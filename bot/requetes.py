@@ -45,6 +45,20 @@ class Requete:
         '''
         self.cursor.execute(req, (user_id,))
         self.db.commit()
+    
+    @verif_db
+    def get_user_lang(self,user_id):
+        req = "SELECT lang FROM Public WHERE facebook_id = %s"
+        self.cursor.execute(req, (user_id,))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        return data
+    
+    @verif_db
+    def update_lang(self,user_id,lang):
+        req = "UPDATE Public SET lang = %s WHERE facebook_id = %s"
+        self.cursor.execute(req, (lang, user_id))
+        self.db.commit()
         
     @verif_db
     def set_action(self, user_id, action):

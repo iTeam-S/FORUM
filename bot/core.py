@@ -1,9 +1,10 @@
-import messenger
-from conf import ACCESS_TOKEN,URL_SERVER
 import const 
 import requetes
 import json
+import messenger
 from options import Options
+from utils import translate
+from conf import ACCESS_TOKEN,URL_SERVER
 
 
 class Traitement(Options):
@@ -52,19 +53,20 @@ class Traitement(Options):
     #                                   DIFFERENTS TRAITEMENTS                                  #              
     #-------------------------------------------------------------------------------------------#
     
-    def salutation(self, sender_id):
+    def salutation(self, sender_id,user_lang):
         """
             Saluer et presenter qui nous sommes
             avant tout à l'utulisateurs
         """
         self.bot.send_message(
             sender_id,
-            const.salutation
+            translate("salutation",user_lang)
         )
-        self.bot.send_quick_reply(sender_id, "bienvenue")
+        self.bot.send_media(sender_id,[{"bke":"bjsds"}])
+        # self.bot.send_quick_reply(sender_id,user_lang, "choix_langues")
         return True
 
-    def traitement_cmd(self, user_id, commande):
+    def traitement_cmd(self, user_id, user_lang, commande):
         """
             METHODES QUI ANALYSES ET TRAITE LES
             PAYLOADS DE QUICK_REPLY ENVOYER PAR
@@ -75,11 +77,21 @@ class Traitement(Options):
         if commande == "__MENU":
             self.bot.send_quick_reply(user_id, "bienvenue")
             return True
+
+        elif cmd[0] == '__SET_LANG' and cmd[-1] in ('fr', 'en', 'mg'):
+            self.req.update_lang(user_id, cmd[-1])
+            self.bot.send_message(
+                user_id,
+                translate('langue_mis_a_jour', cmd[-1]) + ' ✔'
+            )
+            self.bot.send_quick_reply(user_id,cmd[-1],"bienvenue")
+            return True
         
         elif commande == "__FICHE_METIER":
             
             self.bot.send_quick_reply(
                 user_id,
+                user_lang,
                 "recherche_ou_voir_fiche_metier"
             )
             return True
@@ -87,6 +99,7 @@ class Traitement(Options):
         elif commande == "__VOIR_LISTE_FICHE_METIER":
             self.bot.send_quick_reply(
                 user_id,
+                user_lang,
                 "domaine_de_fiche_metier"
             )
             return True 
@@ -94,79 +107,95 @@ class Traitement(Options):
         elif cmd[0] == "__SANTE":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("sante",user_lang).upper(),
                 "Santé",
                 cmd[-1],
-                payload_plus_de_dix="__SANTE"
+                payload_plus_de_dix="__SANTE",
+                lang=user_lang
             )
             return True
         
         elif cmd[0] == "__INFORMATIQUE":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("informatique",user_lang).upper(),
                 "Informatique",
                 cmd[-1],
-                payload_plus_de_dix="__INFORMATIQUE"
+                payload_plus_de_dix="__INFORMATIQUE",
+                lang=user_lang
             )
             return True
         
         elif cmd[0] == "__COMMERCE":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("comm_et_admin",user_lang).upper(),
                 "Commerce et Admnistration",
                 cmd[-1],
-                payload_plus_de_dix="__COMMERCE"
+                payload_plus_de_dix="__COMMERCE",
+                lang=user_lang
             )
             return True
         
         elif cmd[0] == "__AGRONOMIE":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("agronomie",user_lang).upper(),
                 "Agronomie",
                 cmd[-1],
-                payload_plus_de_dix="__AGRONOMIE"
+                payload_plus_de_dix="__AGRONOMIE",
+                lang=user_lang
             )
             return True
         
         elif cmd[0] == "__SCIENCE_HUMAINE":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("science_humaine",user_lang).upper(),
                 "Science Humaine et Communication",
                 cmd[-1],
-                payload_plus_de_dix="__SCIENCE_HUMAINE"
+                payload_plus_de_dix="__SCIENCE_HUMAINE",
+                lang=user_lang
             )
             return True
         
         elif cmd[0] == "__INDISTRUE":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("industrie",user_lang).upper(),
                 "Industrie et BT",
                 cmd[-1],
-                payload_plus_de_dix="__INDISTRUE"
+                payload_plus_de_dix="__INDISTRUE",
+                lang=user_lang
             )
             return True
         
         elif cmd[0] == "__JUSTICE":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("justice",user_lang).upper(),
                 "Justice et Force de l'ordre",
                 cmd[-1],
-                payload_plus_de_dix="__JUSTICE"
+                payload_plus_de_dix="__JUSTICE",
+                lang=user_lang
             )
             return True
         
         elif cmd[0] == "__TOURISME":
             self.fiche_metier_par_domaine(
                 user_id,
+                translate("tourisme",user_lang).upper(),
                 "Tourisme",
                 cmd[-1],
-                payload_plus_de_dix="__TOURISME"
+                payload_plus_de_dix="__TOURISME",
+                lang=user_lang
             )
             return True
 
         elif commande == "__RECHERCHE_FICHE_METIER":
             self.bot.send_message(
                 user_id,
-                const.nom_de_domaine_rechercher
+                translate("nom_de_domaine_rechercher",user_lang)
             )
             self.req.set_action(user_id, "CHERCHER_FICHE_METIER")
             return True
@@ -174,6 +203,7 @@ class Traitement(Options):
         elif commande == "__VISITE_STAND":
             self.bot.send_quick_reply(
                 user_id,
+                user_lang,
                 "rechercher_ou_visiter_stands"
             )
             return True
@@ -181,7 +211,7 @@ class Traitement(Options):
         elif commande == "__RECHERCHE_STAND":
             self.bot.send_message(
                 user_id,
-                const.exemple_de_nom_de_stand_a_cherchher
+                translate("recherche_stand",user_lang)
             )
             self.req.set_action(user_id, "CHERCHER_STAND")
             return True
@@ -190,15 +220,17 @@ class Traitement(Options):
             if not cmd[-1].isdigit():
                 self.bot.send_message(
                     user_id,
-                    const.donner_des_listes_du_stand
+                    translate("listes_stands",user_lang)
                 )
             else:
                 pass
             
             self.gestion_de_stands_par_dix(
                 user_id,
+                user_lang,
                 self.liste_de_tout_les_stands(
-                    self.req.tous_les_stands()
+                    self.req.tous_les_stands(),
+                    user_lang
                 ),
                 page=int(cmd[-1]) if cmd[-1].isdigit() else 1
             )
@@ -207,10 +239,11 @@ class Traitement(Options):
         elif cmd[0] == "__VOIR_LISTE_FICHE_METIER_RECHERCHE":
             self.gestion_de_liste_des_fiches_metier_par_dix(
                 user_id,
+                user_lang,
                 self.listes_de_tout_fiches_metiers(
                         self.req.rechercher_fiche_metier(
                         json.loads(self.req.get_temp(user_id)).get("recherche_fiche_metier")                     
-                    )
+                    ),user_lang
                 ),
                 page=int(cmd[-1]) if cmd[-1].isdigit() else 1,
                 types="recherche",
@@ -219,26 +252,33 @@ class Traitement(Options):
             return True
         
         elif cmd[0] == "__GALERIE":
-            self.bot.send_message(
-                user_id,
-                const.galerie
-            )
-            self.bot.send_template(
-                user_id,
-                self.liste_galerie_de_chaque_stand(
-                    cmd[-1],
-                    self.req.galerie_de_chaque_stand(cmd[-1])
+            galery = self.req.galerie_de_chaque_stand(cmd[-1])
+            if galery:
+                self.bot.send_message(
+                    user_id,
+                    translate("galery",user_lang)
                 )
-            )
-            return True
-        
+                self.bot.send_template(
+                    user_id,
+                    self.liste_galerie_de_chaque_stand(
+                        cmd[-1],
+                        user_lang,
+                        galery
+                    )
+                )
+                return True
+
+            else:
+                self.bot.send_message(user_id,translate("pas_galery",user_lang))
+                return True
+
         elif cmd[0] == "__EMPLOI":
             data = self.req.emploi_de_chaque_stands(cmd[-2])
             if data:
                 if not cmd[-1].isdigit():
                     self.bot.send_message(
                         user_id,
-                        const.emploi
+                        translate("emploi",user_lang)
                     )
                     
                 else:
@@ -246,9 +286,11 @@ class Traitement(Options):
                 
                 self.gestion_de_liste_demploi_par_dix(
                     user_id,
+                    user_lang,
                     cmd[-2],
                     self.liste_emploi_de_chaque_stand(
                         data,
+                        user_lang, 
                         cmd[-2]
                     ),
                     page=int(cmd[-1]) if cmd[-1].isdigit() else 1
@@ -258,7 +300,7 @@ class Traitement(Options):
             else:
                 self.bot.send_message(
                     user_id,
-                    const.pas_emploi
+                    translate("pas_emploi", user_lang)
                 )
                 return True
             
@@ -269,12 +311,13 @@ class Traitement(Options):
                 if not cmd[-1].isdigit():
                     self.bot.send_message(
                         user_id,
-                        const.evenement
+                        translate("events", user_lang)
                     )
                     self.gestion_evenement_par_dix(
                         user_id,
                         cmd[-2],
-                        self.liste_evenement_de_chaque_stand(cmd[-2],data),
+                        user_lang,
+                        self.liste_evenement_de_chaque_stand(cmd[-2], user_lang, data),
                         page=int(cmd[-1]) if cmd[-1].isdigit() else 1
                     )
                     return True
@@ -282,15 +325,16 @@ class Traitement(Options):
                 else:
                     self.gestion_evenement_par_dix(
                         user_id,
+                        user_lang,
                         cmd[-2],
-                        self.liste_evenement_de_chaque_stand(cmd[-2],data),
+                        self.liste_evenement_de_chaque_stand(cmd[-2], user_lang, data),
                         page=int(cmd[-1]) if cmd[-1].isdigit() else 1
                     )
                     return True
             else:
                 self.bot.send_message(
                     user_id,
-                    const.pas_evenement
+                    translate("pas_events",user_lang)
                 )
                 return True
 
@@ -306,7 +350,7 @@ class Traitement(Options):
             if info[2]:
                 self.bot.send_message(
                    user_id,
-                   f"{const.site_web}\n\n{info[2]}"
+                   f"{translate('lien',user_lang)}\n\n{info[2]}"
                )
                 return True
             
@@ -316,7 +360,7 @@ class Traitement(Options):
         elif cmd[0] == "__PRESENTATION":
             presentation = self.req.presentation_stand(cmd[-1])
             if presentation:
-                self.bot.send_message(user_id,const.presentation_video)
+                self.bot.send_message(user_id,translate("present_video",user_lang))
                 self.bot.send_file_url(
                     user_id,
                     f"{URL_SERVER}{cmd[-1]}/{presentation}",
@@ -324,11 +368,11 @@ class Traitement(Options):
                 )
                 return True
             else:
-                self.bot.send_message(user_id,const.pas_video)
+                self.bot.send_message(user_id,translate("pas_video",user_lang))
                 return True
 
 
-    def traitement_pstPayload(self, user_id, commande):
+    def traitement_pstPayload(self, user_id,user_lang, commande):
         postback_payload = commande.split(' ')
         
         if postback_payload[0] == "__VOIR":
@@ -484,12 +528,13 @@ class Traitement(Options):
         elif postback_payload[0] == "__VISITER":
             self.bot.send_quick_reply(
                 user_id,
+                user_lang,
                 "visiter_stand",
                 postback_payload[-1]
             )
             return True
             
-    def traitement_action(self, user_id, commande, statut):
+    def traitement_action(self, user_id, user_lang, commande, statut):
         """
             IL Y A DES MOMENTS QUE LES UTILISATEUR POSTENT
             DES MESSAGES COMME FAIRE DES RECHERCHES OU REPONDRE
@@ -507,11 +552,12 @@ class Traitement(Options):
             if data:
                 self.bot.send_message(
                     user_id,
-                    const.resultat_de_recherche
+                    translate("resultat_de_recherche",user_lang)
                 )
                 self.gestion_de_liste_des_fiches_metier_par_dix(
                     user_id,
-                    self.listes_de_tout_fiches_metiers(data),
+                    user_lang,
+                    self.listes_de_tout_fiches_metiers(data,user_lang),
                     page=1,
                     types="recherche",
                     payload_plus_de_dix="__VOIR_LISTE_FICHE_METIER_RECHERCHE"
@@ -537,10 +583,11 @@ class Traitement(Options):
             else:
                 self.bot.send_message(
                     user_id,
-                    const.resultat_de_recherche_vide
+                    translate("resultat_de_recherche_vide",user_lang)
                 )
                 self.bot.send_quick_reply(
                     user_id,
+                    user_lang,
                     "recherche_ou_voir_fiche_metier"
                 )
                 self.req.set_action(user_id, None)
@@ -551,11 +598,11 @@ class Traitement(Options):
             if data:
                 self.bot.send_message(
                     user_id,
-                    const.resultat_de_recherche
+                    translate("resultat_de_recherche",user_lang)
                 )
                 self.bot.send_template(
                     user_id,
-                    self.liste_de_tout_les_stands(data)
+                    self.liste_de_tout_les_stands(data, user_lang)
                 )
                 self.req.set_action(user_id, None)
                 return True
@@ -563,10 +610,11 @@ class Traitement(Options):
             else:
                 self.bot.send_message(
                     user_id,
-                    const.resultat_de_recherche_stand_vide
+                    translate("resultat_de_recherche_stand_vide",user_lang)
                 )
                 self.bot.send_quick_reply(
                     user_id,
+                    user_lang,
                     "rechercher_ou_visiter_stands"
                 )
                 self.req.set_action(user_id, None)
@@ -585,15 +633,16 @@ class Traitement(Options):
         
         self.req.verif_utilisateur(user_id)
         statut = self.req.get_action(user_id)
+        user_lang = self.req.get_user_lang(user_id)
         
-        if self.traitement_action(user_id, commande, statut):
+        if self.traitement_action(user_id,user_lang, commande, statut):
             return
         
-        if self.traitement_pstPayload(user_id, commande):
+        if self.traitement_pstPayload(user_id,user_lang, commande):
             return
 
-        if self.traitement_cmd(user_id, commande):
+        if self.traitement_cmd(user_id,user_lang, commande):
             return
 
-        if self.salutation(user_id):
+        if self.salutation(user_id,user_lang):
             return

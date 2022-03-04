@@ -1,232 +1,232 @@
 {
     "salutation": {
-        "en": "Hello, Welcome to the FORUM 2022 of SESAME's program",
-        "fr": "Bonjour, Bienvenue au FORUM 2022 du programme SESAME",
-        "mg": "Miarahaba Tompoko, Tongasoa eto amin'ny FORUM 2022 ny programa SESAMA"
+      "en": "Hello, Welcome to the FORUM 2022 of SESAME's program",
+      "fr": "Bonjour, Bienvenue au FORUM 2022 du programme SESAME",
+      "mg": "Miarahaba Tompoko, Tongasoa eto amin'ny FORUM 2022 ny programa SESAMA"
     },
-    "choisir_votre_langue": {
-        "en": "choose your language before continuing",
-        "fr": "Choisir votre langue avant de continuer ",
-        "mg": "Safidio ny fiteninao alohan'ny hitohizana"
+    "choisir_votre_langue":{
+        "en":"choose your language before continuing",
+        "fr":"Choisir votre langue avant de continuer ",
+        "mg":"Safidio ny fiteninao alohan'ny hitohizana"
     },
-    "langue_mis_a_jour": {
-        "en": "language updated",
-        "fr": "langue mis à jour",
-        "mg": "vohahova ny fiteninao"
+    "langue_mis_a_jour":{
+        "en":"language updated",
+        "fr":"langue mis à jour",
+        "mg":"vohahova ny fiteninao"
     },
-    "bienvenu": {
-        "en": "What do you want to do now?",
-        "fr": "Que voulez-vous faire maintenant?",
-        "mg": "Inona ary no andeha hataonao manaraka?"
+    "bienvenu":{
+        "en":"What do you want to do now?",
+        "fr":"Que voulez-vous faire maintenant?",
+        "mg":"Inona ary no andeha hataonao manaraka?"
     },
-    "fiches_metiers": {
-        "en": "see job descriptions",
-        "fr": "voir fiches métiers",
-        "mg": "Hijery fiches metiers"
+    "fiches_metiers":{
+        "en":"see job descriptions",
+        "fr":"voir fiches métiers",
+        "mg":"Hijery fiches metiers"
     },
-    "visiter_stands": {
-        "en": "visit stands",
-        "fr": "visiter stand",
-        "mg": "Hijery ireo stand"
+    "visiter_stands":{
+        "en":"visit stands",
+        "fr":"visiter stand",
+        "mg":"Hijery ireo stand"
     },
-    "recherche_ou_voir_fiche_metier": {
-        "en": "Do you want to search or see the list of job descriptions?",
-        "fr": "Vous voulez rechercher ou voir la liste des fiches metiers",
-        "mg": "Hikaroka ary ianao sa hijery avy hatrany ireo lisitry ny fiches metiers"
+    "recherche_ou_voir_fiche_metier":{
+        "en":"Do you want to search or see the list of job descriptions?",
+        "fr":"Vous voulez rechercher ou voir la liste des fiches metiers",
+        "mg":"Hikaroka ary ianao sa hijery avy hatrany ireo lisitry ny fiches metiers"
     },
-    "rechercher": {
-        "en": "search",
-        "fr": "rechercher",
-        "mg": "hikaroka"
+    "rechercher":{
+        "en":"search",
+        "fr":"rechercher",
+        "mg":"hikaroka"
     },
-    "voir_les_listes": {
-        "en": "see the list",
-        "fr": "voir les listes",
-        "mg": "hijery ireo lisitra"
+    "voir_les_listes":{
+        "en":"see the list",
+        "fr":"voir les listes",
+        "mg":"hijery ireo lisitra"
     },
-    "nom_de_domaine_rechercher": {
-        "en": "Then type the name of the job you want to get from the job description\n\nExample: Developer",
-        "fr": "Tapez alors le nom du metier que vous souhaitez obtenir sa fiche\n\nExemple : Developer",
-        "mg": "Sorato eto ary ny anaran'ny asa tianao hahazoana ny mombamomba azy\n\nOhatra: Developer"
+    "nom_de_domaine_rechercher":{
+        "en":"Then type the name of the job you want to get from the job description\n\nExample: Developer",
+        "fr":"Tapez alors le nom du metier que vous souhaitez obtenir sa fiche\n\nExemple : Developer",
+        "mg":"Sorato eto ary ny anaran'ny asa tianao hahazoana ny mombamomba azy\n\nOhatra: Developer"
     },
-    "domaine_de_fiche_metier": {
-        "en": "So here are the sectors that have job descriptions available\n\nYou can choose what you want!",
-        "fr": "Voici donc les domaines ou les filières qui ont des fiches metiers disponibles\n\nVous pouvez choisir ce que vous voulez!!",
-        "mg": "Ireto manaraka ireto ary ny sehatr'asa na ny taranja ahitana ireo fiches metiers\n\nNoho izany, afaka misafidy izay mahaliana anao ianao!"
+    "domaine_de_fiche_metier":{
+        "en":"So here are the sectors that have job descriptions available\n\nYou can choose what you want!",
+        "fr":"Voici donc les domaines ou les filières qui ont des fiches metiers disponibles\n\nVous pouvez choisir ce que vous voulez!!",
+        "mg":"Ireto manaraka ireto ary ny sehatr'asa na ny taranja ahitana ireo fiches metiers\n\nNoho izany, afaka misafidy izay mahaliana anao ianao!"
     },
-    "sante": {
-        "en": "health",
-        "fr": "santé",
-        "mg": "fahasalamana"
+    "sante":{
+        "en":"health",
+        "fr":"santé",
+        "mg":"fahasalamana"
     },
-    "informatique": {
-        "en": "computer science",
-        "fr": "informatique",
-        "mg": "informatika"
+    "informatique":{
+        "en":"computer science",
+        "fr":"informatique",
+        "mg":"informatika"
     },
-    "comm_et_admin": {
-        "en": "buisness and admnistration",
-        "fr": "commerce et admnistratrion",
-        "mg": "fandraharahana sy fitantanana"
+    "comm_et_admin":{
+        "en":"buisness and admnistration",
+        "fr":"commerce et admnistratrion",
+        "mg":"fandraharahana sy fitantanana"
     },
-    "agronomie": {
-        "en": "agronomy",
-        "fr": "agronomie",
-        "mg": "fambolena"
+    "agronomie":{
+        "en":"agronomy",
+        "fr":"agronomie",
+        "mg":"fambolena"
     },
-    "science_humaine": {
-        "en": "human science and communication",
-        "fr": "sciences humaines et communication",
-        "mg": "fandalinana ny olombelona sy ny fifandraisana"
+    "science_humaine":{
+        "en":"human science and communication",
+        "fr":"sciences humaines et communication",
+        "mg":"fandalinana ny olombelona sy ny fifandraisana"
     },
-    "tourisme": {
-        "en": "tourism",
-        "fr": "tourisme",
-        "mg": "fizahantany"
+    "tourisme":{
+        "en":"tourism",
+        "fr":"tourisme",
+        "mg":"fizahantany"
     },
-    "industrie": {
-        "en": "industry and BT",
-        "fr": "industrie et BT",
-        "mg": "indostria sy ny asa vaventy"
+    "industrie":{
+        "en":"industry and BT",
+        "fr":"industrie et BT",
+        "mg":"indostria sy ny asa vaventy"
     },
-    "justice": {
-        "en": "justice",
-        "fr": "justice et force de l'ordre",
-        "mg": "fitsarahana sy fampiharana ny lalàna"
+    "justice":{
+        "en":"justice",
+        "fr":"justice et force de l'ordre",
+        "mg":"fitsarahana sy fampiharana ny lalàna"
     },
-    "page_suivant": {
-        "en": "next page",
-        "fr": "page suivant",
-        "mg": "pejy manaraka"
+    "page_suivant":{
+        "en":"next page",
+        "fr":"page suivant",
+        "mg":"pejy manaraka"
     },
-    "pas_fiche": {
-        "en": "No job description for the moment this sector",
-        "fr": "Pas de fiche metiers pour le moment pour ce domaine",
-        "mg": "Tsy mbola misy fiches metiers aloha io sehatra io amin'izao fotoana izao"
+    "pas_fiche":{
+        "en":"No job description for the moment this sector",
+        "fr":"Pas de fiche metiers pour le moment pour ce domaine",
+        "mg":"Tsy mbola misy fiches metiers aloha io sehatra io amin'izao fotoana izao"
     },
-    "voir": {
-        "en": "see",
-        "fr": "voir",
-        "mg": "jerehina"
+    "voir":{
+        "en":"see",
+        "fr":"voir",
+        "mg":"jerehina"
     },
-    "resultat_de_recherche": {
-        "en": "Here is the result of your research",
-        "fr": "Voici le(s) fruit(s) de votre recherche",
-        "mg": "Ireto avy ary n valiny karoka izay nataonao"
+    "resultat_de_recherche":{
+        "en":"Here is the result of your research",
+        "fr":"Voici le(s) fruit(s) de votre recherche",
+        "mg":"Ireto avy ary n valiny karoka izay nataonao"
     },
-    "resultat_de_recherche_vide": {
-        "en": "At the moment, there is no job description corresponding to your search\n\nSo you can now even choose the two options below by searching again",
-        "fr": "Pour le moment, il n'y a pas de fiche de metier correspondant à votre recherche\n\nMais vous pouvez même maintenant choisir les deux options ci-dessous en recherchant de nouveau",
-        "mg": "Hatreto dia mbola tsy misy fiche metier mifanaraka amin ny karoka nataona\n\nKanefa afaka misafidy amin ireo fandikana roa eo ambany eo ireo ianao"
+    "resultat_de_recherche_vide":{
+        "en":"At the moment, there is no job description corresponding to your search\n\nSo you can now even choose the two options below by searching again",
+        "fr":"Pour le moment, il n'y a pas de fiche de metier correspondant à votre recherche\n\nMais vous pouvez même maintenant choisir les deux options ci-dessous en recherchant de nouveau",
+        "mg":"Hatreto dia mbola tsy misy fiche metier mifanaraka amin ny karoka nataona\n\nKanefa afaka misafidy amin ireo fandikana roa eo ambany eo ireo ianao"  
     },
-    "rechercher_ou_visiter_stands": {
-        "en": "Search or see all of list for stands",
-        "fr": "rechercher ou visiter tous les listest des stands",
-        "mg": "Hikaroka sa hijery avy hatrany ireo lisitry ny stand"
+    "rechercher_ou_visiter_stands":{
+        "en":"Search or see all of list for stands",
+        "fr":"rechercher ou visiter tous les listest des stands",
+        "mg":"Hikaroka sa hijery avy hatrany ireo lisitry ny stand"
     },
-    "recherche_stand": {
-        "en": "Enter the name of the stand you want to search\n\nExample:BFV",
-        "fr": "Entrer le nom de stand que vous voulez rechercher\n\nExample: BFV",
-        "mg": "Apidiro ary ny anaran'ny Stand izay tiana karohina\n\nOhatra: BFV"
+    "recherche_stand":{
+        "en":"Enter the name of the stand you want to search\n\nExample:BFV",
+        "fr":"Entrer le nom de stand que vous voulez rechercher\n\nExample: BFV",
+        "mg":"Apidiro ary ny anaran'ny Stand izay tiana karohina\n\nOhatra: BFV"
     },
-    "resultat_de_recherche_stand_vide": {
-        "en": "At the moment, there is no stand corresponding to your search\n\nSo you can now even choose the two options below by searching again",
-        "fr": "Pour le moment, il n'y a pas de stand correspondant à votre recherche\n\nMais vous pouvez même maintenant choisir les deux options ci-dessous en recherchant de nouveau",
-        "mg": "Hatreto dia mbola tsy misy stand mifanaraka amin'ny karoka nataona\n\nKanefa afaka misafidy amin'ireo fandikana roa eo ambany eo ireo ianao"
+    "resultat_de_recherche_stand_vide":{
+        "en":"At the moment, there is no stand corresponding to your search\n\nSo you can now even choose the two options below by searching again",
+        "fr":"Pour le moment, il n'y a pas de stand correspondant à votre recherche\n\nMais vous pouvez même maintenant choisir les deux options ci-dessous en recherchant de nouveau",
+        "mg":"Hatreto dia mbola tsy misy stand mifanaraka amin'ny karoka nataona\n\nKanefa afaka misafidy amin'ireo fandikana roa eo ambany eo ireo ianao"  
     },
-    "visiter": {
-        "en": "visit",
-        "fr": "visiter",
-        "mg": "hitsidika"
+    "visiter":{
+        "en":"visit",
+        "fr":"visiter",
+        "mg":"hitsidika"
     },
-    "listes_stands": {
-        "en": "Here are the available stand lists",
-        "fr": "Voici donc les listes du stand disponibles",
-        "mg": "Ireto avy ary ny lisitry ny stand misy amin'izao fotoana izao"
+    "listes_stands":{
+        "en":"Here are the available stand lists",
+        "fr":"Voici donc les listes du stand disponibles",
+        "mg":"Ireto avy ary ny lisitry ny stand misy amin'izao fotoana izao"
     },
-    "visiter_stand": {
-        "en": "What do you want to see now then?",
-        "fr": "Qu'est-ce que vous voulez voir maintenat alors?",
-        "mg": "Inona ary arak'izany ny zavatra tianao hojerehina"
+    "visiter_stand":{
+        "en":"What do you want to see now then?",
+        "fr":"Qu'est-ce que vous voulez voir maintenat alors?",
+        "mg":"Inona ary arak'izany ny zavatra tianao hojerehina"
     },
-    "offre": {
-        "en": "job offer",
-        "fr": "offre d'emploi",
-        "mg": "tolotr'asa"
+    "offre":{
+        "en":"job offer",
+        "fr":"offre d'emploi",
+        "mg":"tolotr'asa"
     },
-    "info": {
-        "en": "informations",
-        "fr": "informations",
-        "mg": "fampafatarana"
+    "info":{
+        "en":"informations",
+        "fr":"informations",
+        "mg":"fampafatarana"
     },
-    "galerie": {
-        "en": "gallery",
-        "fr": "galerie",
-        "mg": "galeria"
+    "galerie":{
+        "en":"gallery",
+        "fr":"galerie",
+        "mg":"galeria"
     },
-    "presentation": {
-        "en": "presentation",
-        "fr": "presentation",
-        "mg": "fampalalahana"
+    "presentation":{
+        "en":"presentation",
+        "fr":"presentation",
+        "mg":"fampalalahana"
     },
-    "plus_info": {
-        "en": "more info",
-        "fr": "plus d'infos",
-        "mg": "fampalalahana hafa"
+    "plus_info":{
+        "en":"more info",
+        "fr":"plus d'infos",
+        "mg":"fampalalahana hafa"
     },
-    "emploi": {
-        "en": "Here are the job offers that with us",
-        "fr": "Voici donc les offres d'emploi disponibles auprès de nous",
-        "mg": "Ireto avy ary ny tolotr'asa misy ato aminay hatreto"
+    "emploi":{
+        "en":"Here are the job offers that with us",
+        "fr":"Voici donc les offres d'emploi disponibles auprès de nous",
+        "mg":"Ireto avy ary ny tolotr'asa misy ato aminay hatreto"
     },
-    "telecharger": {
-        "en": "download",
-        "fr": "télécharger",
-        "mg": "alaina"
+    "telecharger":{
+        "en":"download",
+        "fr":"télécharger",
+        "mg":"alaina"
     },
-    "regarder": {
-        "en": "play video",
-        "fr": "regarder",
-        "mg": "jerehina"
+    "regarder":{
+        "en":"play video",
+        "fr":"regarder",
+        "mg":"jerehina"
     },
-    "pas_emploi": {
-        "en": "At the moment, there is no job offer for this stand",
-        "fr": "Pour le moment, il n'y a pas d'offre d'emploi pour ce stand",
-        "mg": "Mnola tsy misy tolotr'asa aloha io stand io @zao fotoana izao"
+    "pas_emploi":{
+        "en":"At the moment, there is no job offer for this stand",
+        "fr":"Pour le moment, il n'y a pas d'offre d'emploi pour ce stand",
+        "mg":"Mnola tsy misy tolotr'asa aloha io stand io @zao fotoana izao"
     },
-    "events": {
-        "en": "Here are our available events",
-        "fr": "Voici donc les évenements disponibles auprés de nous",
-        "mg": "Ireto avy ary ny evenement misy ato aminay hatreto"
+    "events":{
+        "en":"Here are our available events",
+        "fr":"Voici donc les évenements disponibles auprés de nous",
+        "mg":"Ireto avy ary ny evenement misy ato aminay hatreto"
     },
-    "pas_events": {
-        "en": "At the moment, there are no events available with us",
-        "fr": "Pour le moment, il n'y a pas d'événements disponibles avec nous.",
-        "mg": "Tsy mbola misy evenement azo jerehina aloha ato aminay amin'izao fotoana izao."
+    "pas_events":{
+        "en":"At the moment, there are no events available with us",
+        "fr":"Pour le moment, il n'y a pas d'événements disponibles avec nous.",
+        "mg":"Tsy mbola misy evenement azo jerehina aloha ato aminay amin'izao fotoana izao."
     },
-    "galery": {
-        "en": "Here are our different galleries:",
-        "fr": "Voici donc nos differents galeries:",
-        "mg": "Ireto avy ary ireo sarisary miaraka aminay"
+    "galery":{
+        "en":"Here are our different galleries:",
+        "fr":"Voici donc nos differents galeries:",
+        "mg":"Ireto avy ary ireo sarisary miaraka aminay"
     },
-    "pas_galery": {
-        "en": "For the moment, This stand does not have a galery",
-        "fr": "Pour le moment, ce stand n'a pas de galerie",
-        "mg": "Tsy misy sarisary azo aseho aloha atreto ato amin'ity stand ity"
+    "pas_galery":{
+        "en":"For the moment, This stand does not have a galery",
+        "fr":"Pour le moment, ce stand n'a pas de galerie",
+        "mg":"Tsy misy sarisary azo aseho aloha atreto ato amin'ity stand ity"
     },
-    "present_video": {
-        "en": "So here is our presentation video.\n\nPlease wait for loading ⏳⏳⏳",
-        "fr": "Voici donc notre vidéo de présentation.\n\nVeuillez patienter un peu pour le chargement ⏳⏳⏳",
-        "mg": "ito ary ny video fanehoana anay\n\nManasa anao ary iandry kely amin'ny fatongavany"
+    "present_video":{
+        "en":"So here is our presentation video.\n\nPlease wait for loading ⏳⏳⏳",
+        "fr":"Voici donc notre vidéo de présentation.\n\nVeuillez patienter un peu pour le chargement ⏳⏳⏳",
+        "mg":"ito ary ny video fanehoana anay\n\nManasa anao ary iandry kely amin'ny fatongavany"
     },
-    "pas_video": {
-        "en": "For the moment, This stand does not have a presentation video",
-        "fr": "Pour le moment, ce stand n'a pas de vidéo de présentation",
-        "mg": "Hatreto aloha dia tsy mbola misy video fanehoana ato aminay"
+    "pas_video":{
+        "en":"For the moment, This stand does not have a presentation video",
+        "fr":"Pour le moment, ce stand n'a pas de vidéo de présentation",
+        "mg":"Hatreto aloha dia tsy mbola misy video fanehoana ato aminay"
     },
-    "lien": {
-        "en": "Here is our website link:",
-        "fr": "Voici le lien de notre site Web :",
-        "mg": "Ity ary ny rohy makany amin'ny tranokalanay:"
+    "lien":{
+        "en":"Here is our website link:",
+        "fr":"Voici le lien de notre site Web :",
+        "mg":"Ity ary ny rohy makany amin'ny tranokalanay:"
     }
 }

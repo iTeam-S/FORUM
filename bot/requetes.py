@@ -250,3 +250,17 @@ class Requete:
         data = self.cursor.fetchall()
         self.db.commit()
         return data
+
+    @verif_db
+    def insert_kavio(self,id_user,num_question,id_part,serie,categorie,point):
+        req = """
+                INSERT into Test_KAVIO(id_user,num_question,id_part,serie,categorie,point)
+                VALUES(
+                    (SELECT id FROM Public WHERE facebook_id = %s),%s,%s,%s,%s,%s
+                ) 
+        """
+        self.cursor.execute(req,(id_user,num_question,id_part,serie,categorie,point))
+        self.db.commit()
+
+    # @verif_db
+    # def verif_trois_vrai(self,)

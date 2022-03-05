@@ -62,8 +62,7 @@ class Traitement(Options):
             sender_id,
             translate("salutation",user_lang)
         )
-        self.bot.send_media(sender_id,[{"bke":"bjsds"}])
-        # self.bot.send_quick_reply(sender_id,user_lang, "choix_langues")
+        self.bot.send_quick_reply(sender_id,user_lang, "choix_langues")
         return True
 
     def traitement_cmd(self, user_id, user_lang, commande):
@@ -74,8 +73,9 @@ class Traitement(Options):
         """
         
         cmd = commande.split()
+        _cmd = commande.split("_")
         if commande == "__MENU":
-            self.bot.send_quick_reply(user_id, "bienvenue")
+            self.bot.send_quick_reply(user_id,user_lang, "bienvenue")
             return True
 
         elif cmd[0] == '__SET_LANG' and cmd[-1] in ('fr', 'en', 'mg'):
@@ -371,6 +371,82 @@ class Traitement(Options):
                 self.bot.send_message(user_id,translate("pas_video",user_lang))
                 return True
 
+        elif commande == "__TEST_KAVIO":
+            self.bot.send_message(user_id,translate("bienvenu_kavio",user_lang))
+            self.bot.send_quick_reply(user_id, user_lang, "tester_kavio")
+            return True
+        
+        elif commande == "__ABANDON_KAVIO":
+            self.bot.send_message(user_id,translate("remercier_abandon",user_lang))
+            self.bot.send_quick_reply(user_id, user_lang, "bienvenue")
+            return True
+        
+        elif commande == "__FAIRE_KAVIO":
+            self.bot.send_message(user_id,translate("consignes_part_1",user_lang))
+            self.bot.send_message(user_id,f"{translate('serie',user_lang).upper()} 1")
+            self.bot.send_quick_kavio(
+                user_id,
+                types=0,
+                kavio = const.get_quick_kavio("A_1_1_1",user_lang)
+            )
+            return True
+        
+        elif _cmd[0] == "--**KAVIO":
+            print(commande)
+            categ = ["A","I","R","S","C","E"]
+            """
+                _cmd[-1]:point,
+                _cmd[1]:categ
+                _cmd[2]:num_question,
+                _cmd[3]:partie,
+                _cmd[4]:serie
+            """
+            #insertion(eto no mipetraka)
+            self.req.insert_kavio(user_id,int(_cmd[2]),int(_cmd[3]),int(_cmd[4]),_cmd[1],int(_cmd[-1]))
+            if int(_cmd[2])<6:
+                num_question = int(_cmd[2])
+                verif_trois_vrai = 1
+
+                if verif_trois_vrai < 3:
+                    self.bot.send_quick_kavio(
+                        user_id,
+                        types=0,
+                        kavio = const.get_quick_kavio(
+                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",
+                            user_lang
+                        )
+                    )
+                    return True
+
+                else:
+                    self.bot.send_quick_kavio(
+                        user_id,
+                        types=1,
+                        kavio = const.get_quick_kavio(
+                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",
+                            user_lang
+                        )
+                    )
+                    return True
+
+            else:
+                serie = int(_cmd[4])
+                if serie<5:
+                    #apafantarina daholo alo n ao antin'ny le serie alohan anwvan azy
+                    self.bot.send_message(
+                        user_id,
+                        f"{translate('serie',user_lang).upper()} {serie + 1}"
+                    )
+                    self.bot.send_quick_kavio(
+                        user_id,
+                        kavio = const.get_quick_kavio(f"A_1_{_cmd[3]}_{serie+1}",user_lang)
+                    )
+                    return True
+
+                else:
+                    print("zavatra hafa")
+                    return True
+                
 
     def traitement_pstPayload(self, user_id,user_lang, commande):
         postback_payload = commande.split(' ')

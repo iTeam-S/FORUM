@@ -79,8 +79,13 @@ class Messenger:
                 },
                 {
                     "content_type": "text",
-                    "title": "📑" + translate("visiter_stands",lang).upper(),
+                    "title": "🏠" + translate("visiter_stands",lang).upper(),
                     "payload": "__VISITE_STAND"
+                },
+                {
+                    "content_type": "text",
+                    "title": "🔶" + translate("kavio",lang).upper(),
+                    "payload": "__TEST_KAVIO"
                 }
             ]
         
@@ -104,6 +109,21 @@ class Messenger:
                 }
             ]
         
+        elif types == "tester_kavio":
+            text = translate("idee_commencer_kavio",lang)
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title":"😍" + translate("faire_test_kavio",lang).upper(),
+                    "payload": "__FAIRE_KAVIO",
+                },
+                {
+                    "content_type": "text",
+                    "title":"😉" + translate("abandomner_test_kavio",lang).upper(),
+                    "payload": "__ABANDON_KAVIO",
+                }
+            ]
+
         elif types == "recherche_ou_voir_fiche_metier":
             text = translate("recherche_ou_voir_fiche_metier",lang)
             quick_rep = [
@@ -346,6 +366,35 @@ class Messenger:
         return requests.post(
             'https://graph.facebook.com/v2.6/me/messages',
             json=dataJSON,
+            headers=header,
+            params=params
+        )
+
+    
+    @retry(requests.exceptions.ConnectionError, tries=3, delay=3)
+    def send_quick_kavio(self, dest_id, types, **kwargs):
+
+        self.send_action(dest_id, 'typing_on')
+        data_json = {
+            'messaging_type': "RESPONSE",
+            'recipient': {
+                "id": dest_id
+            },
+
+            'message': {
+                'text': kwargs.get("kavio").get("text"),
+                'quick_replies': f"[{kwargs.get('kavio').get('quick_rep')[1]}]" if types==1 \
+                else kwargs.get("kavio").get("quick_rep")
+            }
+        }
+
+        header = {'content-type': 'application/json; charset=utf-8'}
+        params = {"access_token": self.token}
+        
+        self.send_action(dest_id, 'typing_off')
+        return requests.post(
+            self.url + '/messages',
+            json=data_json,
             headers=header,
             params=params
         )

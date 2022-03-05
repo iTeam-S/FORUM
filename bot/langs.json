@@ -228,5 +228,405 @@
         "en":"Here is our website link:",
         "fr":"Voici le lien de notre site Web :",
         "mg":"Ity ary ny rohy makany amin'ny tranokalanay:"
+    },
+    "kavio":{
+        "en":"KAVIO test",
+        "fr":"test KAVIO",
+        "mg":"andrana KAVIO"
+    },
+    "bienvenu_kavio":{
+        "en":"INSTRUCTIONS:\n\n this KAVIO test is a vocational orientation test\n\nThis vocational orientation test is divided into four parts: activities, qualities, professions and global interests according to your answer choices and preferences. answer spontaneously, as honestly as possible so that we can know your interests professionals and highlight career paths that correspond to your answers. You will have answered different questions, defining your profile according to your answers, in terms of activities, qualities and professions. Your profile of professional interests dominant will emerge once the test is complete.\n\n\nWe wish you a good test!",
+        "fr":"CONSIGNES:\n\nle test KAVIO est un test d'orientation professionnelle\n\nCe test d’orientation professionnelle est divisé en quatre parties : activités, qualités, professions et intérêts globaux selon tes choix de réponses et tes préférences. Réponds spontanément, le plus honnêtement possible pour que nous puissions connaître tes intérêts professionnels et ressortir les pistes de métiers qui correspondent à tes réponses. Tu auras repondu des differentes questions, définissant ton profil selon tes réponses, en termes d’activités, de qualités et de professions. Ton profil d’intérêts professionnels dominant ressortira une fois le test terminé.\n\n\nNous te souhaitons un bon test!",
+        "mg":"TOROLALANA: Ity andrana KAVIO ity dia andrana amin'ny fironana amin'ny asa mifanaraka aminao\n\nMizara efatra ity andrana fironana amin'ny asa ity: hetsika, toetra, asa ary tombontsoa amin'ny ankapobeny araka ny valinteninao sy ny safidinao. Valio ho malalaka, am-pahatsorana araka izay azo atao mba hahafantaranay ny tombontsoanao matihanina sy hamantatra ny lalan'ny asa mifanaraka amin'ny valinteninao. Hamaly fanontaniana samihafa ianao, mamaritra ny mombamomba anao araka ny valin-teninao, amin'ny resaka hetsika, toetra ary asa. Hipoitra ny mombamomba anao momba ny tombontsoa matihanina manjaka rehefa vita ny fitsapana.\n\n\nMirary andrana tsara ho anao ary izahay!"
+    },
+    "consignes_part_1":{
+        "en":"PART 1: ACTIVITIES:\n\n Four series of activities are proposed to you. Indicate your interest in each activity according to the following notation:\n\n\t\t👎- I don't like this activity\n\t\t👍- I like this activity\n\nNB: You will choose the answer 👍 (I like this activity) a maximum of three times for each series of six activities.",
+        "fr":"PARTIE 1 : LES ACTIVITÉS:\n\nQuatre séries d’activités te sont proposées. Indique ton intérêt pour chaque activité selon la notation suivante :\n\n\t\t👎- Je n’aime pas cette activité\n\t\t👍- J’aime cette activité\n\nNB: Tu choisiras au maximum trois fois la réponse 👍 (j’aime cette activité) pour chaque série de six activités. ",
+        "mg":"FIZARANA 1: IREO HETSIKA:\n\nAtrikasa efatra no atolotra anao. Asehoy ny fahaliananao amin'ny hetsika tsirairay araka ity fanamarihana manaraka ity:\n\n\t\t👎- Tsy tiako ity hetsika ity\n\t\t👍- Tiako ity hetsika ity\n\nNB: Hifidy telo fara-fahabestany ny valiny 👍 (Tiako ity hetsika ity) ianao isaky ny andiana hetsika enina."
+    },
+    "idee_commencer_kavio":{
+        "en":"So what is your idea?",
+        "fr":"Quelle est alors votre idée?",
+        "mg":"Ahoana ary ny hevitrao?"
+    },
+    "faire_test_kavio":{
+        "en":"do now",
+        "fr":"faire maintenant",
+        "mg":"hanao izao"
+    },
+    "abandomner_test_kavio":{
+        "en":"do later",
+        "fr":"faire plus tard",
+        "mg":"hanao amin'ny manaraka"
+    },
+    "remercier_abandon":{
+        "en":"Thank you then for your curiosity 😉😉😉.\n\nSo this test is still available for you later when you are ready to do it 😍😍😍!!",
+        "fr":"Merci alors pour votre curiosité 😉😉😉.\n\nAlors ce test est toujours disponible pour vous à plus tard lorsque vous sérez prêt à le faire 😍😍😍!!",
+        "mg":"Misaotra anao noho ny fahaliananao 😉😉😉.\n\nDia mbola misy ity andrana ity ho hitanao any aoriana rehefa vonona ny hanao izany ianao 😍😍😍!!"
+    },
+    "serie":{
+        "en":"series",
+        "fr":"serie",
+        "mg":"atrikasa"
+    },
+    "photograhier":{
+        "en":"photograph",
+        "fr":"photographier",
+        "mg":"maka sary"
+    },
+    "trouver":{
+        "en":"to find",
+        "fr":"trouver",
+        "mg":"mitady"
+    },
+    "batir":{
+        "en":"to build",
+        "fr":"Bâtir",
+        "mg":"manambotra zavatra"
+    },
+    "aider":{
+        "en":"To help",
+        "fr":"aider",
+        "mg":"manampy"
+    },
+    "planifier":{
+        "en":"plan",
+        "fr":"planifier",
+        "mg":"mandamina"
+    },
+    "persuader":{
+        "en":"to persuade",
+        "fr":"persuader",
+        "mg":"mandresy lahatra"
+    },
+    "creer":{
+        "en":"To create",
+        "fr":"créer",
+        "mg":"mamorona"
+    },
+    "expliquer":{
+        "en":"to explain",
+        "fr":"expliquer",
+        "mg":"manazava zavatra"
+    },
+    "fabriquer":{
+        "en":"craft",
+        "fr":"fabriquer",
+        "mg":"asa tanana"
+    },
+    "renseigner":{
+        "en":"to inform",
+        "fr":"renseigner",
+        "mg":"mampahafantatra"
+    },
+    "financer":{
+        "en":"finance",
+        "fr":"financer",
+        "mg":"mamatsy vola"
+    },
+    "marchander":{
+        "en":"To bargain",
+        "fr":"marchander",
+        "mg":"manao fifampiraharahana"
+    },
+    "illustrer":{
+        "en":"Illustrate",
+        "fr":"illustrer",
+        "mg":"mampanehoeho"
+    },
+    "chercher":{
+        "en":"search",
+        "fr":"chercher",
+        "mg":"mikaroka"
+    },
+    "ameliorer":{
+        "en":"to improve",
+        "fr":"améliorer",
+        "mg":"manatsara"
+    },
+    "conseiller":{
+        "en":"to advise",
+        "fr":"conseiller",
+        "mg":"manoro hevitra"
+    },
+    "calculer":{
+        "en":"calculate",
+        "fr":"calculer",
+        "mg":"manao kajy"
+    },
+    "acquerir":{
+        "en":"To acquire",
+        "fr":"acquérir",
+        "mg":"mahazo"
+    },
+    "imaginer":{
+        "en":"To imagine",
+        "fr":"imaginer",
+        "mg":"maka sary an-tsaina"
+    },
+    "iventer":{
+        "en":"Invent",
+        "fr":"iventer",
+        "mg":"mahita voalohany, izany hoe namorona zavatra ka ianao no nahita azy voaloany"
+    },
+    "construire":{
+        "en":"To construct",
+        "fr":"construire",
+        "mg":"Manorina"
+    },
+    "eduquer":{
+        "en":"Educate",
+        "fr":"Eduquer",
+        "mg":"manabe"
+    },
+    "gerer":{
+        "en":"To manage",
+        "fr":"gérer",
+        "mg":"mitantana"
+    },
+    "vendre":{
+        "en":"To sell",
+        "fr":"vendre",
+        "mg":"mivarotra"
+    },
+    "pratique":{
+        "en":"practice",
+        "fr":"pratique",
+        "mg":"fampiharana"
+    },
+    "methodique":{
+        "en":"Methodical",
+        "fr":"Methodical",
+        "mg":"fanana fomba mirindra rehefa manao zavatra"
+    },
+    "intelectuel":{
+        "en":"Intellectual",
+        "fr":"Intellectuel(le)",
+        "mg":"maranin-tsaina"
+    },
+    "dynamic":{
+        "en":"dynamic",
+        "fr":"dynamique",
+        "mg":"tia mihetsiketsika rehefa manao zavatra miaraka amin'ny olona na vondron'olona"
+    },
+    "imaginatif":{
+        "en":"Imaginative",
+        "fr":"imaginatif(ve)",
+        "mg":"tia maka sary an-tsaina"
+    },
+    "attentionne":{
+        "en":"Attentive",
+        "fr":"Attentionné(e)",
+        "mg":"mahay mihaino"
+    },
+    "solide":{
+        "en":"solid",
+        "fr":"solide",
+        "mg":"matanja-tsaina"
+    },
+    "organiser":{
+        "en":"Organized",
+        "fr":"Organisé(e)",
+        "mg":"mahay mandamina"
+    },
+    "reflechi":{
+        "en":"Reflexive",
+        "fr":"Réfléchi(e)",
+        "mg":"mandinika alohan'i anao zavatra"
+    },
+    "sur":{
+        "en":"confident",
+        "fr":"Sûr (e)de soi",
+        "mg":"mahatoky tena"
+    },
+    "reveur":{
+        "en":"Dreamer",
+        "fr":"Rêveur(e)",
+        "mg":"mpanofinofy"
+    },
+    "comprehensif":{
+        "en":"Understanding",
+        "fr":"Compréhensif(ve)",
+        "mg":"malala-tsaina"
+    },
+    "manuel":{
+        "en":"manual",
+        "fr":"Manuel(e)",
+        "mg":"olona mahay mampianatra ny tenany"
+    },
+    "serieux":{
+        "en":"serious",
+        "fr":"Sérieux(se)",
+        "mg":"matotra"
+    },
+    "objectif":{
+        "en":"objective",
+        "fr":"Objectif(ve)",
+        "mg":"mametraka tanjona"
+    },
+    "convaincant":{
+        "en":"Convincing",
+        "fr":"Convaincant(e)",
+        "mg":"maharesy lahatra"
+    },
+    "creatif":{
+        "en":"Créative",
+        "fr":"Créatif(ve)",
+        "mg":"mpamorona"
+    },
+    "serviable":{
+        "en":"Helpful",
+        "fr":"Serviable",
+        "mg":"tia manampy"
+    },
+    "bricoleur":{
+        "en":"handyman",
+        "fr":"Bricoleur(se)",
+        "mg":"tia miasa tany"
+    },
+    "honnete":{
+        "en":"Honest",
+        "fr":"Honnête",
+        "mg":"mahitsy"
+    },
+    "observeur":{
+        "en":"observer",
+        "fr":"Observateur(trice)",
+        "mg":"tia mandinindinika"
+    },
+    "combatif":{
+        "en":"Combative",
+        "fr":"Combatif(ve)",
+        "mg":"tia miady amin'ny zavatra rehetra"
+    },
+    "emotif":{
+        "en":"Emotional",
+        "fr":"Émotif(ve)",
+        "mg":"olon'ny fo"
+    },
+    "sociable":{
+        "en":"Sociable",
+        "fr":"Sociable",
+        "mg":"tia miara-monina"
+    },
+    "medcin":{
+        "en":"Doctor",
+        "fr":"Médecin",
+        "mg":"dokotera"
+    },
+    "marketing":{
+        "en":"Marketing Manager",
+        "fr":"Responsable marketing",
+        "mg":"Mpitantana ara-barotra"
+    },
+    "compta":{
+        "en":"Accountant",
+        "fr":"Expert-comptable",
+        "mg":"manapahaizana momba ny hai-kaonty"
+    },
+    "cultivateur":{
+        "en":"Farmer",
+        "fr":"Cultivateur",
+        "mg":"mpamboly"
+    },
+    "devweb":{
+        "en":"Web developer",
+        "fr":"Développeur web",
+        "mg":"Développeur web"
+    },
+    "commedien":{
+        "en":"Actor",
+        "fr":"Comédien",
+        "mg":"mpanao hatsikana"
+    },
+    "dentiste":{
+        "en":"Dentist",
+        "fr":"Dentiste",
+        "mg":"Dokotera mpikirakira nify"
+    },
+    "dircommercial":{
+        "en":"Commercial director",
+        "fr":"Directeur commercial",
+        "mg":"Tale ara-barotra"
+    },
+    "secretaire":{
+        "en":"Secretary",
+        "fr":"Secrétaire",
+        "mg":"mpitan-tsoratra"
+    },
+    "btp":{
+        "en":"Construction engineer",
+        "fr":"Ingénieur BTP",
+        "mg":"injenera amin'ny asa vaventy"
+    },
+    "journalist":{
+        "en":"journalist",
+        "fr":"journaliste",
+        "mg":"mpanao gazety"
+    },
+    "musicien":{
+        "en":"Musician",
+        "fr":"Musicien",
+        "mg":"mpanao mozika"
+    },
+    "sagefemme":{
+        "en":"midwife",
+        "fr":"Sage femme",
+        "mg":"mpampiteraka"
+    },
+    "drh":{
+        "en":"Resource Manager human",
+        "fr":"Directeur des ressources humaines",
+        "mg":"Directeur des ressources humaines"
+    },
+    "avocat":{
+        "en":"Attorney",
+        "fr":"Avocat",
+        "mg":"mpisolo vava"
+    },
+    "agro":{
+        "en":"Agronomist",
+        "fr":"Ingénieur agronome",
+        "mg":"injeniera ara-pambolena"
+    },
+    "ingenieur_info":{
+        "en":"Computer engineer",
+        "fr":"Ingénieur informatique",
+        "mg":"injeniera informatika"
+    },
+    "photographe":{
+        "en":"photograph",
+        "fr":"Photographe",
+        "mg":"mpaka sary matianina"
+    },
+    "educateur":{
+        "en":"Educator",
+        "fr":"Éducateur",
+        "mg":"mpanabe"
+    },
+    "guide":{
+        "en":"Touristic guide",
+        "fr":"Guide touristique",
+        "mg":"mpanorolalana mpizahantany"
+    },
+    "police":{
+        "en":"Police inspector",
+        "fr":"Inspecteur de police",
+        "mg":"inspektera polisy"
+    },
+    "maintenance":{
+        "en":"Maintenance manager",
+        "fr":"Responsable de maintenance",
+        "mg":"Mpitantana fikojakojana"
+    },
+    "com":{
+        "en":"Responsible for communication",
+        "fr":"Responsable de communication",
+        "mg":"mpiandraikitra amin'ny lafin'ny serasera"
+    },
+    "dessinateur":{
+        "en":"Graphic designer",
+        "fr":"Graphiste dessinateur",
+        "mg":"mpanao sary maty anina"
     }
 }

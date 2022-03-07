@@ -383,7 +383,10 @@ class Traitement(Options):
         
         elif commande == "__FAIRE_KAVIO":
             self.bot.send_message(user_id,translate("consignes_part_1",user_lang))
-            self.bot.send_message(user_id,f"{translate('serie',user_lang).upper()} 1")
+            self.bot.send_message(
+                user_id,
+                f"{translate('serie',user_lang).upper()} 1\n{const.get_serie('1','1',user_lang)}"
+            )
             self.bot.send_quick_kavio(
                 user_id,
                 types=0,
@@ -405,7 +408,9 @@ class Traitement(Options):
             self.req.insert_kavio(user_id,int(_cmd[2]),int(_cmd[3]),int(_cmd[4]),_cmd[1],int(_cmd[-1]))
             if int(_cmd[2])<6:
                 num_question = int(_cmd[2])
-                verif_trois_vrai = 1
+                verif_trois_vrai = int(self.req.verif_trois_vrai(
+                    int(_cmd[3]),int(_cmd[4])
+                ))
 
                 if verif_trois_vrai < 3:
                     self.bot.send_quick_kavio(
@@ -431,21 +436,36 @@ class Traitement(Options):
 
             else:
                 serie = int(_cmd[4])
-                if serie<5:
+                if serie<4:
                     #apafantarina daholo alo n ao antin'ny le serie alohan anwvan azy
                     self.bot.send_message(
                         user_id,
-                        f"{translate('serie',user_lang).upper()} {serie + 1}"
+                        f"{translate('serie',user_lang).upper()} {serie+1}\n{const.get_serie(_cmd[3],serie+1,user_lang)}"
                     )
                     self.bot.send_quick_kavio(
                         user_id,
+                        types=0,
                         kavio = const.get_quick_kavio(f"A_1_{_cmd[3]}_{serie+1}",user_lang)
                     )
                     return True
 
                 else:
-                    print("zavatra hafa")
-                    return True
+                    partie = int(_cmd[3])
+                    if partie<3:
+                        self.bot.send_message(user_id,translate(f"consignes_part_{partie+1}",user_lang))
+                        self.bot.send_message(
+                            user_id,
+                            f"{translate('serie',user_lang).upper()} 1\n{const.get_serie(f'{partie+1}','1',user_lang)}"
+                        )
+                        self.bot.send_quick_kavio(
+                            user_id,
+                            types=0,
+                            kavio = const.get_quick_kavio(f"A_1_{partie+1}_1",user_lang)
+                        )
+                        return True
+                    else:
+                        print("zavatra")
+                        return True
                 
 
     def traitement_pstPayload(self, user_id,user_lang, commande):

@@ -254,13 +254,24 @@ class Requete:
     @verif_db
     def insert_kavio(self,id_user,num_question,id_part,serie,categorie,point):
         req = """
-                INSERT into Test_KAVIO(id_user,num_question,id_part,serie,categorie,point)
-                VALUES(
-                    (SELECT id FROM Public WHERE facebook_id = %s),%s,%s,%s,%s,%s
-                ) 
-        """
+            INSERT into Test_KAVIO(id_user,num_question,id_part,serie,categorie,point)
+            VALUES(
+                (SELECT id FROM Public WHERE facebook_id = %s),%s,%s,%s,%s,%s
+            ) 
+    """
         self.cursor.execute(req,(id_user,num_question,id_part,serie,categorie,point))
         self.db.commit()
 
-    # @verif_db
-    # def verif_trois_vrai(self,)
+    @verif_db
+    def verif_trois_vrai(self,id_part,serie):
+        req = """
+            SELECT COUNT(point) 
+            FROM Test_KAVIO
+            WHERE id_part=%s
+            AND serie=%s
+            AND point=1
+        """
+        self.cursor.execute(req,(id_part,serie))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        return data

@@ -52,3 +52,33 @@ content-type: application/json
     "message": "Account created"
   }
 ```
+
+## Get list company
+```
+  GET http://127.0.0.1:5000/api/v1/list_accounts
+  Authorization: Bearer <Token>
+```
+=> RETOUR:
+```
+  {
+    "0": {
+        "nom": <stand_name>,
+        "email": <email>,
+        "tel": <phone_number>,
+        "domaine": <stand_domaine>,
+        "lien": <site_link>,
+        "type": <account_type>,
+        "adresse": "<addresse_of_company>"
+      },
+      "1": {
+        "nom": <stand_name>,
+        "email": <email>,
+        "tel": <phone_number>,
+        "domaine": <stand_domaine>,
+        "lien": <site_link>,
+        "type": <account_type>,
+        "adresse": "<addresse_of_company>"
+      }
+  }
+```
+

@@ -160,7 +160,7 @@ def add_content():
         compte_id, access = get_jwt_identity().split("+")
 
         titre = request.form.get("titre")
-        description = request.get("description")
+        description = request.form.get("description")
         type = request.form.get("type")
 
         if 'file' not in request.files:
@@ -235,6 +235,48 @@ def add_fiche_metier():
         print(err)
         abort(500, description="Something went wrong !")
 
+
+@verif_db
+@app.route("/api/v1/list_accounts", methods=['GET'])
+@jwt_required()
+def list_accounts():
+    """
+        DESC : Fonction permettant d'obtenir la liste
+        des comptes entreprises existants
+        Juste pour les comptes  avec access admin
+    """
+    try:
+        compte_id, access = get_jwt_identity().split("+")
+
+        if access == "ADMIN":
+            CURSOR.execute("""
+                SELECT
+                    nom, tel, email, type, lien, domaine, adresse
+                FROM
+                    Compte;
+            """)
+            accounts = CURSOR.fetchall()
+
+            if accounts:
+                return {
+                    accounts.index(account):
+                        dict(
+                            zip(CURSOR.column_names, account)
+                        ) for account in accounts
+                }, 200
+            else:
+                return {
+                    "error": False,
+                    "message": "No account finded!"
+                }, 200
+        return {
+            "error": True,
+            "message": "Pas d'access admin"
+        }, 403
+
+    except Exception as err:
+        print(err)
+        abort(500, description="Something went wrong !")
 
 
 if __name__ == "__main__":

@@ -116,11 +116,19 @@ def add_account():
                 CURSOR.execute("SELECT * FROM Compte WHERE email=%s", (email,))
                 if CURSOR.rowcount < 1:
                     password = str(generate_password_hash(password).decode())
-                    CURSOR.execute("""
+                    CURSOR.execute(
+                        """
                         INSERT INTO
-                            Compte(nom, tel, email, type, lien, domaine, password, adresse)
+                            Compte(
+                                nom, tel, email, type, lien,
+                                domaine, password, adresse
+                            )
                             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                        """, (nom, tel, email, type, lien, domaine, password, adresse)
+                        """,
+                        (
+                            nom, tel, email, type, lien,
+                            domaine, password, adresse
+                        )
                     )
                     DB.commit()
 
@@ -246,7 +254,7 @@ def list_accounts():
         Juste pour les comptes  avec access admin
     """
     try:
-        compte_id, access = get_jwt_identity().split("+")
+        access = get_jwt_identity().split("+")[1]
 
         if access == "ADMIN":
             CURSOR.execute("""
@@ -268,6 +276,52 @@ def list_accounts():
                 return {
                     "error": False,
                     "message": "No account finded!"
+                }, 200
+        return {
+            "error": True,
+            "message": "Pas d'access admin"
+        }, 403
+
+    except Exception as err:
+        print(err)
+        abort(500, description="Something went wrong !")
+
+
+@verif_db
+@app.route("/api/v1/list_contents", methods=['GET'])
+@jwt_required()
+def list_contents():
+    """
+        DESC : Fonction permettant d'obtenir la liste
+        des contenus d'un stands
+    """
+    try:
+        compte_id = get_jwt_identity().split("+")[0]
+
+        print(compte_id)
+
+        if compte_id:
+            CURSOR.execute("""
+                SELECT
+                    titre, description, type, fichier
+                FROM
+                    Contenu
+                WHERE
+                    compte_id=%s;
+            """, (compte_id,))
+            contents = CURSOR.fetchall()
+
+            if contents:
+                return {
+                    contents.index(content):
+                        dict(
+                            zip(CURSOR.column_names, content)
+                        ) for content in contents
+                }, 200
+            else:
+                return {
+                    "error": False,
+                    "message": "No content finded!"
                 }, 200
         return {
             "error": True,

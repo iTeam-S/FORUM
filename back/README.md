@@ -78,7 +78,38 @@ content-type: application/json
         "lien": <site_link>,
         "type": <account_type>,
         "adresse": "<addresse_of_company>"
-      }
+      },
+      ....
   }
 ```
 
+## Get list contents of a company
+
+```
+  GET http://127.0.0.1:5000/api/v1/list_contents
+  Authorization: Bearer <Token>
+```
+=> RETOUR:
+```
+{
+  "0": {
+    "description": <description>,
+    "fichier": <fichier> ,
+    "titre": <titre> ,
+    "type": <type>
+  },
+  "1": {
+    "description": <description>,
+    "fichier": <fichier> ,
+    "titre": <titre> ,
+    "type": <type> 
+  },
+    "2": {
+    "description": <description>,
+    "fichier": <fichier> ,
+    "titre": <titre> ,
+    "type": <type> 
+  },
+  ...
+}
+```

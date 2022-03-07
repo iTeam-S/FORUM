@@ -1,5 +1,6 @@
 import requests
 from  retry import retry
+from utils import translate
 
 
 class Messenger:
@@ -63,100 +64,140 @@ class Messenger:
         return res
 
     @retry(requests.exceptions.ConnectionError, tries=3, delay=3)
-    def send_quick_reply(self, dest_id, types, *args):
+    def send_quick_reply(self, dest_id, lang, types, *args):
         self.send_action(dest_id, 'typing_on')
         '''
             Envoie des quick reply messenger
         '''
         if types == "bienvenue":
-            text = "Vous voulez faire qoui maintenant?"
+            text = translate("bienvenu",lang)
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "📑VOIR FICHES METIERS",
+                    "title": "📑" + translate("fiches_metiers",lang).upper(),
                     "payload": "__FICHE_METIER"
                 },
                 {
                     "content_type": "text",
-                    "title": "📑VISITER DES STANDS",
+                    "title": "🏠" + translate("visiter_stands",lang).upper(),
                     "payload": "__VISITE_STAND"
+                },
+                {
+                    "content_type": "text",
+                    "title": "🔶" + translate("kavio",lang).upper(),
+                    "payload": "__TEST_KAVIO"
                 }
             ]
         
-        elif types == "recherche_ou_voir_fiche_metier":
-            text = "Vous voulez rechercher ou voir les listes du fichie metier?"
+        elif types == "choix_langues":
+            text = translate('choisir_votre_langue', lang)
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "🔍RECHERCHER",
+                    "title": 'FR 🇫🇷',
+                    "payload": "__SET_LANG fr",
+                },
+                {
+                    "content_type": "text",
+                    "title": 'EN 🇬🇧',
+                    "payload": "__SET_LANG en",
+                },
+                {
+                    "content_type": "text",
+                    "title": 'MG 🇲🇬',
+                    "payload": "__SET_LANG mg",
+                }
+            ]
+        
+        elif types == "tester_kavio":
+            text = translate("idee_commencer_kavio",lang)
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title":"😍" + translate("faire_test_kavio",lang).upper(),
+                    "payload": "__FAIRE_KAVIO",
+                },
+                {
+                    "content_type": "text",
+                    "title":"😉" + translate("abandomner_test_kavio",lang).upper(),
+                    "payload": "__ABANDON_KAVIO",
+                }
+            ]
+
+        elif types == "recherche_ou_voir_fiche_metier":
+            text = translate("recherche_ou_voir_fiche_metier",lang)
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title": "🔍" + translate("rechercher",lang).upper(),
                     "payload": "__RECHERCHE_FICHE_METIER"
                 },
                 {
                     "content_type": "text",
-                    "title": "📑VOIR LES LISTES",
+                    "title": "📑" + translate("voir_les_listes",lang).upper(),
                     "payload": "__VOIR_LISTE_FICHE_METIER"
                 }
             ]
 
         elif types == "domaine_de_fiche_metier":
-            text = "Voici donc les domaines ou les filières du fiche metier disponible\n\nVous pouvez choisir ce que vous voulez!!"
+            text = translate("domaine_de_fiche_metier",lang)
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "SANTÉ",
+                    "title": translate("sante",lang).upper(),
                     "image_url":"https://e7.pngegg.com/pngimages/291/741/png-clipart-blue-wikipedia-wikimedia-commons-blue-dots-miscellaneous-blue.png",
                     "payload": "__SANTE"
                 },
                 {
                     "content_type": "text",
-                    "title": "INFORMATIQUE",
+                    "title": translate("informatique",lang).upper(),
                     "image_url":"https://e7.pngegg.com/pngimages/291/741/png-clipart-blue-wikipedia-wikimedia-commons-blue-dots-miscellaneous-blue.png",
                     "payload": "__INFORMATIQUE"
                 },
                 {
                     "content_type": "text",
-                    "title": "COMMERCE ET\nADMINISTRATION",
+                    "title":translate("comm_et_admin",lang).upper(),
                     "image_url":"https://e7.pngegg.com/pngimages/291/741/png-clipart-blue-wikipedia-wikimedia-commons-blue-dots-miscellaneous-blue.png",
                     "payload": "__COMMERCE"
                 },
                 {
                     "content_type": "text",
-                    "title": "🟢AGRONOMIE",
+                    "title": "🟢" + translate("agronomie",lang).upper(),
                     "payload": "__AGRONOMIE"
                 },
                 {
                     "content_type": "text",
-                    "title": "🔴SCIENCES HUMAINES ET\nCOMMUNICATION",
+                    "title": "🔴" + translate("science_humaine",lang).upper(),
                     "payload": "__SCIENCE_HUMAINE"
                 },
                 {
                     "content_type": "text",
-                    "title": "🟠TOURISME",
+                    "title": "🟠" + translate("tourisme",lang).upper(),
                     "payload": "__TOURISME"
                 },
                 {
                     "content_type": "text",
-                    "title": "🟣INDUSTRIE ET BT",
+                    "title": "🟣" + translate("industrie",lang).upper(),
                     "payload": "__INDISTRUE"
                 },
                 {
                     "content_type": "text",
-                    "title": "🟡JUSTICE ET FORCE DE L'ORDRE",
+                    "title": "🟡" + translate("justice",lang).upper(),
                     "payload": "__JUSTICE"
                 }   
             ]
             
         elif types == "rechercher_ou_visiter_stands":
-            text = "Rechercher ou voir tout les listes du stand?"
+            text = translate("rechercher_ou_visiter_stands",lang)
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "🔍RECHERCHER",
+                    "title": "🔍" + translate("rechercher",lang).upper(),
                     "payload": "__RECHERCHE_STAND"
                 },
                 {
                     "content_type": "text",
-                    "title": "📜VOIR LES LISTES",
+                    "title": "📜" + translate("voir_les_listes",lang).upper(),
                     "payload": "__VOIR_LISTE_DU_STAND"
                 }
             ]
@@ -165,35 +206,38 @@ class Messenger:
             for argument in args:
                 id_stand = argument
                 
-            text = "Que-ce que vous voulez voir maintenant alors?"
+            text = translate("visiter_stand",lang)
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "OFFRE D'EMPLOI",
+                    "title": "" + translate("offre",lang).upper(),
                     "image_url":"https://png.pngtree.com/png-clipart/20210617/ourlarge/pngtree-job-vacancy-logo-with-finding-glass-png-image_3469306.jpg",
                     "payload": f"__EMPLOI {id_stand} page"
                 },
                 {
                     "content_type": "text",
-                    "title": "📜INFORMATIONS",
+                    "title": "📜" + translate("info",lang).upper(),
                     "payload": f"__EVENEMENTS {id_stand} page"
                 },
                 {
                     "content_type": "text",
-                    "title": "🖼️GALERIE",
+                    "title": "🖼️" + translate("galerie",lang).upper(),
                     "payload": f"__GALERIE {id_stand}" 
                 },
                 {
                     "content_type": "text",
-                    "title": "🏢PRESENTATION",
+                    "title": "🏢" + translate("presentation",lang).upper(),
                     "payload": f"__PRESENTATION {id_stand}" 
                 },
                 {
                     "content_type": "text",
-                    "title": "📠PLUS D'INFO",
+                    "title": "📠" + translate("plus_info",lang).upper(),
                     "payload": f"__INFO {id_stand}" 
                 }   
             ]
+            
+        else:
+            return
             
         data_json = {
             'messaging_type': "RESPONSE",
@@ -279,11 +323,78 @@ class Messenger:
         header = {'content-type': 'application/json; charset=utf-8'}
         params = {"access_token": self.token}
         self.send_action(destId, 'typing_off')
-        self.send_action(destId, 'typing_off')
 
         return requests.post(
             self.url + '/messages',
             json=dataJSON,
+            headers=header,
+            params=params
+        )
+
+    @retry(requests.exceptions.ConnectionError, tries=3, delay=3)
+    def send_media(self,destId,url_facebook,types):
+        """
+            Methode qui envoye des fichiers
+            media comme image et video 
+            par lien facebook
+        """
+        self.send_action(destId, 'typing_on')
+        dataJSON = {
+            "recipient":{
+                "id": destId
+            },
+            "message":{
+                "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "media",
+                    "elements": [
+                        {
+                        "media_type": types,
+                        "url": url_facebook
+                        }
+                    ]
+                }
+            }    
+            }
+        }
+
+        header = {'content-type': 'application/json; charset=utf-8'}
+        params = {"access_token": self.token}
+        self.send_action(destId, 'typing_off')
+
+        return requests.post(
+            'https://graph.facebook.com/v2.6/me/messages',
+            json=dataJSON,
+            headers=header,
+            params=params
+        )
+
+    
+    @retry(requests.exceptions.ConnectionError, tries=3, delay=3)
+    def send_quick_kavio(self, dest_id, types, **kwargs):
+
+        self.send_action(dest_id, 'typing_on')
+        data_json = {
+            'messaging_type': "RESPONSE",
+            'recipient': {
+                "id": dest_id
+            },
+
+            'message': {
+                'text': kwargs.get("kavio").get("text"),
+                'quick_replies': f"[{kwargs.get('kavio').get('quick_rep')[1]}]" if types==1 \
+                else kwargs.get("kavio").get("quick_rep")
+            }
+        }
+
+        header = {'content-type': 'application/json; charset=utf-8'}
+        params = {"access_token": self.token}
+        
+        self.send_action(dest_id, 'typing_off')
+        return requests.post(
+            self.url + '/messages',
+            json=data_json,
             headers=header,
             params=params
         )

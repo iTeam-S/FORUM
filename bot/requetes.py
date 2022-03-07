@@ -45,6 +45,20 @@ class Requete:
         '''
         self.cursor.execute(req, (user_id,))
         self.db.commit()
+    
+    @verif_db
+    def get_user_lang(self,user_id):
+        req = "SELECT lang FROM Public WHERE facebook_id = %s"
+        self.cursor.execute(req, (user_id,))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        return data
+    
+    @verif_db
+    def update_lang(self,user_id,lang):
+        req = "UPDATE Public SET lang = %s WHERE facebook_id = %s"
+        self.cursor.execute(req, (lang, user_id))
+        self.db.commit()
         
     @verif_db
     def set_action(self, user_id, action):
@@ -234,5 +248,30 @@ class Requete:
         """
         self.cursor.execute(req,(id_stand,))
         data = self.cursor.fetchall()
+        self.db.commit()
+        return data
+
+    @verif_db
+    def insert_kavio(self,id_user,num_question,id_part,serie,categorie,point):
+        req = """
+            INSERT into Test_KAVIO(id_user,num_question,id_part,serie,categorie,point)
+            VALUES(
+                (SELECT id FROM Public WHERE facebook_id = %s),%s,%s,%s,%s,%s
+            ) 
+    """
+        self.cursor.execute(req,(id_user,num_question,id_part,serie,categorie,point))
+        self.db.commit()
+
+    @verif_db
+    def verif_trois_vrai(self,id_part,serie):
+        req = """
+            SELECT COUNT(point) 
+            FROM Test_KAVIO
+            WHERE id_part=%s
+            AND serie=%s
+            AND point=1
+        """
+        self.cursor.execute(req,(id_part,serie))
+        data = self.cursor.fetchone()[0]
         self.db.commit()
         return data

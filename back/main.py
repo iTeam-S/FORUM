@@ -1,3 +1,4 @@
+from pathlib import Path
 import mysql.connector
 from werkzeug.utils import secure_filename
 # ---------------------------------------
@@ -11,20 +12,31 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import create_access_token
 # ---------------------------------------
 from datetime import timedelta
-from time import time
+import time
 import os
 # ---------------------------------------
 from conf import database
 # ---------------------------------------
 
-
 app = Flask(__name__)
 CORS(app)
 
-app.config["JWT_SECRET_KEY"] = "LUCIFER-MORNINGSTAR"
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=12)
-jwt = JWTManager(app)
+# ------------UPLOAD FOLDER CONF---------------
+path = os.getcwd()
+if not os.path.isdir('data'):
+    os.makedirs('data/')
 
+UPLOAD_FOLDER = os.path.join(path, 'data/')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# ---------------------------------------------
+
+# ----------------TOKEN CONFIG-----------------
+app.config["JWT_SECRET_KEY"] = "LUCIFER-MORNINGSTAR"
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+jwt = JWTManager(app)
+# ---------------------------------------------
+
+# --------------DATABASE CONNECT---------------
 DB = mysql.connector.connect(**database())
 CURSOR = DB.cursor(buffered=True)
 
@@ -39,6 +51,7 @@ def verif_db(fonction):
             DB.reconnect()
         return fonction(*arg, **kwarg)
     return trt_verif
+# ---------------------------------------------
 
 
 # *************************** ERROR Handler *****************************
@@ -165,23 +178,33 @@ def add_content():
         DESC : Fonction permettant d'ajouter du contenu
     """
     try:
-        compte_id, access = get_jwt_identity().split("+")
+        compte_id = get_jwt_identity().split("+")[0]
 
+        filename = None
         titre = request.form.get("titre")
         description = request.form.get("description")
         type = request.form.get("type")
 
-        if 'file' not in request.files:
+        if request.files:
             fichier = request.files['file']
-            filename = str(time.time()) + '_' + secure_filename(fichier.name)
-            fichier.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            compte_folder = os.path.join(
+                app.config['UPLOAD_FOLDER'], str(compte_id)
+            )
+            Path(compte_folder).mkdir(parents=True, exist_ok=True)
+
+            filename = str(time.time()) + '_' + secure_filename(
+                fichier.filename)
+
+            fichier.save(
+                os.path.join(compte_folder, filename)
+            )
 
         if titre and type and compte_id:
             CURSOR.execute("""
                 INSERT INTO
                     Contenu(titre, description, type, fichier, compte_id)
                     VALUES (%s, %s, %s, %s, %s)
-                """, (titre, description, type, filename, compte_id)
+                """, (titre, description, type, filename or None, compte_id)
             )
             DB.commit()
 
@@ -211,13 +234,21 @@ def add_fiche_metier():
     try:
         compte_id, access = get_jwt_identity().split("+")
 
+        filename = None
         titre = request.form.get("titre")
         domaine_id = request.form.get("domaine_id")
 
         if 'file' not in request.files:
             fichier = request.files['file']
-            filename = str(time.time()) + '_' + secure_filename(fichier.name)
-            fichier.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            compte_folder = os.path.join(
+                app.config['UPLOAD_FOLDER'], str(compte_id)
+            )
+            Path(compte_folder).mkdir(parents=True, exist_ok=True)
+
+            filename = str(time.time()) + '_' + secure_filename(
+                fichier.filename)
+            fichier.save(compte_folder, filename)
 
         if access == "admin":
             if titre and domaine_id and id:
@@ -303,7 +334,7 @@ def list_contents():
         if compte_id:
             CURSOR.execute("""
                 SELECT
-                    titre, description, type, fichier
+                    id, titre, description, type, fichier
                 FROM
                     Contenu
                 WHERE

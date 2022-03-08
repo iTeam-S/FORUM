@@ -55,8 +55,7 @@ export default function CardAddContenu() {
   const  handleAddContenu = async(data, e) => {
     e.preventDefault();
         try {
-          const fichier = convert2base64(data.file[0]);
-          console.warn(fichier);
+          const fichier = data.file[0];
           const newContenu = await CompteService.AddContenu(data.titre,data.description,data.type, fichier);
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){

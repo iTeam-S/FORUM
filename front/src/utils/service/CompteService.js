@@ -31,16 +31,17 @@ class CompteService{
     }
 
     AddContenu(titre, description, type, file){
-        return RouteAxios.post('/add_content', {
-            titre,
-            description,
-            type,
-            file
-        },{
+        var content = new FormData();
+
+        content.append("titre", titre);
+        content.append("description", description);
+        content.append("type", type);
+        content.append("file", file);
+
+        return RouteAxios.post('/add_content', content,{
             headers: {
                 'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
-                'Content-Type': "multipart/form-data",
-
+                'Content-Type': 'multipart/form-data; boundary=${form._boundary}'
             }
         })
     }

@@ -45,11 +45,15 @@ class CompteService{
         })
     }
 
-    /*getAllContenu(){
-        return RouteAxios.get("/all").then(response =>{
+    getAllContenu(){
+        return RouteAxios.get("/list_contents",  {
+                headers: {
+                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+                }
+        }).then(response =>{
             return response;
         })
-    }*/
+    }
 
 }
 

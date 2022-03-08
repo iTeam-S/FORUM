@@ -6,19 +6,20 @@ export const CompteContext = createContext();
 
 export const CompteContextProvider = (props) =>{
     const [compte, setCompte] = useState([]);
-    const addCompte = (newCompte) => {
-        setCompte([...compte, newCompte]);
-    }
-
-    {/*useEffect(() => {
+    useEffect(() => {
         async function fetchCompte(){
-            const response = await CompteService.getAllCompte();
-            setCompte(response.data);
+                await CompteService.getAllCompte().then((response) => {
+                    setCompte(response.data);
+                });
+               
         }
 
         fetchCompte();
-    }, [])*/}
-
+    }, [])
+    const addCompte = (newCompte) => {
+        setCompte([...compte, newCompte]);
+    }
+    
     return(
         <CompteContext.Provider value={{compte, setCompte, addCompte}}>
             {props.children}

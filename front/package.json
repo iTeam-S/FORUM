@@ -1,0 +1,62 @@
+{
+  "name": "forum-sesame",
+  "version": "1.1.0",
+  "description": "forum-sesame est une plateforme web pour faire un forum virtuel",
+  "repository": "https://github.com/iTeam-S/FORUM-2022.git",
+  "license": "",
+  "dependencies": {
+    "@craco/craco": "^6.3.0",
+    "@fortawesome/fontawesome-free": "5.15.3",
+    "@hookform/resolvers": "^2.8.5",
+    "@popperjs/core": "^2.9.1",
+    "@reduxjs/toolkit": "^1.7.1",
+    "@tailwindcss/forms": "0.2.1",
+    "axios": "^0.21.1",
+    "chart.js": "2.9.4",
+    "gulp": "4.0.2",
+    "gulp-append-prepend": "1.0.8",
+    "moment": "^2.29.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-hook-form": "^7.22.5",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
+    "react-router-hash-link": "^2.4.3",
+    "react-scripts": "4.0.3",
+    "react-validation": "^3.0.7",
+    "reactjs-alert": "^1.2.7",
+    "validator": "^13.7.0",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm start",
+    "build:tailwind": "tailwind build src/assets/styles/index.css -o src/assets/styles/tailwind.css"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "optionalDependencies": {
+    "typescript": "4.2.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.36",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14"
+  }
+}

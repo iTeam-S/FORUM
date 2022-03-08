@@ -259,7 +259,7 @@ def list_accounts():
         if access == "ADMIN":
             CURSOR.execute("""
                 SELECT
-                    nom, tel, email, type, lien, domaine, adresse
+                   id, nom, tel, email, type, lien, logo , domaine, adresse
                 FROM
                     Compte;
             """)

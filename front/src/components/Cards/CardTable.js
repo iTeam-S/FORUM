@@ -1,6 +1,17 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
+import { CompteContext } from "utils/contexte/CompteContext";
 export default function CardTable({ color}) {
+  const {compte} = useContext(CompteContext);
+
+  //convertis le tableau encore en obj en array
+  let convertCompte2Tab = Object.keys(compte).map((cle) => {
+    return [compte[cle]]
+  })
+  //mapper le tableau convertit et on a nos comptes
+  const compteTab = convertCompte2Tab.map((cpt) => {
+    return cpt[0];
+  });
   return (
     <>
       <div
@@ -59,31 +70,35 @@ export default function CardTable({ color}) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                  <img
-                    src={require("assets/img/bootstrap.jpg").default}
-                    className="h-12 w-12 bg-white rounded-full border"
-                    alt="..."
-                  ></img>{" "}
-                  <span
-                    className={
-                      "ml-3 font-bold " +
-                      +(color === "light" ? "text-blueGray-600" : "text-white")
-                    }
-                  >
-                    BNI Madagascar
-                  </span>
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex justify-center">
-                    <span className="mr-2">100</span>
-                  </div>
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Delete
-                </td>
-              </tr>
+                 {
+                   compteTab.map((compte) => (
+                     <tr key={compte.id}>
+                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                        <img
+                          src={compte.logo ? compte.logo : require("assets/img/logodefaut.png").default}
+                          className="h-12 w-12 bg-white rounded-full border"
+                          alt="..."
+                        ></img>{" "}
+                        <span
+                          className={
+                            "ml-3 font-bold " +
+                            +(color === "light" ? "text-blueGray-600" : "text-white")
+                          }
+                        >
+                          {compte.nom}
+                        </span>
+                      </th>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex justify-center">
+                          <span className="mr-2">100</span>
+                        </div>
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                        Delete
+                      </td>
+                    </tr>
+                   ))
+                 }
             </tbody>
           </table>
         </div>

@@ -14,16 +14,21 @@ class CompteService{
             adresse
         }, {
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
             }
         }
         )
     }
-    /*getAllCompte(){
-        return RouteAxios.get("/all").then(response =>{
+    getAllCompte(){
+        return RouteAxios.get("/list_accounts",  {
+                headers: {
+                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+                }
+        }).then(response =>{
             return response;
         })
-    }*/
+    }
 
     AddContenu(titre, description, type, file){
         return RouteAxios.post('/add_content', {

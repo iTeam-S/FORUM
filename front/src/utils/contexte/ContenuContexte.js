@@ -10,7 +10,6 @@ export const ContenuContexteProvider = (props) =>{
         async function fetchContenu(){
             await CompteService.getAllContenu().then((response) => {
                 setContenu(response.data);
-                console.log(contenu)
             });
         }
 

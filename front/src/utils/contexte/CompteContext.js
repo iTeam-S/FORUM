@@ -12,10 +12,10 @@ export const CompteContextProvider = (props) =>{
         if(ifLog != null){
             async function fetchCompte(){
                 await CompteService.getAllCompte().then((response) => {
-                    setCompte(response.data);
-                });
-        }
-        fetchCompte();
+                    setCompte(response.data)
+                })
+            }
+            fetchCompte();
     }
     }, [])
     const addCompte = (newCompte) => {

@@ -12,7 +12,6 @@ export default function CardTable({ color}) {
   const compteTab = convertCompte2Tab.map((cpt) => {
     return cpt[0];
   });
-  console.log(compte)
   return (
     <>
       <div

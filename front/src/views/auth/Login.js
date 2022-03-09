@@ -32,6 +32,7 @@ export default function Login() {
                 (response) => {
                   if(response.type === 'ENTREPRISE'){
                      history.push('/adminEntreprise/ProfilEntreprise');
+                     window.location.reload();
                   }
                   else if(response.type === 'ADMIN'){
                     history.push('/admin/TablesEntreprises');

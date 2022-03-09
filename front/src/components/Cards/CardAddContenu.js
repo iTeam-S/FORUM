@@ -5,9 +5,9 @@ import * as Yup from 'yup';
 import {useHistory} from "react-router";
 
 // components
-import { ContenuContexte } from "utils/contexte/ContenuContexte";
 import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
+import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function CardAddContenu() {
   const compte = LoginService.getCurrentCompte();
@@ -15,7 +15,7 @@ export default function CardAddContenu() {
   const [errorMesssage,setErrorMessage]=useState("");
  
   let history = useHistory();
-  const {addContenu} = useContext(ContenuContexte);
+  const { addContenu } = useContext(CompteContext)
 
   const validationSchema = Yup.object().shape({
         titre: Yup.string()

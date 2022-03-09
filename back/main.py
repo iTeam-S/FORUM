@@ -250,7 +250,7 @@ def add_fiche_metier():
                 fichier.filename)
             fichier.save(compte_folder, filename)
 
-        if access == "admin":
+        if access == "ADMIN":
             if titre and domaine_id and id:
                 CURSOR.execute("""
                     INSERT INTO
@@ -341,7 +341,6 @@ def list_contents():
                     compte_id=%s;
             """, (compte_id,))
             contents = CURSOR.fetchall()
-
             if contents:
                 return {
                     contents.index(content):

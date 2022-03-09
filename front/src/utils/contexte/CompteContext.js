@@ -6,13 +6,21 @@ import { LoginService } from 'utils/service/LoginService';
 export const CompteContext = createContext();
 
 export const CompteContextProvider = (props) =>{
+    let [contenu, setContenu] = useState([]);
     const [compte, setCompte] = useState([]);
-    const ifLog = LoginService.getCurrentCompte();
+
+    function fetchContenu(){
+            CompteService.getAllContenu().then((response) => {
+            setContenu(response);
+        });
+    }
+
     useEffect(() => {
-        if(ifLog != null){
+        if(LoginService.getCurrentCompte() != null){
             async function fetchCompte(){
                 await CompteService.getAllCompte().then((response) => {
-                    setCompte(response.data)
+                setCompte(response.data);
+                fetchContenu();
                 })
             }
             fetchCompte();
@@ -21,9 +29,12 @@ export const CompteContextProvider = (props) =>{
     const addCompte = (newCompte) => {
         setCompte([...compte, newCompte]);
     }
-    
+    const addContenu = (newContenu) => {
+        setContenu([...contenu, newContenu]);
+    }
+
     return(
-        <CompteContext.Provider value={{addCompte, setCompte, compte}}>
+        <CompteContext.Provider value={{addCompte, setCompte, compte, contenu , addContenu, setContenu}}>
             {props.children}
         </CompteContext.Provider>
     )

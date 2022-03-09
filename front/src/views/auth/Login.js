@@ -36,6 +36,7 @@ export default function Login() {
                   }
                   else if(response.type === 'ADMIN'){
                     history.push('/admin/TablesEntreprises');
+                     window.location.reload();
                   } else{
                     setErreur(true);
                     setErrorMessage("Email ou mot de passe incorrecte!");

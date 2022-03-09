@@ -7,7 +7,6 @@ import "assets/styles/tailwind.css";
 
 //contexte
 import { CompteContextProvider } from "utils/contexte/CompteContext";
-import { ContenuContexteProvider } from "utils/contexte/ContenuContexte";
 
 // private
 import AdminRoute from "views/private/AdminRoute";
@@ -35,7 +34,6 @@ import AddContenu from "views/admin-entreprise/AddContenu.js";
 
 
 ReactDOM.render(
-    <ContenuContexteProvider>
       <CompteContextProvider>
         <BrowserRouter>
           <Switch>
@@ -81,7 +79,6 @@ ReactDOM.render(
             <Redirect from="*" to="/error" />
           </Switch>
         </BrowserRouter>
-      </CompteContextProvider>
-      </ContenuContexteProvider>,
+      </CompteContextProvider>,
   document.getElementById("root")
 );

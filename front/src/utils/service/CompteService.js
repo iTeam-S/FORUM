@@ -52,7 +52,8 @@ class CompteService{
                     'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
                 }
         }).then(response =>{
-            return response;
+            console.log(response.data);
+            return response.data;
         })
     }
 

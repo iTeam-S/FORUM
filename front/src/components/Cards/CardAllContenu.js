@@ -1,9 +1,20 @@
 import React, {useContext} from "react";
-import { ContenuContexte } from "utils/contexte/ContenuContexte";
+import { CompteContext } from "utils/contexte/CompteContext";
 
 
 
 export default function CardAllContenu() {
+  const {contenu} = useContext(CompteContext);
+
+   //convertis le tableau encore en obj en array
+  let convertContenu2Tab = Object.keys(contenu).map((cle) => {
+    return [contenu[cle]]
+  })
+  //mapper le tableau convertit et on a nos comptes
+  const contenuTab = convertContenu2Tab.map((content) => {
+    return content[0];
+  });
+  console.log(contenuTab)
   return (
     <>
        <div className="w-full sm:w-full md:w-6/12 lg:w-4/12 px-4 text-center mt-4">

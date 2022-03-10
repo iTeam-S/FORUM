@@ -31,6 +31,7 @@ import CardOtherProfil from "components/Cards/CardOtherProfil";
 import Statistiques from "views/admin-entreprise/Statistiques.js"
 import AllContenu from "views/admin-entreprise/AllContenu.js";
 import AddContenu from "views/admin-entreprise/AddContenu.js";
+import AllFicheMetier from "views/admin/AllFicheMetier";
 
 
 ReactDOM.render(
@@ -61,6 +62,9 @@ ReactDOM.render(
             {/*admin route */}
               <AdminRoute exact path="/admin/TablesEntreprises">
                 <TablesEntreprises /> 
+              </AdminRoute>
+              <AdminRoute exact path="/admin/AllFicheMetier">
+                <AllFicheMetier />
               </AdminRoute>
               <AdminRoute exact path="/adminEntreprise/ProfilEntreprise">
                 <ProfilEntreprise /> 

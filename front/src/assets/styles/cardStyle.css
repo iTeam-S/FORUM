@@ -1,3 +1,4 @@
+/*reglage du texte overflow dans le card allcontenu*/
 .description{
     display: -webkit-box;
     min-height: 90px;
@@ -5,4 +6,10 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/*taille de l'image dans le card profil*/
+.image-size{
+    width: 130px;
+    height: 130px;
 }

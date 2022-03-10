@@ -1,8 +1,41 @@
-import React from "react";
+import React, {useState} from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from 'yup';
+import {useHistory} from "react-router";
 
 // components
+import CompteService from "utils/service/CompteService";
+import { LoginService } from "utils/service/LoginService";
 
 export default function CardAddFicheMetier() {
+  const compte = LoginService.getCurrentCompte();
+  const [erreur, setErreur] = useState(false);
+  const [errorMesssage,setErrorMessage]=useState("");
+
+  let history = useHistory();
+
+  const validationSchema = Yup.object().shape({
+        titre: Yup.string()
+          .required('Ce champ est obligatoire'),
+        domaine_id: Yup.string()
+          .required("Ce champ est obligatoire"),
+        file: Yup.mixed()
+          .test('required', "N'oubliez pas votre fichier, c'est obligatoire", (value) => {
+            return value && value.length;
+          })
+          .test('fileSize', "Le fichier est trop gros", (value) => {
+            return value && value[0] && value[0].size <= 500000000;
+          })
+      });
+      const {
+        register,
+        handleSubmit,
+        formState: { errors }
+      } = useForm({
+        resolver: yupResolver(validationSchema)
+      });
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">

@@ -49,9 +49,8 @@ export default function CardAddEntreprise() {
 
   const  handleAddAccount = async(data) => {
         try {
-            const newCompte = await CompteService.AddAccount(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse)
             if(compte !== null && compte.type === 'ADMIN'){
-                addCompte(newCompte.data);
+                await CompteService.AddAccount(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse)
                 history.push('/admin/TablesEntreprises');
                 window.location.reload();
             }else{

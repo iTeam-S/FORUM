@@ -124,7 +124,7 @@ def add_account():
         type = data.get("type")
         lien = data.get("lien")
 
-        if access == "admin":
+        if access == "ADMIN":
             if nom and email and type and lien and password:
                 CURSOR.execute("SELECT * FROM Compte WHERE email=%s", (email,))
                 if CURSOR.rowcount < 1:

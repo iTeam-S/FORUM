@@ -14,8 +14,8 @@ class CompteService{
             adresse
         }, {
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
+                'Content-Type': 'application/json'
             }
         }
         )

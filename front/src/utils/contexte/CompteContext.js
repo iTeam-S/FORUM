@@ -9,8 +9,8 @@ export const CompteContextProvider = (props) =>{
     let [contenu, setContenu] = useState([]);
     const [compte, setCompte] = useState([]);
 
-    function fetchContenu(){
-            CompteService.getAllContenu().then((response) => {
+    async function fetchContenu(){
+           await CompteService.getAllContenu().then((response) => {
             setContenu(response);
         });
     }
@@ -26,15 +26,10 @@ export const CompteContextProvider = (props) =>{
             fetchCompte();
     }
     }, [])
-    const addCompte = (newCompte) => {
-        setCompte([...compte, newCompte]);
-    }
-    const addContenu = (newContenu) => {
-        setContenu([...contenu, newContenu]);
-    }
+   
 
     return(
-        <CompteContext.Provider value={{addCompte, setCompte, compte, contenu , addContenu, setContenu}}>
+        <CompteContext.Provider value={{ setCompte, setContenu,  compte, contenu }}>
             {props.children}
         </CompteContext.Provider>
     )

@@ -254,9 +254,9 @@ def add_fiche_metier():
             if titre and domaine_id and id:
                 CURSOR.execute("""
                     INSERT INTO
-                        Contenu(titre, fichier, domaine_id)
+                        Fiche_metier(titre, fichier, domaine_id, compte_id)
                         VALUES (%s, %s, %s)
-                    """, (titre, filename, domaine_id)
+                    """, (titre, filename, domaine_id, compte_id)
                 )
                 DB.commit()
 

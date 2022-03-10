@@ -2,12 +2,15 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { CompteContext } from "utils/contexte/CompteContext";
 
+//styles css
 import '../../assets/styles/cardStyle.css';
+//composants
+import TableDropdown from "components/Dropdowns/TableDropdown.js";
 
 
 export default function CardAllFiche({color}) {
-  /*const {contenus} = useContext(CompteContext); //contenus still obj*/
-
+  const {fiche} = useContext(CompteContext); //fiche still obj
+  console.log(fiche)
   return (
     <>
         <div
@@ -25,7 +28,7 @@ export default function CardAllFiche({color}) {
                   (color === "light" ? "text-blueGray-700" : "text-white")
                 }
               >
-                Listes des entreprises
+                Listes des fiches métiers
               </h3>
             </div>
           </div>
@@ -65,18 +68,45 @@ export default function CardAllFiche({color}) {
                 >
                   Statistique de visite
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                    (color === "light"
-                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                  }
-                >Action</th>
               </tr>
             </thead>
             <tbody>
-                 
+                 { Object.keys(fiche).map((cle) => (
+                    <tr key={fiche[cle].id}>
+                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                        <img
+                          src={require("assets/img/fiche.jpeg").default}
+                          className="h-12 w-12 bg-white rounded-full border"
+                          alt="..."
+                        ></img>{" "}
+                        <span
+                          className={
+                            "ml-3 font-bold " +
+                            +(color === "light" ? "text-blueGray-600" : "text-white")
+                          }
+                        >
+                          {fiche[cle].titre}
+                        </span>
+                      </th>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex justify-center">
+                          <span className="mr-2">
+                            {fiche[cle].domaine}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex justify-center">
+                          <span className="mr-2">100</span>
+                        </div>
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                        <TableDropdown />
+                      </td>
+                    </tr>
+                 ))
+
+                 }
             </tbody>
           </table>
         </div>

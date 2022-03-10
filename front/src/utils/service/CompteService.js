@@ -20,16 +20,6 @@ class CompteService{
         }
         )
     }
-    getAllCompte(){
-        return RouteAxios.get("/list_accounts",  {
-                headers: {
-                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
-                }
-        }).then(response =>{
-            return response;
-        })
-    }
-
     AddContenu(titre, description, type, file){
         var content = new FormData();
 
@@ -44,6 +34,30 @@ class CompteService{
             }
         })
     }
+    AddFicheMetier(titre, domaine_id, file){
+        var content = new FormData();
+
+        content.append("titre", titre);
+        content.append("domaine_id", domaine_id);
+        content.append("file", file);
+
+        return RouteAxios.post('/add_fiche_metier', content,{
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+
+    getAllCompte(){
+        return RouteAxios.get("/list_accounts",  {
+                headers: {
+                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+                }
+        }).then(response =>{
+            return response;
+        })
+    }
 
     getAllContenu(){
         return RouteAxios.get("/list_contents",  {
@@ -51,6 +65,16 @@ class CompteService{
                     'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
                 }
         }).then(response =>{
+            return response;
+        })
+    }
+
+    getAllFiche(){
+        return RouteAxios.get("list_fiche_metier", {
+            headers: {
+                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            }
+        }).then(response => {
             return response;
         })
     }

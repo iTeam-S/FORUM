@@ -1,6 +1,9 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { CompteContext } from "utils/contexte/CompteContext";
+
+//components
+import TableDropdown from "components/Dropdowns/TableDropdown.js";
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
 
@@ -66,7 +69,7 @@ export default function CardTable({ color}) {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
-                >Action</th>
+                ></th>
               </tr>
             </thead>
             <tbody>
@@ -94,7 +97,7 @@ export default function CardTable({ color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        Delete
+                        <TableDropdown />
                       </td>
                     </tr>
                    ))

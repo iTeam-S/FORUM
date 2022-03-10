@@ -365,7 +365,7 @@ def list_contents():
 
 # ---------------------------------------------------
 @verif_db
-@app.route("/api/v1/list_contents", methods=['GET'])
+@app.route("/api/v1/list_fiche_metier", methods=['GET'])
 @jwt_required()
 def list_fiche_metier():
     """
@@ -451,50 +451,6 @@ def delete_contents():
 
 
 @verif_db
-@app.route("/api/v1/delete_content/", methods=['DELETE'])
-@jwt_required()
-def delete_content():
-    """
-        DESC : Fonction permettant de supprimer un contenu
-    """
-    try:
-        compte_id, access = get_jwt_identity().split("+")
-        content_id = request.get_json().get("content_id")
-
-        if access == "ADMIN":
-            try:
-                CURSOR.execute("""
-                    DELETE FROM
-                        Contenu
-                    WHERE
-                        id=%s;
-                """, (content_id))
-
-                DB.commit()
-
-                return {
-                    "error": False,
-                    "message": "Content Deleted!"
-                }, 200
-            except Exception as err:
-                print(err)
-                DB.close()
-                return {
-                    "error": True,
-                    "message": "le contenu est encore utilisé !"
-                }, 400
-
-        return {
-            "error": True,
-            "message": "Pas d'access admin"
-        }, 403
-
-    except Exception as err:
-        print(err)
-        abort(500, description="Something went wrong !")
-
-
-@verif_db
 @app.route("/api/v1/delete_account/", methods=['DELETE'])
 @jwt_required()
 def delete_account():
@@ -519,14 +475,59 @@ def delete_account():
 
                 return {
                     "error": False,
-                    "message": "Content Deleted!"
+                    "message": "Account Deleted!"
                 }, 200
             except Exception as err:
                 print(err)
                 DB.close()
                 return {
                     "error": True,
-                    "message": "le contenu est encore utilisé !"
+                    "message": "le compte est encore utilisé !"
+                }, 400
+
+        return {
+            "error": True,
+            "message": "Pas d'access admin"
+        }, 403
+
+    except Exception as err:
+        print(err)
+        abort(500, description="Something went wrong !")
+
+
+@verif_db
+@app.route("/api/v1/delete_fiche_metier/", methods=['DELETE'])
+@jwt_required()
+def delete_fiche_metier():
+    """
+        DESC : Fonction permettant de supprimer un
+        Fiche Metier
+    """
+    try:
+        access = get_jwt_identity().split("+")[1]
+        fiche_metier_id = request.get_json().get("fiche_metier_id")
+
+        if access == "ADMIN":
+            try:
+                CURSOR.execute("""
+                    DELETE FROM
+                        Fiche_metier
+                    WHERE
+                        id=%s;
+                """, (fiche_metier_id))
+
+                DB.commit()
+
+                return {
+                    "error": False,
+                    "message": "Fiche Metier Deleted!"
+                }, 200
+            except Exception as err:
+                print(err)
+                DB.close()
+                return {
+                    "error": True,
+                    "message": "le fiche metier est encore utilisé !"
                 }, 400
 
         return {

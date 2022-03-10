@@ -53,6 +53,27 @@ content-type: application/json
   }
 ```
 
+## Insert ficher metier (Need ADMIN access)
+```
+  POST http://<host>:5000/api/v1/add_fiche_metier
+  content-type: application/json
+  Authorization: Bearer <Token>
+
+  {
+    "titre": <titre>,
+    "domaine_id": <domaine_id>,
+    "file": <file(img/pdf)>
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": false,
+    "message": "Fiche Metier inserted"
+  }
+```
+
+
 ## Get list company
 ```
   GET http://127.0.0.1:5000/api/v1/list_accounts
@@ -112,4 +133,85 @@ content-type: application/json
   },
   ...
 }
+```
+
+## Get list of Fiche Metier (Need Admin Access)
+
+```
+  GET http://127.0.0.1:5000/api/v1/list_fiche_metier
+  Authorization: Bearer <Token>
+```
+=> RETOUR:
+```
+{
+  "0": {
+    "titre": <description>,
+    "domaine_id": <fichier> ,
+    "file": <titre>
+  },
+  "1": {
+    "titre": <titre>,
+    "domaine_id": <domaine_id> ,
+    "file": <file>
+  },
+  ...
+}
+```
+
+## Delete stand account (Need Admin Access)
+
+```
+  DELETE http://127.0.0.1:5000/api/v1/delete_account
+  Authorization: Bearer <Token>
+  content-type: application/json
+    
+  {
+    "compte_id": <compte_id>
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": False,
+    "message": "Account Deleted!"
+  }
+}
+```
+
+## Delete content of an account
+
+```
+  DELETE http://127.0.0.1:5000/api/v1/delete_content
+  Authorization: Bearer <Token>
+  content-type: application/json
+    
+  {
+    content_id": <content_id>
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": False,
+    "message": "Content Deleted!"
+  }
+```
+
+## Delete Fiche metier ( Need admin access )
+
+```
+  DELETE http://127.0.0.1:5000/api/v1/delete_fiche_metier
+  Authorization: Bearer <Token>
+  content-type: application/json
+    
+  {
+    "fiche_metier_id": <fiche_metier_id>
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": False,
+    "message": "Fiche Metier Deleted!"
+  }
 ```

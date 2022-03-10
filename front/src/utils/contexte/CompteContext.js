@@ -6,12 +6,12 @@ import { LoginService } from 'utils/service/LoginService';
 export const CompteContext = createContext();
 
 export const CompteContextProvider = (props) =>{
-    let [contenu, setContenu] = useState([]);
+    let [contenus, setContenu] = useState([]);
     const [compte, setCompte] = useState([]);
 
     async function fetchContenu(){
            await CompteService.getAllContenu().then((response) => {
-            setContenu(response);
+            setContenu(response.data);
         });
     }
 
@@ -29,7 +29,7 @@ export const CompteContextProvider = (props) =>{
    
 
     return(
-        <CompteContext.Provider value={{ setCompte, setContenu,  compte, contenu }}>
+        <CompteContext.Provider value={{ setCompte, setContenu,  compte, contenus }}>
             {props.children}
         </CompteContext.Provider>
     )

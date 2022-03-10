@@ -39,15 +39,13 @@ export default function CardAddContenu() {
       });
 
 
-  const  handleAddContenu = async(data, e) => {
-    e.preventDefault();
+  const  handleAddContenu = async(data) => {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
-                  console.log(data)
-                  return
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file);
+                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
                   history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();
                 }
             }else{
                 setErreur(true);

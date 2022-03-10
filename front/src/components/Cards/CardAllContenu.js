@@ -1,29 +1,25 @@
 import React, {useContext} from "react";
 import { CompteContext } from "utils/contexte/CompteContext";
 
+import '../../assets/styles/cardStyle.css';
+
 
 export default function CardAllContenu() {
-  const {contenu} = useContext(CompteContext);
+  const {contenus} = useContext(CompteContext); //contenus still obj
 
-   //convertis le tableau encore en obj en array
-  let convertContenu2Tab = Object.keys(contenu).map((cle) => {
-    return [contenu[cle]]
-  })
-  //mapper le tableau convertit et on a nos comptes
-  const contenuTab = convertContenu2Tab.map((content) => {
-    return content[0];
-  });
-  console.log(contenuTab)
   return (
     <>
-       <div className="w-full sm:w-full md:w-6/12 lg:w-4/12 px-4 text-center mt-4">
+        {/* conver obj to array */}
+       { Object.keys(contenus).map((cle) => (
+         <div className="w-full sm:w-full md:w-6/12 lg:w-4/12 px-4 text-center mt-4" key={contenus[cle].id} >
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
             <div className="px-4 py-5 flex-auto">
-                <h6 className="text-xl font-semibold">Free Revisions</h6>
-                <p className="mt-2 mb-4 text-blueGray-500">
-                      Keep you user engaged by providing meaningful information.
-                      Remember that by this time, the user is curious.
-                </p>
+                <h6 className="text-xl font-semibold">{contenus[cle].titre}</h6>
+                <div className="  mt-2 mb-4 text-blueGray-500">
+                  <p className="description">
+                     {contenus[cle].description}
+                  </p>
+                </div>
             </div>
             <div className="flex flex-wrap justify-between mx-4">
               <p className="text-blueGray-500">300 vues</p>
@@ -42,6 +38,7 @@ export default function CardAllContenu() {
             </div>
           </div>
         </div>
+       ))}
     </>
   );
 }

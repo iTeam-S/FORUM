@@ -1,4 +1,4 @@
-import React, {useState, useContext } from "react";
+import React, {useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -6,7 +6,6 @@ import {useHistory} from "react-router";
 
 // components
 import CompteService from "utils/service/CompteService";
-import { CompteContext } from "utils/contexte/CompteContext";
 import { LoginService } from "utils/service/LoginService";
 
 
@@ -16,7 +15,6 @@ export default function CardAddEntreprise() {
   const [errorMesssage,setErrorMessage]=useState("");
  
   let history = useHistory();
-  const {addCompte} = useContext(CompteContext);
 
   const validationSchema = Yup.object().shape({
         nom: Yup.string()

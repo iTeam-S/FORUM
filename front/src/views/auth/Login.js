@@ -37,14 +37,19 @@ export default function Login() {
                   else if(response.type === 'ADMIN'){
                     history.push('/admin/TablesEntreprises');
                      window.location.reload();
-                  } else{
+                  }
+                  else if (response.status === 412){
                     setErreur(true);
                     setErrorMessage("Email ou mot de passe incorrecte!");
+                  }
+                  else {
+                    setErreur(true);
+                    setErrorMessage("Probleme de connexion au serveur!");
                   }
                 })
         } catch (error) {
           setErreur(true);
-          setErrorMessage("Erreur à la connexion!");
+          setErrorMessage("Serveur en maintenance");
         }
   }
   return (

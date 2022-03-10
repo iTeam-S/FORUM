@@ -40,8 +40,7 @@ class CompteService{
 
         return RouteAxios.post('/add_content', content,{
             headers: {
-                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
-                'Content-Type': 'multipart/form-data; boundary=${form._boundary}'
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
             }
         })
     }
@@ -52,8 +51,7 @@ class CompteService{
                     'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
                 }
         }).then(response =>{
-            console.log(response.data);
-            return response.data;
+            return response;
         })
     }
 

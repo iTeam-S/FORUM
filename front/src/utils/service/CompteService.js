@@ -43,8 +43,7 @@ class CompteService{
 
         return RouteAxios.post('/add_fiche_metier', content,{
             headers: {
-                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
             }
         })
     }

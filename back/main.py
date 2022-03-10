@@ -238,7 +238,7 @@ def add_fiche_metier():
         titre = request.form.get("titre")
         domaine_id = request.form.get("domaine_id")
 
-        if 'file' not in request.files:
+        if request.files:
             fichier = request.files['file']
 
             compte_folder = os.path.join(
@@ -248,14 +248,16 @@ def add_fiche_metier():
 
             filename = str(time.time()) + '_' + secure_filename(
                 fichier.filename)
-            fichier.save(compte_folder, filename)
+            fichier.save(
+                os.path.join(compte_folder, filename)
+            )
 
         if access == "ADMIN":
-            if titre and domaine_id and id:
+            if titre and domaine_id:
                 CURSOR.execute("""
                     INSERT INTO
                         Fiche_metier(titre, fichier, domaine_id, compte_id)
-                        VALUES (%s, %s, %s)
+                        VALUES (%s, %s, %s, %s)
                     """, (titre, filename, domaine_id, compte_id)
                 )
                 DB.commit()

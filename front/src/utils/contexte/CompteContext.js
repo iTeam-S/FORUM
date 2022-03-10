@@ -9,22 +9,29 @@ export const CompteContextProvider = (props) =>{
     let [contenus, setContenu] = useState([]);
     const [compte, setCompte] = useState([]);
 
-    async function fetchContenu(){
-           await CompteService.getAllContenu().then((response) => {
-            setContenu(response.data);
-        });
+    async function fetchCompte(){
+               await CompteService.getAllCompte().then((response) => {
+                setCompte(response.data);
+            });
     }
 
     useEffect(() => {
-        if(LoginService.getCurrentCompte() != null){
-            async function fetchCompte(){
-                await CompteService.getAllCompte().then((response) => {
-                setCompte(response.data);
-                fetchContenu();
+        if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ADMIN'){
+             async function fetchContenu(){
+                await CompteService.getAllContenu().then((response) => {
+                    setContenu(response.data);
+                    fetchCompte();
                 })
             }
-            fetchCompte();
-    }
+            fetchContenu();
+        } else if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ENTREPRISE'){
+            async function fetchContenu(){
+                await CompteService.getAllContenu().then((response) => {
+                    setContenu(response.data);
+                })
+            }
+            fetchContenu();
+        }
     }, [])
    
 

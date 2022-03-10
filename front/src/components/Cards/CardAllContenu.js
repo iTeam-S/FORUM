@@ -7,6 +7,8 @@ import '../../assets/styles/cardStyle.css';
 export default function CardAllContenu() {
   const {contenus} = useContext(CompteContext); //contenus still obj
 
+  console.log(contenus);
+
   return (
     <>
         {/* conver obj to array */}

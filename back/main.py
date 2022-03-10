@@ -329,8 +329,6 @@ def list_contents():
     try:
         compte_id = get_jwt_identity().split("+")[0]
 
-        print('===>' , compte_id)
-
         if compte_id:
             CURSOR.execute("""
                 SELECT

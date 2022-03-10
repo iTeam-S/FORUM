@@ -7,7 +7,6 @@ import "assets/styles/tailwind.css";
 
 //contexte
 import { CompteContextProvider } from "utils/contexte/CompteContext";
-import { ContenuContexteProvider } from "utils/contexte/ContenuContexte";
 
 // private
 import AdminRoute from "views/private/AdminRoute";
@@ -32,10 +31,10 @@ import CardOtherProfil from "components/Cards/CardOtherProfil";
 import Statistiques from "views/admin-entreprise/Statistiques.js"
 import AllContenu from "views/admin-entreprise/AllContenu.js";
 import AddContenu from "views/admin-entreprise/AddContenu.js";
+import AllFicheMetier from "views/admin/AllFicheMetier";
 
 
 ReactDOM.render(
-    <ContenuContexteProvider>
       <CompteContextProvider>
         <BrowserRouter>
           <Switch>
@@ -64,6 +63,9 @@ ReactDOM.render(
               <AdminRoute exact path="/admin/TablesEntreprises">
                 <TablesEntreprises /> 
               </AdminRoute>
+              <AdminRoute exact path="/admin/AllFicheMetier">
+                <AllFicheMetier />
+              </AdminRoute>
               <AdminRoute exact path="/adminEntreprise/ProfilEntreprise">
                 <ProfilEntreprise /> 
               </AdminRoute>
@@ -81,7 +83,6 @@ ReactDOM.render(
             <Redirect from="*" to="/error" />
           </Switch>
         </BrowserRouter>
-      </CompteContextProvider>
-      </ContenuContexteProvider>,
+      </CompteContextProvider>,
   document.getElementById("root")
 );

@@ -4,6 +4,7 @@ import { createPopper } from "@popperjs/core";
 import {LoginService} from "utils/service/LoginService";
 
 const UserDropdown = () => {
+  const logoEntreprise = LoginService.getCurrentCompte().logo;
   const Deconnexion = () => {
     LoginService.logout();
   }
@@ -36,8 +37,8 @@ const UserDropdown = () => {
           <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
             <img
               alt="..."
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src={require("assets/img/team-1-800x800.jpg").default}
+              className="h-12 w-12 bg-white rounded-full align-middle border-none shadow-lg"
+              src={logoEntreprise ? logoEntreprise : require("assets/img/logodefaut.png").default}
             />
           </span>
         </div>

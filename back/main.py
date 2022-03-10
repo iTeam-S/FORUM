@@ -341,7 +341,6 @@ def list_contents():
                     compte_id=%s;
             """, (compte_id,))
             contents = CURSOR.fetchall()
-
             if contents:
                 return {
                     contents.index(content):

@@ -235,6 +235,20 @@ class Messenger:
                     "payload": f"__INFO {id_stand}" 
                 }   
             ]
+        elif types == "fini_test_kavio":
+            text = translate("fini_test_kavio_question",lang)
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title": "😍" + translate("voir_resultat",lang).upper(),
+                    "payload": "__VOIR_RESULTAT"
+                },
+                {
+                    "content_type": "text",
+                    "title": "➕" + translate("recommencer",lang).upper(),
+                    "payload": "__FAIRE_KAVIO"
+                }
+            ]
             
         else:
             return

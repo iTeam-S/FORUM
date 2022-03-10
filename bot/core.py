@@ -62,6 +62,7 @@ class Traitement(Options):
             sender_id,
             translate("salutation",user_lang)
         )
+        self.bot.send_message(sender_id,"aaaaaa")
         self.bot.send_quick_reply(sender_id,user_lang, "choix_langues")
         return True
 
@@ -372,9 +373,22 @@ class Traitement(Options):
                 return True
 
         elif commande == "__TEST_KAVIO":
-            self.bot.send_message(user_id,translate("bienvenu_kavio",user_lang))
-            self.bot.send_quick_reply(user_id, user_lang, "tester_kavio")
-            return True
+            verification = int(self.req.verif_test_kavio(user_id))
+            if verification and verification==72:
+                self.bot.send_message(
+                    user_id,
+                    translate("fini_test_kavio",user_lang)
+                )
+                self.bot.send_quick_reply(user_id, user_lang,"fini_test_kavio")
+                return True
+
+            elif verification and verification<72:
+                return True
+
+            else:
+                self.bot.send_message(user_id,translate("bienvenu_kavio",user_lang))
+                self.bot.send_quick_reply(user_id, user_lang, "tester_kavio")
+                return True
         
         elif commande == "__ABANDON_KAVIO":
             self.bot.send_message(user_id,translate("remercier_abandon",user_lang))
@@ -404,7 +418,7 @@ class Traitement(Options):
                 _cmd[3]:partie,
                 _cmd[4]:serie
             """
-            #insertion(eto no mipetraka)
+
             self.req.insert_kavio(user_id,int(_cmd[2]),int(_cmd[3]),int(_cmd[4]),_cmd[1],int(_cmd[-1]))
             if int(_cmd[2])<6:
                 num_question = int(_cmd[2])
@@ -437,7 +451,6 @@ class Traitement(Options):
             else:
                 serie = int(_cmd[4])
                 if serie<4:
-                    #apafantarina daholo alo n ao antin'ny le serie alohan anwvan azy
                     self.bot.send_message(
                         user_id,
                         f"{translate('serie',user_lang).upper()} {serie+1}\n{const.get_serie(_cmd[3],serie+1,user_lang)}"
@@ -464,9 +477,12 @@ class Traitement(Options):
                         )
                         return True
                     else:
-                        print("zavatra")
+                        self.resultat_generale(user_id,user_lang)
                         return True
-                
+
+        elif commande == "__VOIR_RESULTAT":
+            self.resultat_generale(user_id,user_lang)
+            return True      
 
     def traitement_pstPayload(self, user_id,user_lang, commande):
         postback_payload = commande.split(' ')

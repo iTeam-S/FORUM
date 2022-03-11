@@ -55,11 +55,15 @@ class Options:
                             "content_type": "text",
                             "title": "⏭️" + translate("page_suivant",lang).upper(),
                             "payload": f"{payload_plus_de_dix} {page+1}",
-                        }
+                        },const.retoure("FICHES_METIERS_RECHERCHE",lang)
                     ]
                 )
             else:
-                self.bot.send_template(dest_id, res[deb_indice:deb_indice + 10])
+                self.bot.send_template(
+                    dest_id,
+                    res[deb_indice:deb_indice + 10],
+                    next = [const.retoure("FICHES_METIERS_RECHERCHE",lang)]
+                )
     
         else:
             if len(res) > deb_indice + 10:
@@ -70,11 +74,16 @@ class Options:
                             "content_type": "text",
                             "title": "⏭️" + translate("page_suivant",lang).upper(),
                             "payload": f"{payload_plus_de_dix} {page+1}",
-                        }
+                        },const.retoure("FICHES_METIERS",lang)
                     ]
                 )
             else:
-                self.bot.send_template(dest_id, res[deb_indice:deb_indice + 10])
+                self.bot.send_template(
+                    dest_id,
+                    res[deb_indice:deb_indice + 10],
+                    next = [const.retoure("FICHES_METIERS",lang)]
+                )
+                
         
             
     def fiche_metier_par_domaine(self, user_id, trans_domaine, domaine, page, payload_plus_de_dix="",lang="fr"):
@@ -98,7 +107,8 @@ class Options:
             )
             
         else:
-           self.bot.send_message(user_id, translate("pas_fiche",lang)) 
+           self.bot.send_message(user_id, translate("pas_fiche",lang))
+           self.bot.send_quick_reply(user_id,lang,"retoure_a_la_domaine")
            return True
             
     def liste_de_tout_les_stands(self, data, lang):
@@ -132,11 +142,15 @@ class Options:
                             "content_type": "text",
                             "title": "⏭️" + translate("page_suivant",lang).upper(),
                             "payload": f"__VOIR_LISTE_DU_STAND {page+1}",
-                        }
+                        },const.retoure("STAND_DEBUT",lang)
                     ]
                 )
             else:
-                self.bot.send_template(dest_id, res[deb_indice:deb_indice + 10])
+                self.bot.send_template(
+                    dest_id,
+                    res[deb_indice:deb_indice + 10],
+                    next = [const.retoure("STAND_DEBUT",lang)]
+                )
                 
     def liste_galerie_de_chaque_stand(self, id_stand, lang, data):
         liste_galerie = []
@@ -186,11 +200,15 @@ class Options:
                         "content_type": "text",
                         "title": "⏭️" + translate("page_suivant",lang).upper(),
                         "payload": f"__EMPLOI {id_stand} {page+1}",
-                    }
+                    },const.retoure("STAND_EMPLOI",lang)
                 ]
             )
         else:
-            self.bot.send_template(dest_id, res[deb_indice:deb_indice + 10])
+            self.bot.send_template(
+                dest_id,
+                res[deb_indice:deb_indice + 10],
+                next = [const.retoure("STAND_EMPLOI",lang)]
+            )
 
     def gestion_extension_de_fichier(self,fichier):
         if fichier.endswith(".pdf"):
@@ -232,11 +250,15 @@ class Options:
                         "content_type": "text",
                         "title": "⏭️" + translate("page_suivant", lang).upper(),
                         "payload": f"__EVENEMENTS {id_stand} {page+1}",
-                    }
+                    },const.retoure("STAND_EMPLOI",lang)
                 ]
             )
         else:
-            self.bot.send_template(dest_id, res[deb_indice:deb_indice + 10])
+            self.bot.send_template(
+                dest_id, 
+                res[deb_indice:deb_indice + 10],
+                next = [const.retoure("STAND_EMPLOI",lang)]
+            )
 
     def resultat_de_test_kavio(self,data):
         max = 0

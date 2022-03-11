@@ -485,18 +485,27 @@ class Traitement(Options):
 
         elif commande == "__VOIR_RESULTAT":
             self.resultat_generale(user_id,user_lang)
-            return True      
+            return True 
+
+        elif commande == "__RETOURE_FICHEMETIER":
+            self.bot.send_quick_reply(user_id,user_lang,"domaine_de_fiche_metier")
+            return True
+        
+        elif commande == "__RETOURE_FICHEMETIER_RECHERCHE":
+            self.bot.send_quick_reply(user_id,user_lang,"recherche_ou_voir_fiche_metier")
+            return True
 
     def traitement_pstPayload(self, user_id,user_lang, commande):
         postback_payload = commande.split(' ')
         
         if postback_payload[0] == "__VOIR":
             self.bot.send_file_url(user_id, postback_payload[-2], 'image')
-            
             self.req.inserer_consultation(
                 user_id,
                 postback_payload[-3],
-                types=postback_payload[-1])
+                types=postback_payload[-1]
+            )
+            #asina retoure eto
             return True
             
         elif postback_payload[0] == "__VOIR_EMPLOI":

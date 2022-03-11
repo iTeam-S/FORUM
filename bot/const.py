@@ -1206,33 +1206,63 @@ def get_quick_kavio(identifiant,lang):
 def persistent_menu(types,lang):
     if types == "PRINCIPALE":
         return [
-                {
-                    "locale": "default",
-                    "composer_input_disabled": False,
-                    "call_to_actions": [
-                        {
-                            "type": "postback",
-                            "title": "📑" + translate("fiches_metiers",lang).upper(),
-                            "payload": "__FICHE_METIER"
-                        },
-                        {
-                            "type": "postback",
-                            "title": "🏠" + translate("visiter_stands",lang).upper(),
-                            "payload": "__VISITE_STAND"
-                        },
-                        {
-                            "type": "postback",
-                            "title": "🔶" + translate("kavio",lang).upper(),
-                            "payload": "__TEST_KAVIO"
-                        }
-                    ]
-                }
-            ]
+            {
+                "locale": "default",
+                "composer_input_disabled": False,
+                "call_to_actions": [
+                    {
+                        "type": "postback",
+                        "title": "📑" + translate("fiches_metiers",lang).upper(),
+                        "payload": "__FICHE_METIER"
+                    },
+                    {
+                        "type": "postback",
+                        "title": "🏠" + translate("visiter_stands",lang).upper(),
+                        "payload": "__VISITE_STAND"
+                    },
+                    {
+                        "type": "postback",
+                        "title": "🔶" + translate("kavio",lang).upper(),
+                        "payload": "__TEST_KAVIO"
+                    }
+                ]
+            }
+        ]
+
 
 
 #-------------------------------------------------------------------------------------------#
-#                             FONCTIONS CONSTANTS                                           #
+#                             FONCTIONS ET VARIABLES CONSTANTS                              #
 #-------------------------------------------------------------------------------------------#
+def retoure(types,lang):
+    if types=="FICHES_METIERS":
+        return {
+            "content_type": "text",
+            "title": "⏪" + translate("retoure",lang),
+            "payload":"__RETOURE_FICHEMETIER",
+        }
+    
+    elif types == "FICHES_METIERS_RECHERCHE":
+        return {
+            "content_type": "text",
+            "title": "⏪" + translate("retoure",lang),
+            "payload":"__RETOURE_FICHEMETIER_RECHERCHE",
+        }
+    
+    elif types == "STAND_DEBUT":
+        return {
+            "content_type": "text",
+            "title": "⏪" + translate("retoure",lang),
+            "payload":"__RETOURNE_STAND_DEBUT",
+        }
+    
+    elif types == "STAND_EMPLOI":
+        return {
+            "content_type": "text",
+            "title": "⏪" + translate("retoure",lang),
+            "payload":"__RETOURNE_STAND_EMPLOI",
+        }
+
 def resultat_partie_1(result_1,lang):
     res_1 = []
     result_partie_1 = []

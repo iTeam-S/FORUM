@@ -793,7 +793,6 @@
         "en":"PROFESSIONS",
         "fr":"PROFESSIONS",
         "mg":"ASA"
-
     },
     "A":{
         "en":"ARTISTIC",
@@ -824,5 +823,15 @@
         "en":"ENTERPRESING",
         "fr":"ENTREPRENANT",
         "mg":"ENTREPRENANT"
+    },
+    "retoure":{
+        "en":"RETURN",
+        "fr":"RETOURE",
+        "mg":"HIVERINA"
+    },
+    "retoure_a_la_domaine":{
+        "en":"Return to the sectors of the job description",
+        "fr":"Revenir aux domaines ou filières du fiche metier",
+        "mg":"Hiverina hijery ireo sehatra na taranja ny fiche metier"
     }
 }

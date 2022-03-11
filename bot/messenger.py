@@ -1,3 +1,4 @@
+import const
 import requests
 from  retry import retry
 from utils import translate
@@ -250,6 +251,16 @@ class Messenger:
                 }
             ]
             
+        elif types == "retoure_a_la_domaine":
+            text = translate("retoure_a_la_domaine",lang)
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title": "⏪" + translate("retoure",lang).upper(),
+                    "payload": "__RETOURE_FICHEMETIER"
+                }
+            ]
+
         else:
             return
             
@@ -422,9 +433,8 @@ class Messenger:
                     "psid": dest_id,
                     "persistent_menu": persistent_menu
             }
-
             res = requests.post(
-                'https://graph.facebook.com/v12.0/me/messenger_profile',
+                self.url + '/custom_user_settings',
                 json=dataJSON, headers=header, params=params
             )
             return res

@@ -10,7 +10,6 @@ import TableDropdown from "components/Dropdowns/TableDropdown.js";
 
 export default function CardAllFiche({color}) {
   const {fiche} = useContext(CompteContext); //fiche still obj
-  console.log(fiche)
   return (
     <>
         <div

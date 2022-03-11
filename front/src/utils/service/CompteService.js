@@ -2,6 +2,7 @@ import { RouteAxios } from "utils/urlAxios/UrlAxios";
 import {LoginService} from "utils/service/LoginService";
 
 class CompteService{
+                /*ADD SERVICE*/
     AddAccount(nom, email, tel, domaine, lien, type, password, adresse){
         return RouteAxios.post('/add_account', {
             nom, 
@@ -48,6 +49,7 @@ class CompteService{
         })
     }
 
+                /*GET SERVICE*/
     getAllCompte(){
         return RouteAxios.get("/list_accounts",  {
                 headers: {
@@ -69,13 +71,28 @@ class CompteService{
     }
 
     getAllFiche(){
-        return RouteAxios.get("list_fiche_metier", {
+        return RouteAxios.get("/list_fiche_metier", {
             headers: {
                     'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
             }
         }).then(response => {
             return response;
         })
+    }
+
+
+                /*DELETE SERVICE*/
+    DeleteOneCompte(compte_id){
+        return RouteAxios.delete("/delete_account", 
+            {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            },
+            data: {
+                compte_id: compte_id
+            }
+        },
+        ) 
     }
 
 }

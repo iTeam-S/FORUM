@@ -6,15 +6,7 @@ import { CompteContext } from "utils/contexte/CompteContext";
 import TableDropdown from "components/Dropdowns/TableDropdown.js";
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
-
-  //convertis le tableau encore en obj en array
-  let convertCompte2Tab = Object.keys(compte).map((cle) => {
-    return [compte[cle]]
-  })
-  //mapper le tableau convertit et on a nos comptes
-  const compteTab = convertCompte2Tab.map((cpt) => {
-    return cpt[0];
-  });
+  console.log(compte)
   return (
     <>
       <div
@@ -74,11 +66,11 @@ export default function CardTable({ color}) {
             </thead>
             <tbody>
                  {
-                   compteTab.map((compte) => (
-                     <tr key={compte.id}>
+                   Object.keys(compte).map((cle) => (
+                     <tr key={compte[cle].id}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                         <img
-                          src={compte.logo ? compte.logo : require("assets/img/logodefaut.png").default}
+                          src={compte[cle].logo ? compte[cle].logo : require("assets/img/logodefaut.png").default}
                           className="h-12 w-12 bg-white rounded-full border"
                           alt="..."
                         ></img>{" "}
@@ -88,7 +80,7 @@ export default function CardTable({ color}) {
                             +(color === "light" ? "text-blueGray-600" : "text-white")
                           }
                         >
-                          {compte.nom}
+                          {compte[cle].nom}
                         </span>
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -97,7 +89,7 @@ export default function CardTable({ color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <TableDropdown />
+                        <TableDropdown id_compte={compte[cle].id} comptenom = {compte[cle].email} />
                       </td>
                     </tr>
                    ))

@@ -1,7 +1,19 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
 
-const NotificationDropdown = () => {
+//composant from utils
+import CompteService from "utils/service/CompteService";
+import {LoginService} from "utils/service/LoginService";
+
+const NotificationDropdown = ({id_compte}) => {
+  // action delete et edit
+  const deleteCompte = () => {
+    if(LoginService.getCurrentCompte().type === "ADMIN"){
+      CompteService.DeleteOneCompte(id_compte);
+    }
+  }
+
+
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -49,7 +61,7 @@ const NotificationDropdown = () => {
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={deleteCompte}
         >
           Delete
         </a>

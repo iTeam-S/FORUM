@@ -17,7 +17,7 @@ export const CompteContextProvider = (props) =>{
     }
     
     async function fetchCompte(){
-               await CompteService.getAllCompte().then((response) => {
+            await CompteService.getAllCompte().then((response) => {
                 setCompte(response.data);
                 fetchFicheMetier();
             });

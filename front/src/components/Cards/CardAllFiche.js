@@ -1,6 +1,10 @@
 import React, {useContext} from "react";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+
 import { CompteContext } from "utils/contexte/CompteContext";
+import CompteService from "utils/service/CompteService";
 
 //styles css
 import '../../assets/styles/cardStyle.css';
@@ -10,6 +14,14 @@ import TableDropdown from "components/Dropdowns/TableDropdown.js";
 
 export default function CardAllFiche({color}) {
   const {fiche} = useContext(CompteContext); //fiche still obj
+  const history = useHistory();
+
+  const deleteFiche = (id_fiche) => {
+    CompteService.DeleteFicheMetier(id_fiche);
+    history.push("/adminEntreprise/Statistiques");
+    window.location.reload();
+  }
+
   return (
     <>
         <div
@@ -100,7 +112,21 @@ export default function CardAllFiche({color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <TableDropdown />
+                        <Link to="/adminEntreprise/CardEditProfile">
+                          <button
+                          className="bg-teal-500  text-white active:bg-lightBlue-800  font-bold  text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                            type="button"
+                          >
+                            Edit
+                          </button>
+                        </Link>
+                        <button
+                          className="bg-red-500  text-white active:bg-red-500 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                          type="button"
+                          onClick={() => deleteFiche(fiche[cle].id)}
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                  ))

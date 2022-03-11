@@ -8,7 +8,7 @@ import '../../assets/styles/cardStyle.css';
 
 export default function CardAllContenu() {
   const {contenus} = useContext(CompteContext); //contenus still obj
-    let history = useHistory();
+  const history = useHistory();
 
   async function deleteContent(id_content){
     await CompteService.DeleteOneContent(id_content);

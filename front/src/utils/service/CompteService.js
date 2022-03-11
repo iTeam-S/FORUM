@@ -104,7 +104,20 @@ class CompteService{
             data: {
                 content_id: content_id
             }
-        },
+        }
+        ) 
+    }
+
+    DeleteFicheMetier(fiche_metier_id){
+        return RouteAxios.delete("/delete_fiche_metier", 
+            {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            },
+            data: {
+                fiche_metier_id: fiche_metier_id
+            }
+        }
         ) 
     }
 

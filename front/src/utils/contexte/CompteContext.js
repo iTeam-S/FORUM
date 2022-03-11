@@ -26,8 +26,8 @@ export const CompteContextProvider = (props) =>{
 
     useEffect(() => {
         if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ADMIN'){
-             async function fetchContenu(){
-                await CompteService.getAllContenu().then((response) => {
+              function fetchContenu(){
+                 CompteService.getAllContenu().then((response) => {
                     setContenu(response.data);
                     fetchCompte();
                 })

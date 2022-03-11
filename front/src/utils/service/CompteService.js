@@ -95,6 +95,19 @@ class CompteService{
         ) 
     }
 
+    DeleteOneContent(content_id){
+        return RouteAxios.delete("/delete_content", 
+            {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            },
+            data: {
+                content_id: content_id
+            }
+        },
+        ) 
+    }
+
 }
 
 export default new CompteService();

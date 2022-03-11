@@ -414,7 +414,7 @@ def delete_contents():
         DESC : Fonction permettant de supprimer un contenu
     """
     try:
-        compte_id, access = get_jwt_identity().split("+")[1]
+        compte_id, access = get_jwt_identity().split("+")
         content_id = request.get_json().get("content_id")
 
         if compte_id:

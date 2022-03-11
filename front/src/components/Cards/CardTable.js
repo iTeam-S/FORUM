@@ -1,12 +1,15 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import { CompteContext } from "utils/contexte/CompteContext";
 
-//components
-import TableDropdown from "components/Dropdowns/TableDropdown.js";
+import { CompteContext } from "utils/contexte/CompteContext";
+import CompteService from "utils/service/CompteService";
+
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
-  console.log(compte)
+
+  const deleteOneCompte = (id) => {
+    CompteService.DeleteOneCompte(id);
+  }
   return (
     <>
       <div
@@ -89,7 +92,13 @@ export default function CardTable({ color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <TableDropdown id_compte={compte[cle].id} comptenom = {compte[cle].email} />
+                        <button
+                          className="bg-lightBlue-800  text-white active:bg-teal-500 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                          type="button"
+                          onClick={() => deleteOneCompte(compte[cle].id)}
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                    ))

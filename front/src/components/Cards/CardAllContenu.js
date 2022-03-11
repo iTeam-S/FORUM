@@ -1,11 +1,20 @@
 import React, {useContext} from "react";
 import { CompteContext } from "utils/contexte/CompteContext";
+import CompteService from "utils/service/CompteService";
+import { useHistory } from "react-router";
 
 import '../../assets/styles/cardStyle.css';
 
 
 export default function CardAllContenu() {
   const {contenus} = useContext(CompteContext); //contenus still obj
+    let history = useHistory();
+
+  async function deleteContent(id_content){
+    await CompteService.DeleteOneContent(id_content);
+      history.push("/adminEntreprise/Statistiques");
+      window.location.reload();
+  }
 
   return (
     <>
@@ -32,7 +41,10 @@ export default function CardAllContenu() {
                 <button className="bg-emerald-500 w-full text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                   Publié
                 </button>
-                <button className="bg-red-500 text-white w-full active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                <button className="bg-red-500 text-white w-full active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                 type="button"
+                 onClick={() => deleteContent(contenus[cle].id)}
+                 >
                   Delete
                 </button>
             </div>

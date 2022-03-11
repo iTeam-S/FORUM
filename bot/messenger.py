@@ -412,3 +412,29 @@ class Messenger:
             headers=header,
             params=params
         )
+
+    @retry(requests.exceptions.ConnectionError, tries=3, delay=3)
+    def persistent_menu(self, dest_id, persistent_menu,action='PUT'):
+        header = {'content-type': 'application/json; charset=utf-8'}
+        params = {"access_token": self.token}
+        if action == "PUT":
+            dataJSON = {
+                    "psid": dest_id,
+                    "persistent_menu": persistent_menu
+            }
+
+            res = requests.post(
+                'https://graph.facebook.com/v12.0/me/messenger_profile',
+                json=dataJSON, headers=header, params=params
+            )
+            return res
+            
+        elif action == "DELETE":
+            params['params'] = "(persistent_menu)"
+            params['psid'] = dest_id
+
+            res = requests.delete(
+                self.url + '/custom_user_settings',
+                headers=header, params=params
+            )
+            return res

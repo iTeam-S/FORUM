@@ -62,7 +62,6 @@ class Traitement(Options):
             sender_id,
             translate("salutation",user_lang)
         )
-        self.bot.send_message(sender_id,"aaaaaa")
         self.bot.send_quick_reply(sender_id,user_lang, "choix_langues")
         return True
 
@@ -84,6 +83,10 @@ class Traitement(Options):
             self.bot.send_message(
                 user_id,
                 translate('langue_mis_a_jour', cmd[-1]) + ' ✔'
+            )
+            self.bot.persistent_menu(
+                user_id,
+                const.persistent_menu('PRINCIPALE',cmd[-1])
             )
             self.bot.send_quick_reply(user_id,cmd[-1],"bienvenue")
             return True

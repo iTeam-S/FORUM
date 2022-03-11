@@ -1203,6 +1203,32 @@ def get_quick_kavio(identifiant,lang):
 
     return variables.get(identifiant)
 
+def persistent_menu(types,lang):
+    if types == "PRINCIPALE":
+        return [
+                {
+                    "locale": "default",
+                    "composer_input_disabled": False,
+                    "call_to_actions": [
+                        {
+                            "type": "postback",
+                            "title": "📑" + translate("fiches_metiers",lang).upper(),
+                            "payload": "__FICHE_METIER"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "🏠" + translate("visiter_stands",lang).upper(),
+                            "payload": "__VISITE_STAND"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "🔶" + translate("kavio",lang).upper(),
+                            "payload": "__TEST_KAVIO"
+                        }
+                    ]
+                }
+            ]
+
 
 #-------------------------------------------------------------------------------------------#
 #                             FONCTIONS CONSTANTS                                           #

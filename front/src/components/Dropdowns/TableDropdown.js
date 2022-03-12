@@ -1,7 +1,7 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
 
-const NotificationDropdown = () => {
+export default function NotificationDropdown (){
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -57,5 +57,3 @@ const NotificationDropdown = () => {
     </>
   );
 };
-
-export default NotificationDropdown;

@@ -5,7 +5,7 @@ import { CompteContext } from "utils/contexte/CompteContext";
 //styles css
 import '../../assets/styles/cardStyle.css';
 //composants
-import TableDropdown from "components/Dropdowns/TableDropdown.js";
+import NotificationDropdown from "components/Dropdowns/TableDropdown.js";
 
 
 export default function CardAllFiche({color}) {
@@ -101,7 +101,7 @@ export default function CardAllFiche({color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <TableDropdown />
+                        <NotificationDropdown />
                       </td>
                     </tr>
                  ))

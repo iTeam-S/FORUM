@@ -2,11 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 
-//components
-import { LoginService } from "utils/service/LoginService";
-
 export default function CardOtherProfil() {
-  const {id} = useParams();
+  // const {id} = useParams();
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">

@@ -238,7 +238,7 @@ def add_fiche_metier():
         titre = request.form.get("titre")
         domaine_id = request.form.get("domaine_id")
 
-        if 'file' not in request.files:
+        if request.files:
             fichier = request.files['file']
 
             compte_folder = os.path.join(
@@ -251,7 +251,7 @@ def add_fiche_metier():
             fichier.save(compte_folder, filename)
 
         if access == "ADMIN":
-            if titre and domaine_id and id:
+            if titre and domaine_id:
                 CURSOR.execute("""
                     INSERT INTO
                         Fiche_metier(titre, fichier, domaine_id, compte_id)
@@ -273,6 +273,7 @@ def add_fiche_metier():
     except Exception as err:
         print(err)
         abort(500, description="Something went wrong !")
+
 
 # -------------------- GET LIST API ----------------
 @verif_db
@@ -407,12 +408,12 @@ def list_fiche_metier():
 @verif_db
 @app.route("/api/v1/delete_content/", methods=['DELETE'])
 @jwt_required()
-def delete_contents():
+def delete_content():
     """
         DESC : Fonction permettant de supprimer un contenu
     """
     try:
-        compte_id, access = get_jwt_identity().split("+")[1]
+        compte_id, access = get_jwt_identity().split("+")
         content_id = request.get_json().get("content_id")
 
         if compte_id:
@@ -531,6 +532,214 @@ def delete_fiche_metier():
         return {
             "error": True,
             "message": "Pas d'access admin"
+        }, 403
+
+    except Exception as err:
+        print(err)
+        abort(500, description="Something went wrong !")
+
+
+@verif_db
+@app.route("/api/v1/update_account/", methods=['PATCH'])
+@jwt_required()
+def update_account():
+    """
+        DESC : Fonction permettant de mettre à jour
+        les données du compte
+    """
+    try:
+        compte_id = get_jwt_identity().split("+")[0]
+        data = request.get_json()
+
+        if compte_id:
+            account = (
+                data.get("nom"),
+                data.get("email"),
+                data.get("tel"),
+                data.get("domaine"),
+                str(
+                    generate_password_hash(
+                        str(data.get("password"))).decode()),
+                data.get("adresse"),
+                data.get("type"),
+                data.get("lien"),
+                compte_id
+            )
+            try:
+                CURSOR.execute("""
+                    UPDATE
+                        Compte
+                    SET
+                        nom = %s,
+                        email = %s,
+                        tel = %s,
+                        domaine = %s,
+                        password = %s,
+                        adresse = %s,
+                        type = %s,
+                        lien = %s,
+
+                    WHERE
+                        id=%s;
+                """, account)
+
+                DB.commit()
+
+                return {
+                    "error": False,
+                    "message": "Account Updated!"
+                }, 200
+            except Exception as err:
+                print(err)
+                DB.close()
+                return {
+                    "error": True,
+                    "message": "le Compte est encore utilisé !"
+                }, 400
+
+        return {
+            "error": True,
+            "message": "Pas d'access"
+        }, 403
+
+    except Exception as err:
+        print(err)
+        abort(500, description="Something went wrong !")
+
+
+@verif_db
+@app.route("/api/v1/update_content/", methods=['PATCH'])
+@jwt_required()
+def update_content():
+    """
+        DESC : Fonction permettant de mettre à jour
+        les infos sur un contenus
+    """
+    try:
+        compte_id = get_jwt_identity().split("+")[0]
+        data = request.get_json()
+
+        if compte_id:
+            content = (
+                data.get("titre"),
+                data.get("description"),
+                data.get("type"),
+                data.get("content_id"),
+                compte_id
+            )
+
+            if request.files:
+                fichier = request.files['file']
+
+                compte_folder = os.path.join(
+                    app.config['UPLOAD_FOLDER'], str(compte_id)
+                )
+                Path(compte_folder).mkdir(parents=True, exist_ok=True)
+
+                filename = str(time.time()) + '_' + secure_filename(
+                    fichier.filename)
+                fichier.save(compte_folder, filename)
+
+            try:
+                CURSOR.execute("""
+                    UPDATE
+                        Content
+                    SET
+                        titre = %s,
+                        description = %s,
+                        type = %s
+                """ + (filename or '') + """
+                    WHERE
+                        id=%s AND compte_id=%s;
+                """, content)
+
+                DB.commit()
+
+                return {
+                    "error": False,
+                    "message": "Account Updated!"
+                }, 200
+            except Exception as err:
+                print(err)
+                DB.close()
+                return {
+                    "error": True,
+                    "message": "le Contenu est encore utilisé !"
+                }, 400
+
+        return {
+            "error": True,
+            "message": "Pas d'access"
+        }, 403
+
+    except Exception as err:
+        print(err)
+        abort(500, description="Something went wrong !")
+
+
+@verif_db
+@app.route("/api/v1/update_fiche_metier/", methods=['PATCH'])
+@jwt_required()
+def update_fiche_metier():
+    """
+        DESC : Fonction permettant de mettre à jour
+        les infos sur un contenus
+    """
+    try:
+        compte_id = get_jwt_identity().split("+")[0]
+        data = request.get_json()
+
+        if compte_id:
+            content = (
+                data.get("titre"),
+                data.get("description"),
+                data.get("type"),
+                data.get("content_id"),
+                compte_id
+            )
+
+            if request.files:
+                fichier = request.files['file']
+
+                compte_folder = os.path.join(
+                    app.config['UPLOAD_FOLDER'], str(compte_id)
+                )
+                Path(compte_folder).mkdir(parents=True, exist_ok=True)
+
+                filename = str(time.time()) + '_' + secure_filename(
+                    fichier.filename)
+                fichier.save(compte_folder, filename)
+
+            try:
+                CURSOR.execute("""
+                    UPDATE
+                        Content
+                    SET
+                        titre = %s,
+                        description = %s,
+                        type = %s
+                """ + (filename or '') + """
+                    WHERE
+                        id=%s AND compte_id=%s;
+                """, content)
+
+                DB.commit()
+
+                return {
+                    "error": False,
+                    "message": "Account Updated!"
+                }, 200
+            except Exception as err:
+                print(err)
+                DB.close()
+                return {
+                    "error": True,
+                    "message": "le Compte est encore utilisé !"
+                }, 400
+
+        return {
+            "error": True,
+            "message": "Pas d'access"
         }, 403
 
     except Exception as err:

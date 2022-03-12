@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { CompteContext } from "utils/contexte/CompteContext";
 
 //components
-import TableDropdown from "components/Dropdowns/TableDropdown.js";
+import NotificationDropdown from "components/Dropdowns/TableDropdown.js";
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
 
@@ -97,7 +97,7 @@ export default function CardTable({ color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <TableDropdown />
+                        <NotificationDropdown />
                       </td>
                     </tr>
                    ))

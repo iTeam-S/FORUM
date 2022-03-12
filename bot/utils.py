@@ -1,6 +1,7 @@
 import os
 import json
 
+
 def translate(key, lang='fr'):
     '''
         Traduire un mot clé dans données.

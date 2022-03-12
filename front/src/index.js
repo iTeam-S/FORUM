@@ -55,7 +55,7 @@ ReactDOM.render(
             <EntrepriseRoute path="/adminEntreprise/ProfilEntreprise" exact>
               <ProfilEntreprise />
             </EntrepriseRoute>
-            <EntrepriseRoute path="/adminEntreprise/CardEditProfile/" exact >
+            <EntrepriseRoute path="/adminEntreprise/CardEditProfile" exact >
               <CardEditProfile />
             </EntrepriseRoute>
 

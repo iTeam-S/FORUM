@@ -2,6 +2,7 @@ import { RouteAxios } from "utils/urlAxios/UrlAxios";
 import {LoginService} from "utils/service/LoginService";
 
 class CompteService{
+                /*ADD SERVICE*/
     AddAccount(nom, email, tel, domaine, lien, type, password, adresse){
         return RouteAxios.post('/add_account', {
             nom, 
@@ -43,12 +44,12 @@ class CompteService{
 
         return RouteAxios.post('/add_fiche_metier', content,{
             headers: {
-                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
             }
         })
     }
 
+                /*GET SERVICE*/
     getAllCompte(){
         return RouteAxios.get("/list_accounts",  {
                 headers: {
@@ -70,13 +71,54 @@ class CompteService{
     }
 
     getAllFiche(){
-        return RouteAxios.get("list_fiche_metier", {
+        return RouteAxios.get("/list_fiche_metier", {
             headers: {
                     'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
             }
         }).then(response => {
             return response;
         })
+    }
+
+
+                /*DELETE SERVICE*/
+    DeleteOneCompte(compte_id){
+        return RouteAxios.delete("/delete_account", 
+            {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            },
+            data: {
+                compte_id: compte_id
+            }
+        },
+        ) 
+    }
+
+    DeleteOneContent(content_id){
+        return RouteAxios.delete("/delete_content", 
+            {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            },
+            data: {
+                content_id: content_id
+            }
+        }
+        ) 
+    }
+
+    DeleteFicheMetier(fiche_metier_id){
+        return RouteAxios.delete("/delete_fiche_metier", 
+            {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            },
+            data: {
+                fiche_metier_id: fiche_metier_id
+            }
+        }
+        ) 
     }
 
 }

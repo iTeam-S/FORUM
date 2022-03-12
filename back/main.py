@@ -248,14 +248,16 @@ def add_fiche_metier():
 
             filename = str(time.time()) + '_' + secure_filename(
                 fichier.filename)
-            fichier.save(compte_folder, filename)
+            fichier.save(
+                os.path.join(compte_folder, filename)
+            )
 
         if access == "ADMIN":
             if titre and domaine_id:
                 CURSOR.execute("""
                     INSERT INTO
                         Fiche_metier(titre, fichier, domaine_id, compte_id)
-                        VALUES (%s, %s, %s)
+                        VALUES (%s, %s, %s, %s)
                     """, (titre, filename, domaine_id, compte_id)
                 )
                 DB.commit()
@@ -406,7 +408,7 @@ def list_fiche_metier():
 
 
 @verif_db
-@app.route("/api/v1/delete_content/", methods=['DELETE'])
+@app.route("/api/v1/delete_content", methods=['DELETE'])
 @jwt_required()
 def delete_content():
     """
@@ -450,7 +452,7 @@ def delete_content():
 
 
 @verif_db
-@app.route("/api/v1/delete_account/", methods=['DELETE'])
+@app.route("/api/v1/delete_account", methods=['DELETE'])
 @jwt_required()
 def delete_account():
     """
@@ -459,16 +461,24 @@ def delete_account():
     """
     try:
         access = get_jwt_identity().split("+")[1]
-        account_id = request.get_json().get("account_id")
+        data = request.get_json()
+        print(data)
+        if data:
+            account_id = data.get("compte_id")
+        else:
+            return {
+                "error": True,
+                "message": "Pas de compte à suprimmé"
+            }, 400
 
-        if access == "ADMIN":
+        if access == "ADMIN" and account_id:
             try:
                 CURSOR.execute("""
                     DELETE FROM
                         Compte
                     WHERE
                         id=%s;
-                """, (account_id))
+                """, (account_id,))
 
                 DB.commit()
 
@@ -478,7 +488,6 @@ def delete_account():
                 }, 200
             except Exception as err:
                 print(err)
-                DB.close()
                 return {
                     "error": True,
                     "message": "le compte est encore utilisé !"
@@ -495,7 +504,7 @@ def delete_account():
 
 
 @verif_db
-@app.route("/api/v1/delete_fiche_metier/", methods=['DELETE'])
+@app.route("/api/v1/delete_fiche_metier", methods=['DELETE'])
 @jwt_required()
 def delete_fiche_metier():
     """

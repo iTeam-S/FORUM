@@ -1,20 +1,15 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import { CompteContext } from "utils/contexte/CompteContext";
 
-//components
-import NotificationDropdown from "components/Dropdowns/TableDropdown.js";
+import { CompteContext } from "utils/contexte/CompteContext";
+import CompteService from "utils/service/CompteService";
+
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
 
-  //convertis le tableau encore en obj en array
-  let convertCompte2Tab = Object.keys(compte).map((cle) => {
-    return [compte[cle]]
-  })
-  //mapper le tableau convertit et on a nos comptes
-  const compteTab = convertCompte2Tab.map((cpt) => {
-    return cpt[0];
-  });
+  const deleteOneCompte = (id) => {
+    CompteService.DeleteOneCompte(id);
+  }
   return (
     <>
       <div
@@ -74,11 +69,11 @@ export default function CardTable({ color}) {
             </thead>
             <tbody>
                  {
-                   compteTab.map((compte) => (
-                     <tr key={compte.id}>
+                   Object.keys(compte).map((cle) => (
+                     <tr key={compte[cle].id}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                         <img
-                          src={compte.logo ? compte.logo : require("assets/img/logodefaut.png").default}
+                          src={compte[cle].logo ? compte[cle].logo : require("assets/img/logodefaut.png").default}
                           className="h-12 w-12 bg-white rounded-full border"
                           alt="..."
                         ></img>{" "}
@@ -88,7 +83,7 @@ export default function CardTable({ color}) {
                             +(color === "light" ? "text-blueGray-600" : "text-white")
                           }
                         >
-                          {compte.nom}
+                          {compte[cle].nom}
                         </span>
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -97,7 +92,13 @@ export default function CardTable({ color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <NotificationDropdown />
+                        <button
+                          className="bg-lightBlue-800  text-white active:bg-teal-500 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                          type="button"
+                          onClick={() => deleteOneCompte(compte[cle].id)}
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                    ))

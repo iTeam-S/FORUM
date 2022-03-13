@@ -121,6 +121,25 @@ class CompteService{
         ) 
     }
 
+    UpdateCompte(nom, email, tel, domaine, lien, type, password, adresse){
+        return RouteAxios.patch('/update_account', {
+            nom, 
+            email, 
+            tel, 
+            domaine, 
+            lien, 
+            type, 
+            password, 
+            adresse
+        }, {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
+                'Content-Type': 'application/json'
+            }
+        }
+        )
+    }
+        
 }
 
 export default new CompteService();

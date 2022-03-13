@@ -1,31 +1,33 @@
 import React, {useContext} from "react";
 import { CompteContext } from "utils/contexte/CompteContext";
 import CompteService from "utils/service/CompteService";
-import { useHistory } from "react-router";
 
 import '../../assets/styles/cardStyle.css';
 
 
 export default function CardAllContenu() {
-  const {contenus, setContenu} = useContext(CompteContext); //contenus still obj
-  const history = useHistory();
+  const {contenus} = useContext(CompteContext); //contenus still obj
+
+  const contenuConvert = Object.keys(contenus).map((cle) => {
+    return contenus[cle];
+  })
 
     async function deleteContent(id_content){
      await CompteService.DeleteOneContent(id_content);
-     window.location.reload();
+      window.location.reload();
   }
 
   return (
     <>
         {/* conver obj to array */}
-       { Object.keys(contenus).map((cle) => (
-         <div className="w-full sm:w-full md:w-6/12 lg:w-4/12 px-4 text-center mt-4" key={contenus[cle].id} >
+       { contenuConvert.map((content, index) => (
+         <div className="w-full sm:w-full md:w-6/12 lg:w-4/12 px-4 text-center mt-4" key={content.id} >
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
             <div className="px-4 py-5 flex-auto">
-                <h6 className="text-xl font-semibold">{contenus[cle].titre}</h6>
+                <h6 className="text-xl font-semibold">{content.titre}</h6>
                 <div className="  mt-2 mb-4 text-blueGray-500">
                   <p className="description">
-                     {contenus[cle].description}
+                     {content.description}
                   </p>
                 </div>
             </div>
@@ -44,7 +46,7 @@ export default function CardAllContenu() {
                  type="button"
                  onClick={(e) => {
                    e.preventDefault();
-                   deleteContent(contenus[cle].id);
+                   deleteContent(content.id);
                  }}
                  >
                   Delete

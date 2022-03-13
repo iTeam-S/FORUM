@@ -7,13 +7,12 @@ import '../../assets/styles/cardStyle.css';
 
 
 export default function CardAllContenu() {
-  const {contenus} = useContext(CompteContext); //contenus still obj
+  const {contenus, setContenu} = useContext(CompteContext); //contenus still obj
   const history = useHistory();
 
-  async function deleteContent(id_content){
-    await CompteService.DeleteOneContent(id_content);
-      history.push("/adminEntreprise/Statistiques");
-      window.location.reload();
+    async function deleteContent(id_content){
+     await CompteService.DeleteOneContent(id_content);
+     window.location.reload();
   }
 
   return (
@@ -43,7 +42,10 @@ export default function CardAllContenu() {
                 </button>
                 <button className="bg-red-500 text-white w-full active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                  type="button"
-                 onClick={() => deleteContent(contenus[cle].id)}
+                 onClick={(e) => {
+                   e.preventDefault();
+                   deleteContent(contenus[cle].id);
+                 }}
                  >
                   Delete
                 </button>

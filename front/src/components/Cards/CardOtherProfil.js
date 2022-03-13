@@ -2,11 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 
-//components
-import { LoginService } from "utils/service/LoginService";
-
 export default function CardOtherProfil() {
-  const {id} = useParams();
+  // const {id} = useParams();
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
@@ -16,7 +13,7 @@ export default function CardOtherProfil() {
               <div className="relative">
                 <img
                   alt="..."
-                  src={require("assets/img/team-2-800x800.jpg").default}
+                  src={require("assets/img/logodefaut.png").default}
                   className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                 />
               </div>

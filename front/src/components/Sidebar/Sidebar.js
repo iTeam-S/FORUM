@@ -70,13 +70,34 @@ export default function Sidebar() {
                     >
                       <i
                         className={
-                          "fas fa-table mr-2 text-sm " +
+                          "fas fa-building mr-2 text-sm " +
                           (window.location.href.indexOf("/admin/TablesEntreprises") !== -1
                             ? "opacity-75"
                             : "text-blueGray-300")
                         }
                       ></i>{" "}
                       Liste entreprise
+                    </Link>
+                  </li>
+                  <li className="items-center">
+                    <Link
+                      className={
+                        "text-xs uppercase py-3 font-bold block " +
+                        (window.location.href.indexOf("/admin/AllFicheMetier") !== -1
+                          ? "text-teal-500 hover:text-teal-600"
+                          : "text-blueGray-700 hover:text-blueGray-500")
+                      }
+                      to="/admin/AllFicheMetier"
+                    >
+                      <i
+                        className={
+                          "fas fa-file mr-2 text-sm " +
+                          (window.location.href.indexOf("/admin/AllFicheMetier") !== -1
+                            ? "opacity-75"
+                            : "text-blueGray-300")
+                        }
+                      ></i>{" "}
+                      Liste fiche métier
                     </Link>
                   </li>
 
@@ -114,7 +135,7 @@ export default function Sidebar() {
                     >
                       <i
                         className={
-                          "fas fa-tools mr-2 text-sm " +
+                          "fas fa-plus mr-2 text-sm " +
                           (window.location.href.indexOf("/admin/AddFicheMetier") !== -1
                             ? "opacity-75"
                             : "text-blueGray-300")

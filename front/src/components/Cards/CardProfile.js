@@ -1,5 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+
+//style css
+import '../../assets/styles/cardStyle.css';
+
 
 //components
 import { LoginService } from "utils/service/LoginService";
@@ -16,8 +20,8 @@ export default function CardProfile() {
               <div className="relative">
                 <img
                   alt="..."
-                  src={require("assets/img/team-2-800x800.jpg").default}
-                  className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                  src={compte.logo ? compte.logo : require("assets/img/logodefaut.png").default}
+                  className="shadow-xl rounded-full image-size align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                 />
               </div>
             </div>

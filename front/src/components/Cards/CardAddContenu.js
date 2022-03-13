@@ -1,11 +1,10 @@
-import React, {useState, useContext } from "react";
+import React, {useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import {useHistory} from "react-router";
 
 // components
-import { ContenuContexte } from "utils/contexte/ContenuContexte";
 import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
 
@@ -15,7 +14,6 @@ export default function CardAddContenu() {
   const [errorMesssage,setErrorMessage]=useState("");
  
   let history = useHistory();
-  const {addContenu} = useContext(ContenuContexte);
 
   const validationSchema = Yup.object().shape({
         titre: Yup.string()
@@ -40,27 +38,12 @@ export default function CardAddContenu() {
         resolver: yupResolver(validationSchema)
       });
 
-  
 
-  const convert2base64 = file => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const lien = e.target.value;
-      return lien;
-    }
-    reader.readAsDataURL(file);
-  }
-
-
-  const  handleAddContenu = async(data, e) => {
-    e.preventDefault();
+  const  handleAddContenu = async(data) => {
         try {
-          const fichier = convert2base64(data.file[0]);
-          console.warn(fichier);
-          const newContenu = await CompteService.AddContenu(data.titre,data.description,data.type, fichier);
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
-                  addContenu(newContenu.data);
+                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
                   history.push('/adminEntreprise/AllContenu');
                   window.location.reload();
                 }
@@ -171,7 +154,6 @@ export default function CardAddContenu() {
                     <input
                       type="file"
                       name="file"
-                      onChange={(e) => convert2base64(e)}
                       {...register('file')}
                       id="inpImageContenu"
                       accept="image/jpeg, image/jpg, image/png, .pdf, video/*"

@@ -1,7 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 
 export default function CardEditProfile() {
+  const {id_compte} = useParams();
+  console.log(id_compte)
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
@@ -108,10 +111,13 @@ export default function CardEditProfile() {
                     >
                       Petite description de votre entreprise
                     </label>
-                    <textarea
-                      minlength="8" maxlenght="3000"
-                      className="border-0 px-3 py-4 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    > </textarea>
+                    <input
+                      type="text"
+                      name="description"
+                      id="inpDescription"
+                      style={{height: '70px'}}
+                      className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
@@ -123,8 +129,12 @@ export default function CardEditProfile() {
                       Video
                     </label>
                     <input
-                      type="video"
-                      className="border-0 px-3 py-6 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      type="file"
+                      name="file"
+                      id="inpVideoContenu"
+                      style={{height: '70px', padding: '25px 30px'}}
+                      accept="video/*"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
                 </div>

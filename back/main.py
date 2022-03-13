@@ -657,7 +657,7 @@ def update_content():
                         titre = %s,
                         description = %s,
                         type = %s
-                """ + (filename or '') + """
+                """ + (f'fichier = { filename }' if filename else '') + """
                     WHERE
                         id=%s AND compte_id=%s;
                 """, content)
@@ -699,11 +699,10 @@ def update_fiche_metier():
         data = request.get_json()
 
         if compte_id:
-            content = (
+            fiche_metier = (
                 data.get("titre"),
-                data.get("description"),
-                data.get("type"),
-                data.get("content_id"),
+                data.get("domaine_id"),
+                data.get("fiche_metier_id"),
                 compte_id
             )
 
@@ -725,12 +724,11 @@ def update_fiche_metier():
                         Content
                     SET
                         titre = %s,
-                        description = %s,
-                        type = %s
-                """ + (filename or '') + """
+                        domaine_id = %s
+                """ + (f'fichier = { filename }' if filename else '') + """
                     WHERE
                         id=%s AND compte_id=%s;
-                """, content)
+                """, fiche_metier)
 
                 DB.commit()
 

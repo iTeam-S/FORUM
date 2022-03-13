@@ -215,3 +215,73 @@ content-type: application/json
     "message": "Fiche Metier Deleted!"
   }
 ```
+
+## Update account information 
+
+```
+  PATCH http://127.0.0.1:5000/api/v1/update_account
+  Authorization: Bearer <Token>
+  content-type: application/json
+    
+  {
+    "nom": <nom>
+    "email": <email>
+    "tel": <tel>
+    "domaine": <domaine>
+    "password": <password>
+    "adresse": <adresse>
+    "type": <type>
+    "lien": <lien>
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": False,
+    "message": "Compte Updated!"
+  }
+```
+
+## Update content data 
+
+```
+  PATCH http://127.0.0.1:5000/api/v1/update_content
+  Authorization: Bearer <Token>
+  content-type: application/json
+    
+  {
+    "titre": <titre>,
+    "description": <description>,
+    "type": <type>,
+    "content_id": <content_id>
+    "file": <fichier>
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": False,
+    "message": "Content Updated!"
+  }
+```
+
+## Update fiche metier 
+
+```
+  PATCH http://127.0.0.1:5000/api/v1/update_fiche_metier
+  Authorization: Bearer <Token>
+  content-type: application/json
+    
+  {
+    "titre": <titre>,
+    "domaine_id": <domaine_id>,
+    "fiche_metier_id": <fiche_metier_id>,
+    "file": <fichier>
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": False,
+    "message": "Fiche Metier Updated!"
+  }

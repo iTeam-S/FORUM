@@ -19,13 +19,15 @@ export const CompteContextProvider = (props) =>{
     async function fetchCompte(){
             await CompteService.getAllCompte().then((response) => {
                 setCompte(response.data);
-                fetchFicheMetier();
+                if(LoginService.getCurrentCompte().type === 'ADMIN'){
+                    fetchFicheMetier();
+                }
             });
     }
     
 
     useEffect(() => {
-        if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ADMIN'){
+        if(LoginService.getCurrentCompte() != null){
              async function fetchContenu(){
                  await CompteService.getAllContenu().then((response) => {
                     setContenu(response.data);

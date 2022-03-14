@@ -3,7 +3,7 @@ import mysql.connector
 from werkzeug.utils import secure_filename
 # ---------------------------------------
 from flask_cors import CORS
-from flask import Flask, request, abort
+from flask import Flask, request, abort, send_from_directory
 from flask_bcrypt import check_password_hash, generate_password_hash
 # ---------------------------------------
 from flask_jwt_extended import JWTManager
@@ -812,6 +812,22 @@ def update_fiche_metier():
     except Exception as err:
         print(err)
         abort(500, description="Something went wrong !")
+
+
+@app.route('/api/v1/get_attachement/<attachement>', methods=['GET'])
+@jwt_required()
+def get_attachement(attachement):
+    """
+        DESC : Fonction permettant de récuperer un fichier
+    """
+    compte_id = get_jwt_identity().split("+")[0]
+
+    if compte_id:
+        compte_folder = os.path.join(
+            app.config['UPLOAD_FOLDER'], str(compte_id)
+        )
+        return send_from_directory(
+            directory=compte_folder, path=attachement, as_attachment=True)
 
 
 if __name__ == "__main__":

@@ -76,7 +76,7 @@ content-type: application/json
 
 ## Get list company
 ```
-  GET http://127.0.0.1:5000/api/v1/list_accounts
+  GET http://<host>:5000/api/v1/list_accounts
   Authorization: Bearer <Token>
 ```
 => RETOUR:
@@ -109,7 +109,7 @@ content-type: application/json
 ## Get list contents of a company
 
 ```
-  GET http://127.0.0.1:5000/api/v1/list_contents
+  GET http://<host>:5000/api/v1/list_contents
   Authorization: Bearer <Token>
 ```
 => RETOUR:
@@ -143,7 +143,7 @@ content-type: application/json
 ## Get list of Fiche Metier (Need Admin Access)
 
 ```
-  GET http://127.0.0.1:5000/api/v1/list_fiche_metier
+  GET http://<host>:5000/api/v1/list_fiche_metier
   Authorization: Bearer <Token>
 ```
 => RETOUR:
@@ -166,7 +166,7 @@ content-type: application/json
 ## Delete stand account (Need Admin Access)
 
 ```
-  DELETE http://127.0.0.1:5000/api/v1/delete_account
+  DELETE http://<host>:5000/api/v1/delete_account
   Authorization: Bearer <Token>
   content-type: application/json
     
@@ -186,7 +186,7 @@ content-type: application/json
 ## Delete content of an account
 
 ```
-  DELETE http://127.0.0.1:5000/api/v1/delete_content
+  DELETE http://<host>:5000/api/v1/delete_content
   Authorization: Bearer <Token>
   content-type: application/json
     
@@ -205,7 +205,7 @@ content-type: application/json
 ## Delete Fiche metier ( Need admin access )
 
 ```
-  DELETE http://127.0.0.1:5000/api/v1/delete_fiche_metier
+  DELETE http://<host>:5000/api/v1/delete_fiche_metier
   Authorization: Bearer <Token>
   content-type: application/json
     
@@ -224,7 +224,7 @@ content-type: application/json
 ## Update account information 
 
 ```
-  PATCH http://127.0.0.1:5000/api/v1/update_account
+  PATCH http://<host>:5000/api/v1/update_account
   Authorization: Bearer <Token>
   content-type: application/json
     
@@ -250,7 +250,7 @@ content-type: application/json
 ## Update content data 
 
 ```
-  PATCH http://127.0.0.1:5000/api/v1/update_content
+  PATCH http://<host>:5000/api/v1/update_content
   Authorization: Bearer <Token>
   content-type: application/json
     
@@ -272,7 +272,7 @@ content-type: application/json
 
 ## Update fiche metier 
 ```
-  PATCH http://127.0.0.1:5000/api/v1/update_fiche_metier
+  PATCH http://<host>:5000/api/v1/update_fiche_metier
   Authorization: Bearer <Token>
   content-type: application/json
     
@@ -289,4 +289,10 @@ content-type: application/json
     "error": False,
     "message": "Fiche Metier Updated!"
   }
+```
+
+## Get an attachement (image, video, pdf, ...) 
+```
+  GET http://<host>:5000/api/v1/get_attachement/<attachement_name>
+  Authorization: Bearer <Token>
 ```

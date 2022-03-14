@@ -65,6 +65,13 @@ def internal_server_error(e):
     return e, 500
 # *************************** ___________ *****************************
 
+# ************************ Handle Allowed file ************************
+ALLOWED_EXTENSIONS_VIDEOS = set(['mp4', 'mkv', 'avi', 'webm'])
+
+def allowed_file_video(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_VIDEOS
+# *************************** ___________ *****************************
+
 
 @verif_db
 @app.route("/api/v1/login", methods=['POST'])
@@ -180,42 +187,62 @@ def add_content():
     try:
         compte_id = get_jwt_identity().split("+")[0]
 
-        filename = None
-        titre = request.form.get("titre")
-        description = request.form.get("description")
-        type = request.form.get("type")
+        if request.form:
+            filename = None
+            titre = request.form.get("titre")
+            description = request.form.get("description")
+            type = request.form.get("type")
+            link = request.form.get("link")
 
-        if request.files:
-            fichier = request.files['file']
-            compte_folder = os.path.join(
-                app.config['UPLOAD_FOLDER'], str(compte_id)
-            )
-            Path(compte_folder).mkdir(parents=True, exist_ok=True)
+            if request.files:
+                fichier = request.files['file']
 
-            filename = str(time.time()) + '_' + secure_filename(
-                fichier.filename)
+                if fichier:
+                    size = len(fichier.read())
+                    if size > 25000000 and allowed_file_video(
+                        fichier.filename
+                    ):
+                        print("Here")
+                        filename = link
+                        return
+                    else:
+                        compte_folder = os.path.join(
+                            app.config['UPLOAD_FOLDER'], str(compte_id)
+                        )
+                        Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
-            fichier.save(
-                os.path.join(compte_folder, filename)
-            )
+                        filename = str(time.time()) + '_' + secure_filename(
+                            fichier.filename)
 
-        if titre and type and compte_id:
-            CURSOR.execute("""
-                INSERT INTO
-                    Contenu(titre, description, type, fichier, compte_id)
-                    VALUES (%s, %s, %s, %s, %s)
-                """, (titre, description, type, filename or None, compte_id)
-            )
-            DB.commit()
+                        fichier.save(
+                            os.path.join(compte_folder, filename)
+                        )
+                    fichier.close()
+
+            if titre and type and compte_id:
+                CURSOR.execute("""
+                    INSERT INTO
+                        Contenu(titre, description, type, fichier, compte_id)
+                        VALUES (%s, %s, %s, %s, %s)
+                    """, (
+                        titre, description, type, filename or None, compte_id
+                    )
+                )
+                DB.commit()
+
+                return {
+                    "error": False,
+                    "message": "Contenu inserted"
+                }, 200
 
             return {
-                "error": False,
-                "message": "Contenu inserted"
-            }, 200
+                "error": True,
+                "message": "Donnees obligatoires manquants"
+            }, 412
 
         return {
             "error": True,
-            "message": "Donnees obligatoires manquants"
+            "message": "Pas de donnee envoye dans le formulaire."
         }, 412
 
     except Exception as err:
@@ -734,14 +761,14 @@ def update_fiche_metier():
 
                 return {
                     "error": False,
-                    "message": "Account Updated!"
+                    "message": "Fiche Metier Updated!"
                 }, 200
             except Exception as err:
                 print(err)
                 DB.close()
                 return {
                     "error": True,
-                    "message": "le Compte est encore utilisé !"
+                    "message": "le Fiche metier est encore utilisé !"
                 }, 400
 
         return {

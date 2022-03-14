@@ -224,13 +224,13 @@ content-type: application/json
   content-type: application/json
     
   {
-    "nom": <nom>
-    "email": <email>
-    "tel": <tel>
-    "domaine": <domaine>
-    "password": <password>
-    "adresse": <adresse>
-    "type": <type>
+    "nom": <nom>,
+    "email": <email>,
+    "tel": <tel>,
+    "domaine": <domaine>,
+    "password": <password>,
+    "adresse": <adresse>,
+    "type": <type>,
     "lien": <lien>
   }
 ```
@@ -253,7 +253,7 @@ content-type: application/json
     "titre": <titre>,
     "description": <description>,
     "type": <type>,
-    "content_id": <content_id>
+    "content_id": <content_id>,
     "file": <fichier>
   }
 ```
@@ -285,3 +285,4 @@ content-type: application/json
     "error": False,
     "message": "Fiche Metier Updated!"
   }
+```

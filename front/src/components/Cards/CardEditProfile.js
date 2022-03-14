@@ -1,17 +1,16 @@
-import React, {useState} from "react";
+import React, {useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import {useHistory} from "react-router";
 
-//components
+// components
 import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
 
 
 export default function CardEditProfile() {
   const compte = LoginService.getCurrentCompte();
-
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
  
@@ -46,7 +45,7 @@ export default function CardEditProfile() {
         resolver: yupResolver(validationSchema)
       });
 
-  const  handleUpdate = async(data) => {
+  const  handleEditAccount = async(data) => {
         try {
             if(compte !== null){
                 await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse)
@@ -54,11 +53,10 @@ export default function CardEditProfile() {
                 window.location.reload();
             }else{
                 setErreur(true);
-                setErrorMessage("Echec à la modification");
+                setErrorMessage("Echec à la registration");
             }
         } catch (error) {
-            setErreur(true)
-            setErrorMessage(error.response.data.message)
+            setErreur(true);
         }
     }
 
@@ -66,10 +64,10 @@ export default function CardEditProfile() {
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-        <form onSubmit={handleSubmit(handleUpdate)}>
+        <form onSubmit={handleSubmit(handleEditAccount)}>
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold">Modifier votre profile</h6>
+              <h6 className="text-blueGray-700 text-xl font-bold">Edit compte</h6>
               <input 
                 className="bg-teal-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="submit"              
@@ -79,7 +77,7 @@ export default function CardEditProfile() {
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Information su votre entreprise
+                Information de l'entreprise
               </h6>
               <div className="flex flex-wrap">
                 <div className="w-full lg:w-6/12 px-4">
@@ -94,6 +92,7 @@ export default function CardEditProfile() {
                       type="text"
                       name="nom"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Nom de l'entreprise"
                       defaultValue={compte.nom}
                       {...register('nom')}
                    />
@@ -133,7 +132,7 @@ export default function CardEditProfile() {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       {...register('domaine')}
                     >
-                         <option  defaultValue={compte.domaine} hidden>{compte.domaine}</option>
+                         <option  defaultValue={compte.domaine} hidden>{compte.domaine} </option>
                          <option key="1" value="Santé">Santé</option>
                          <option key="2" value="Informatique">Informatique</option>
                          <option key="3" value="Commerce et Admnistration">Commerce et Admnistration</option>
@@ -142,7 +141,6 @@ export default function CardEditProfile() {
                          <option key="6" value="Tourisme">Tourisme</option>
                          <option key="7" value="Industrie et BT">Industrie et BT</option>
                          <option key="8" value="Justice et Force de l'ordre">Justice et Force de l'ordre</option>
-
                     </select>
                     <p className="text-red-500 italic">{errors.domaine?.message}</p>
                   </div>
@@ -159,9 +157,55 @@ export default function CardEditProfile() {
                       type="password"
                       name="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      defaultValue={compte.password}
                       {...register('password')}
                     />
                     <p className="text-red-500 italic">{errors.password?.message}</p>
+                  </div>
+                </div>
+              </div>
+
+              <hr className="mt-6 border-b-1 border-blueGray-300" />
+
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Information sur les contacts
+              </h6>
+              <div className="flex flex-wrap">
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Contact
+                    </label>
+                    <input
+                      type="text"
+                      name="tel"
+                      placeholder="VOtre numéro téléphone..."
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      defaultValue={compte.tel}
+                      {...register('tel')}
+                    />
+                    <p className="text-red-500 italic">{errors.tel?.message}</p>
+                  </div>
+                </div>
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      defaultValue={compte.email}
+                      {...register('email')}
+                    />
+                    <p className="text-red-500 italic">{errors.email?.message}</p>
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
@@ -176,53 +220,11 @@ export default function CardEditProfile() {
                       type="text"
                       name="adresse"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Votre adresse..."
                       defaultValue={compte.adresse}
+                      {...register('adresse')}
                     />
-                  </div>
-                </div>
-                <div className="w-full sm:6/12 md:6/12 lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                     <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Contact
-                    </label>
-                    <input
-                      type="text"
-                      name="tel"
-                      placeholder="VOtre numéro téléphone..."
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      {...register('tel')}
-                      defaultValue={compte.tel}
-                    />
-                    <p className="text-red-500 italic">{errors.tel?.message}</p>
-                  </div>
-                </div>
-              </div>
-
-              <hr className="mt-6 border-b-1 border-blueGray-300" />
-
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Modifier les informations sur les contacts
-              </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      {...register('email')}
-                      defaultValue={compte.email}
-                    />
-                    <p className="text-red-500 italic">{errors.email?.message}</p>
+                    <p className="text-red-500 italic">{errors.adresse?.message}</p>
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
@@ -238,8 +240,8 @@ export default function CardEditProfile() {
                       name="lien"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Lien vers votre site.."
-                      {...register('lien')}
                       defaultValue={compte.lien}
+                      {...register('lien')}
                     />
                     <p className="text-red-500 italic">{errors.lien?.message}</p>
                   </div>

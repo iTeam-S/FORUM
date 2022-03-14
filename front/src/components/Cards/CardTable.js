@@ -9,6 +9,7 @@ export default function CardTable({ color}) {
 
   const deleteOneCompte = (id) => {
     CompteService.DeleteOneCompte(id);
+    window.location.reload();
   }
   return (
     <>

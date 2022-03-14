@@ -27,11 +27,12 @@ import AddFicheMetier from "views/admin/AddFicheMetier";
 
 //views entreprise
 import ProfilEntreprise from "views/admin-entreprise/ProfilEntreprise.js";
-import CardOtherProfil from "components/Cards/CardOtherProfil";
 import Statistiques from "views/admin-entreprise/Statistiques.js"
 import AllContenu from "views/admin-entreprise/AllContenu.js";
 import AddContenu from "views/admin-entreprise/AddContenu.js";
 import AllFicheMetier from "views/admin/AllFicheMetier";
+import CardEditContenu from "components/Cards/CardEditContenu";
+import CardEditFiche from "components/Cards/CardEditFiche";
 
 
 ReactDOM.render(
@@ -58,6 +59,9 @@ ReactDOM.render(
             <EntrepriseRoute path="/adminEntreprise/CardEditProfile" exact >
               <CardEditProfile />
             </EntrepriseRoute>
+            <EntrepriseRoute path="/adminEntreprise/CardEditContenu" exact >
+              <CardEditContenu />
+            </EntrepriseRoute>
 
             {/*admin route */}
               <AdminRoute exact path="/admin/TablesEntreprises">
@@ -69,8 +73,8 @@ ReactDOM.render(
               <AdminRoute exact path="/adminEntreprise/ProfilEntreprise">
                 <ProfilEntreprise /> 
               </AdminRoute>
-              <AdminRoute exact path="/admin/ProfilEntrprise/:id">
-                <CardOtherProfil />
+              <AdminRoute exact path="/admin/CardEditFiche">
+                <CardEditFiche />
               </AdminRoute>
               <AdminRoute exact path="/admin/AddEntreprise">
                 <AddEntreprise /> 

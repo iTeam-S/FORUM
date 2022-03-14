@@ -41,6 +41,7 @@ export const CompteContextProvider = (props) =>{
             }
             fetchContenu();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
 

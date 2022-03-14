@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -7,10 +7,21 @@ import {useHistory} from "react-router";
 // components
 import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
+import { CompteContext } from "utils/contexte/CompteContext";
 
 
 export default function CardEditProfile() {
-  const compte = LoginService.getCurrentCompte();
+  const {compte} = useContext(CompteContext);
+  const compteFromService = LoginService.getCurrentCompte();
+  const compteConv = Object.keys(compte).map((cle) =>{
+    return compte[cle];
+  })
+  
+  const compteCurrent = compteConv.filter((compteConvertis) => {
+    return compteConvertis.id === compteFromService.id;
+  })
+  console.log(compteCurrent)
+
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
  
@@ -49,7 +60,7 @@ export default function CardEditProfile() {
         try {
             if(compte !== null){
                 await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse)
-                history.push('/admin/TablesEntreprises');
+                history.push('/adminEntreprise/ProfilEntreprise');
                 window.location.reload();
             }else{
                 setErreur(true);
@@ -93,7 +104,7 @@ export default function CardEditProfile() {
                       name="nom"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Nom de l'entreprise"
-                      defaultValue={compte.nom}
+                      defaultValue={compteCurrent.nom}
                       {...register('nom')}
                    />
                    <p className="text-red-500 italic">{errors.nom?.message}</p>
@@ -112,7 +123,7 @@ export default function CardEditProfile() {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       {...register('type')}
                     >
-                         <option defaultValue={compte.type}  hidden>{compte.type}</option>
+                         <option defaultValue={compteCurrent.type}  hidden>{compteCurrent.type}</option>
                          <option key="1" value="ADMIN"> ADMIN</option>
                          <option key="2" value="ENTREPRISE">ENTREPRISE</option>
                     </select>
@@ -132,7 +143,7 @@ export default function CardEditProfile() {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       {...register('domaine')}
                     >
-                         <option  defaultValue={compte.domaine} hidden>{compte.domaine} </option>
+                         <option  defaultValue={compteCurrent.domaine} hidden>{compteCurrent.domaine} </option>
                          <option key="1" value="Santé">Santé</option>
                          <option key="2" value="Informatique">Informatique</option>
                          <option key="3" value="Commerce et Admnistration">Commerce et Admnistration</option>
@@ -157,7 +168,7 @@ export default function CardEditProfile() {
                       type="password"
                       name="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={compte.password}
+                      defaultValue={compteCurrent.password}
                       {...register('password')}
                     />
                     <p className="text-red-500 italic">{errors.password?.message}</p>
@@ -184,7 +195,7 @@ export default function CardEditProfile() {
                       name="tel"
                       placeholder="VOtre numéro téléphone..."
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={compte.tel}
+                      defaultValue={compteCurrent.tel}
                       {...register('tel')}
                     />
                     <p className="text-red-500 italic">{errors.tel?.message}</p>
@@ -202,7 +213,7 @@ export default function CardEditProfile() {
                       type="email"
                       name="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={compte.email}
+                      defaultValue={compteCurrent.email}
                       {...register('email')}
                     />
                     <p className="text-red-500 italic">{errors.email?.message}</p>
@@ -221,7 +232,7 @@ export default function CardEditProfile() {
                       name="adresse"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Votre adresse..."
-                      defaultValue={compte.adresse}
+                      defaultValue={compteCurrent.adresse}
                       {...register('adresse')}
                     />
                     <p className="text-red-500 italic">{errors.adresse?.message}</p>
@@ -240,7 +251,7 @@ export default function CardEditProfile() {
                       name="lien"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Lien vers votre site.."
-                      defaultValue={compte.lien}
+                      defaultValue={compteCurrent.lien}
                       {...register('lien')}
                     />
                     <p className="text-red-500 italic">{errors.lien?.message}</p>

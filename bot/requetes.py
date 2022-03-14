@@ -30,7 +30,7 @@ class Requete:
             return fonction(*arg, **kwarg)
 
         return trt_verif
-    
+
     @verif_db
     def verif_utilisateur(self, user_id):
         '''
@@ -45,21 +45,21 @@ class Requete:
         '''
         self.cursor.execute(req, (user_id,))
         self.db.commit()
-    
+
     @verif_db
-    def get_user_lang(self,user_id):
+    def get_user_lang(self, user_id):
         req = "SELECT lang FROM Public WHERE facebook_id = %s"
         self.cursor.execute(req, (user_id,))
         data = self.cursor.fetchone()[0]
         self.db.commit()
         return data
-    
+
     @verif_db
-    def update_lang(self,user_id,lang):
+    def update_lang(self, user_id, lang):
         req = "UPDATE Public SET lang = %s WHERE facebook_id = %s"
         self.cursor.execute(req, (lang, user_id))
         self.db.commit()
-        
+
     @verif_db
     def set_action(self, user_id, action):
         '''
@@ -68,13 +68,13 @@ class Requete:
         req = 'UPDATE Public SET action = %s WHERE facebook_id = %s'
         self.cursor.execute(req, (action, user_id))
         self.db.commit()
-    
+
     @verif_db
     def set_temp(self, user_id, temp):
         req = 'UPDATE Public SET temp = %s WHERE facebook_id = %s'
         self.cursor.execute(req, (temp, user_id))
         self.db.commit()
-        
+
     @verif_db
     def get_action(self, user_id):
         '''
@@ -85,7 +85,7 @@ class Requete:
         data = self.cursor.fetchone()[0]
         self.db.commit()
         return data
-    
+
     @verif_db
     def get_temp(self, user_id):
         '''
@@ -106,7 +106,7 @@ class Requete:
         '''
         req = """
             SELECT f.id,f.titre,f.fichier
-            FROM Fiche_metier f 
+            FROM Fiche_metier f
             JOIN Domaine d ON f.domaine_id = d.id
             WHERE nom = %s
         """
@@ -114,7 +114,7 @@ class Requete:
         data = self.cursor.fetchall()
         self.db.commit()
         return data
-            
+
     @verif_db
     def inserer_consultation(self, user_id, contenu, types):
         req = """
@@ -124,9 +124,9 @@ class Requete:
         """
         self.cursor.execute(req, (user_id, types, contenu))
         self.db.commit()
-    
+
     @verif_db
-    def  rechercher_fiche_metier(self, query):
+    def rechercher_fiche_metier(self, query):
         req = """
                 SELECT id,titre,fichier
                 FROM Fiche_metier
@@ -137,7 +137,7 @@ class Requete:
         data = self.cursor.fetchall()
         self.db.commit()
         return data
-    
+
     @verif_db
     def tous_les_stands(self):
         req = """
@@ -150,9 +150,9 @@ class Requete:
         data = self.cursor.fetchall()
         self.db.commit()
         return data
-    
+
     @verif_db
-    def  rechercher_fiche_stands(self, query):
+    def rechercher_fiche_stands(self, query):
         req = """
                 SELECT id,logo,nom,description
                 FROM Compte
@@ -165,113 +165,122 @@ class Requete:
         data = self.cursor.fetchall()
         self.db.commit()
         return data
-    
+
     @verif_db
-    def informations_de_chaque_stand(self,id_stand):
+    def informations_de_chaque_stand(self, id_stand):
         req = """
                 SELECT tel,email,lien,adresse,description
                 FROM Compte
                 WHERE Id = %s
         """
-        self.cursor.execute(req,(id_stand,))
-        data = self.cursor.fetchall()
-        self.db.commit()
-        return data
-    
-    @verif_db
-    def galerie_de_chaque_stand(self,id_stand):
-        req = """
-            SELECT id,titre,fichier 
-            FROM Contenu
-            WHERE type = "galerie" 
-            AND compte_id = %s
-        """
-        self.cursor.execute(req,(id_stand,))
+        self.cursor.execute(req, (id_stand,))
         data = self.cursor.fetchall()
         self.db.commit()
         return data
 
     @verif_db
-    def presentation_stand(self,id_stand):
+    def galerie_de_chaque_stand(self, id_stand):
+        req = """
+            SELECT id,titre,fichier
+            FROM Contenu
+            WHERE type = "galerie"
+            AND compte_id = %s
+        """
+        self.cursor.execute(req, (id_stand,))
+        data = self.cursor.fetchall()
+        self.db.commit()
+        return data
+
+    @verif_db
+    def presentation_stand(self, id_stand):
         req = """
                 SELECT video
                 FROM Compte
                 WHERE Id = %s
         """
-        self.cursor.execute(req,(id_stand,))
+        self.cursor.execute(req, (id_stand,))
         data = self.cursor.fetchone()[0]
         self.db.commit()
         return data
-    
+
     @verif_db
-    def verification_consultation(self,id_user,types,dimension):
+    def verification_consultation(self, id_user, types, dimension):
         req = """
-            SELECT 1 FROM Consultation 
+            SELECT 1 FROM Consultation
             WHERE id = (SELECT id FROM Public WHERE facebook_id = %s)
-            AND  type = %s 
+            AND  type = %s
             AND dimension = %s
             AND date = CURDATE()
         """
-        self.cursor.execute(req,(id_user,types,dimension))
+        self.cursor.execute(req, (id_user, types, dimension))
         data = self.cursor.fetchone()
         self.db.commit()
         return data
-    
+
     @verif_db
     def emploi_de_chaque_stands(self, id_stand):
         req = """
             SELECT id, titre, fichier
-            FROM Contenu 
-            WHERE type = "emploi" 
+            FROM Contenu
+            WHERE type = "emploi"
             AND compte_id = %s
         """
-        self.cursor.execute(req,(id_stand,))
+        self.cursor.execute(req, (id_stand,))
         data = self.cursor.fetchall()
         self.db.commit()
         return data
-    
+
     @verif_db
-    def description_de_chaque_contenu(self,id_contenu):
+    def description_de_chaque_contenu(self, id_contenu):
         req = "SELECT description FROM Contenu WHERE id= %s"
-        self.cursor.execute(req,(id_contenu,))
+        self.cursor.execute(req, (id_contenu,))
         data = self.cursor.fetchone()
         self.db.commit()
         return data
-    
+
     @verif_db
     def evenement_chaque_stand(self, id_stand):
         req = """
             SELECT id, titre,fichier
-            FROM Contenu 
+            FROM Contenu
             WHERE type = "evenement"
             AND compte_id = %s
         """
-        self.cursor.execute(req,(id_stand,))
+        self.cursor.execute(req, (id_stand,))
         data = self.cursor.fetchall()
         self.db.commit()
         return data
 
     @verif_db
-    def insert_kavio(self,id_user,num_question,id_part,serie,categorie,point):
+    def insert_kavio(
+        self, id_user, num_question, id_part, serie, categorie, point
+    ):
         req = """
-            INSERT into Test_KAVIO(id_user,num_question,id_part,serie,categorie,point)
+            INSERT into Test_KAVIO(
+                id_user,
+                num_question,
+                id_part,
+                serie,
+                categorie,
+                point)
             VALUES(
                 (SELECT id FROM Public WHERE facebook_id = %s),%s,%s,%s,%s,%s
-            ) 
-    """
-        self.cursor.execute(req,(id_user,num_question,id_part,serie,categorie,point))
+            )
+        """
+        self.cursor.execute(req, (
+            id_user, num_question, id_part, serie, categorie, point))
         self.db.commit()
 
     @verif_db
-    def verif_trois_vrai(self,id_part,serie):
+    def verif_trois_vrai(self, id_part, serie):
         req = """
-            SELECT COUNT(point) 
+            SELECT COUNT(point)
             FROM Test_KAVIO
             WHERE id_part=%s
             AND serie=%s
             AND point=1
         """
-        self.cursor.execute(req,(id_part,serie))
+        self.cursor.execute(req, (id_part, serie))
         data = self.cursor.fetchone()[0]
         self.db.commit()
         return data

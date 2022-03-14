@@ -89,7 +89,8 @@ content-type: application/json
         "domaine": <stand_domaine>,
         "lien": <site_link>,
         "type": <account_type>,
-        "adresse": "<addresse_of_company>"
+        "adresse": "<addresse_of_company>",
+        "visiteurs": "<visiteurs>",
       },
       "1": {
         "nom": <stand_name>,
@@ -99,6 +100,7 @@ content-type: application/json
         "lien": <site_link>,
         "type": <account_type>,
         "adresse": "<addresse_of_company>"
+        "visiteurs": "<visiteurs>"
       },
       ....
   }
@@ -117,19 +119,22 @@ content-type: application/json
     "description": <description>,
     "fichier": <fichier> ,
     "titre": <titre> ,
-    "type": <type>
+    "type": <type>,
+    "vus": <vus>
   },
   "1": {
     "description": <description>,
     "fichier": <fichier> ,
     "titre": <titre> ,
-    "type": <type> 
+    "type": <type>,
+    "vus": <vus>
   },
     "2": {
     "description": <description>,
     "fichier": <fichier> ,
     "titre": <titre> ,
-    "type": <type> 
+    "type": <type>,
+    "vus": <vus>
   },
   ...
 }
@@ -266,7 +271,6 @@ content-type: application/json
 ```
 
 ## Update fiche metier 
-
 ```
   PATCH http://127.0.0.1:5000/api/v1/update_fiche_metier
   Authorization: Bearer <Token>

@@ -65,11 +65,14 @@ def internal_server_error(e):
     return e, 500
 # *************************** ___________ *****************************
 
+
 # ************************ Handle Allowed file ************************
 ALLOWED_EXTENSIONS_VIDEOS = set(['mp4', 'mkv', 'avi', 'webm'])
 
+
 def allowed_file_video(filename):
-	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_VIDEOS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower(
+        ) in ALLOWED_EXTENSIONS_VIDEOS
 # *************************** ___________ *****************************
 
 
@@ -320,9 +323,28 @@ def list_accounts():
         if access == "ADMIN":
             CURSOR.execute("""
                 SELECT
-                   id, nom, tel, email, type, lien, logo , domaine, adresse
+                   Cp.id,
+                   Cp.nom,
+                   Cp.tel,
+                   Cp.email,
+                   Cp.type,
+                   Cp.lien,
+                   Cp.logo ,
+                   Cp.domaine,
+                   Cp.adresse,
+                   COUNT(DISTINCT Cs.id) visiteurs
                 FROM
-                    Compte;
+                    Compte Cp
+                JOIN
+                    Contenu Ct
+                ON
+                    Cp.id = Ct.compte_id
+                JOIN
+                    Consultation Cs
+                ON
+                    Ct.id = Cs.dimension
+                GROUP BY
+                    Cp.id;
             """)
             accounts = CURSOR.fetchall()
 
@@ -362,11 +384,22 @@ def list_contents():
         if compte_id:
             CURSOR.execute("""
                 SELECT
-                    id, titre, description, type, fichier
+                    Ct.id,
+                    Ct.titre,
+                    Ct.description,
+                    Ct.type,
+                    Ct.fichier,
+                    COUNT(DISTINCT Cs.id) Vues
                 FROM
-                    Contenu
+                    `Contenu` Ct
+                JOIN
+                    `Consultation` Cs
+                ON
+                    Ct.id = Cs.dimension
                 WHERE
-                    compte_id=%s;
+                    Ct.compte_id=%s
+                GROUP BY
+                    Ct.id;
             """, (compte_id,))
             contents = CURSOR.fetchall()
             if contents:

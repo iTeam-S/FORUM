@@ -1,4 +1,4 @@
-import {createContext, useLayoutEffect, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 import CompteService from 'utils/service/CompteService';
 import { LoginService } from 'utils/service/LoginService';
 
@@ -18,13 +18,13 @@ export const CompteContextProvider = (props) =>{
     
     async function fetchCompte(){
             await CompteService.getAllCompte().then((response) => {
-                setCompte(response.data);
+                setCompte([...contenus, response.data]);
                 fetchFicheMetier();
             });
     }
     
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ADMIN'){
              async function fetchContenu(){
                  await CompteService.getAllContenu().then((response) => {

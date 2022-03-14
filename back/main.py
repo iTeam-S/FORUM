@@ -347,6 +347,7 @@ def list_accounts():
                     Cp.id;
             """)
             accounts = CURSOR.fetchall()
+            print(accounts)
 
             if accounts:
                 return {
@@ -609,7 +610,7 @@ def delete_fiche_metier():
 
 
 @verif_db
-@app.route("/api/v1/update_account/", methods=['PATCH'])
+@app.route("/api/v1/update_account", methods=['PATCH'])
 @jwt_required()
 def update_account():
     """
@@ -632,7 +633,7 @@ def update_account():
                 data.get("adresse"),
                 data.get("type"),
                 data.get("lien"),
-                compte_id
+                int(compte_id)
             )
             try:
                 CURSOR.execute("""
@@ -646,7 +647,7 @@ def update_account():
                         password = %s,
                         adresse = %s,
                         type = %s,
-                        lien = %s,
+                        lien = %s
 
                     WHERE
                         id=%s;

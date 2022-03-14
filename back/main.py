@@ -678,7 +678,7 @@ def update_account():
 
 
 @verif_db
-@app.route("/api/v1/update_content/", methods=['PATCH'])
+@app.route("/api/v1/update_content", methods=['PATCH'])
 @jwt_required()
 def update_content():
     """
@@ -748,7 +748,7 @@ def update_content():
 
 
 @verif_db
-@app.route("/api/v1/update_fiche_metier/", methods=['PATCH'])
+@app.route("/api/v1/update_fiche_metier", methods=['PATCH'])
 @jwt_required()
 def update_fiche_metier():
     """
@@ -764,7 +764,7 @@ def update_fiche_metier():
                 data.get("titre"),
                 data.get("domaine_id"),
                 data.get("fiche_metier_id"),
-                compte_id
+                int(compte_id)
             )
 
             if request.files:

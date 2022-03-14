@@ -253,7 +253,7 @@ class Messenger:
 
         header = {'content-type': 'application/json; charset=utf-8'}
         params = {"access_token": self.token}
-        
+
         self.send_action(dest_id, 'typing_off')
         return requests.post(
             self.url + '/messages',

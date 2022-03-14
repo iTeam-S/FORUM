@@ -473,17 +473,17 @@ class Traitement(Options):
         
         if postback_payload[0] == "__VOIR":
             self.bot.send_file_url(user_id, postback_payload[-2], 'image')
-            
+
             self.req.inserer_consultation(
                 user_id,
                 postback_payload[-3],
                 types=postback_payload[-1])
             return True
-            
+
         elif postback_payload[0] == "__VOIR_EMPLOI":
-            
+
             description = self.req.description_de_chaque_contenu(postback_payload[1])
-            
+
             if postback_payload[-2].endswith(".pdf"):
                 if description:
                     self.bot.send_message(
@@ -495,14 +495,14 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype='file'
                     )
-                    
+
                 else:
                     self.bot.send_file_url(
                         user_id,
                         postback_payload[-2],
                         filetype='file'
                     )
-            
+
             else:
                 if description:
                     self.bot.send_message(
@@ -514,7 +514,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype="image"
                     )
-                    
+
                 else:
                     self.bot.send_file_url(
                         user_id,
@@ -531,7 +531,7 @@ class Traitement(Options):
 
         elif postback_payload[0] == "__VOIR_EVENEMENT":
             description = self.req.description_de_chaque_contenu(postback_payload[1])
-            
+
             if postback_payload[-2].endswith(".pdf"):
                 if description:
                     self.bot.send_message(
@@ -543,7 +543,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype='file'
                     )
-                    
+
                 else:
                     self.bot.send_file_url(
                         user_id,
@@ -551,7 +551,6 @@ class Traitement(Options):
                         filetype='file'
                     )
 
-                    
             elif postback_payload[-2].endswith(".mp4"):
                 if description:
                     self.bot.send_message(
@@ -563,14 +562,14 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype='video'
                     )
-                    
+
                 else:
                     self.bot.send_file_url(
                         user_id,
                         postback_payload[-2],
                         filetype='video'
                     )
-                
+
             elif postback_payload[-1] == "CONTENU_URL":
                 description_url = self.req.description_de_chaque_contenu(postback_payload[1])
                 if description_url:
@@ -582,7 +581,7 @@ class Traitement(Options):
                         user_id,
                         postback_payload[-2]
                     )
-                    
+
                 else:
                     self.bot.send_message(
                         user_id,
@@ -606,21 +605,21 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype="image"
                     )
-                    
+
                 else:
                     self.bot.send_file_url(
                         user_id,
                         postback_payload[-2],
                         filetype="image"
                     )
-            
+
             self.req.inserer_consultation(
                 user_id,
                 postback_payload[1],
                 postback_payload[-1]
             )
             return True
-            
+
         elif postback_payload[0] == "__VISITER":
             self.bot.send_quick_reply(
                 user_id,
@@ -629,7 +628,7 @@ class Traitement(Options):
                 postback_payload[-1]
             )
             return True
-            
+
     def traitement_action(self, user_id, user_lang, commande, statut):
         """
             IL Y A DES MOMENTS QUE LES UTILISATEUR POSTENT
@@ -642,7 +641,7 @@ class Traitement(Options):
             ET ALORS GERER TOUS ÇA L'INTERER DE CREER CETTE 
             METHODE
         """
-        
+
         if statut == "CHERCHER_FICHE_METIER":
             data = self.req.rechercher_fiche_metier(commande.strip())
             if data:
@@ -658,7 +657,7 @@ class Traitement(Options):
                     types="recherche",
                     payload_plus_de_dix="__VOIR_LISTE_FICHE_METIER_RECHERCHE"
                 )
-                
+
                 if len(data) > 10:
                     """
                         On assigne dans le temp de l'utilisateur le mot clé
@@ -702,7 +701,7 @@ class Traitement(Options):
                 )
                 self.req.set_action(user_id, None)
                 return True
-            
+
             else:
                 self.bot.send_message(
                     user_id,
@@ -717,7 +716,7 @@ class Traitement(Options):
                 return True
 
     #-------------------------------------------------------------------------------------------#
-    #                       ROUTAGES VERS LES DIFFERENTS TRAITEMENTS                            #              
+    #                       ROUTAGES VERS LES DIFFERENTS TRAITEMENTS                            #
     #-------------------------------------------------------------------------------------------#
     def __execution(self, user_id, commande):
         """

@@ -335,11 +335,11 @@ def list_accounts():
                    COUNT(DISTINCT Cs.id) visiteurs
                 FROM
                     Compte Cp
-                JOIN
+                LEFT JOIN
                     Contenu Ct
                 ON
                     Cp.id = Ct.compte_id
-                JOIN
+                LEFT JOIN
                     Consultation Cs
                 ON
                     Ct.id = Cs.dimension
@@ -393,7 +393,7 @@ def list_contents():
                     COUNT(DISTINCT Cs.id) Vues
                 FROM
                     `Contenu` Ct
-                JOIN
+                LEFT JOIN
                     `Consultation` Cs
                 ON
                     Ct.id = Cs.dimension

@@ -20,7 +20,6 @@ export default function CardEditProfile() {
   const compteCurrent = compteConv.filter((compteConvertis) => {
     return compteConvertis.id === compteFromService.id;
   })
-  console.log(compteCurrent)
 
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
@@ -86,179 +85,183 @@ export default function CardEditProfile() {
               />
             </div>
           </div>
-          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Information de l'entreprise
-              </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Nom
-                    </label>
-                    <input
-                      type="text"
-                      name="nom"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Nom de l'entreprise"
-                      defaultValue={compteCurrent.nom}
-                      {...register('nom')}
-                   />
-                   <p className="text-red-500 italic">{errors.nom?.message}</p>
-                  </div>
-                </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Type de compte
-                    </label>
-                    <select
-                      name="type"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      {...register('type')}
-                    >
-                         <option defaultValue={compteCurrent.type}  hidden>{compteCurrent.type}</option>
-                         <option key="1" value="ADMIN"> ADMIN</option>
-                         <option key="2" value="ENTREPRISE">ENTREPRISE</option>
-                    </select>
-                    <p className="text-red-500 italic">{errors.type?.message}</p>
-                  </div>
-                </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Domaine
-                    </label>
-                    <select
-                      name="domaine"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      {...register('domaine')}
-                    >
-                         <option  defaultValue={compteCurrent.domaine} hidden>{compteCurrent.domaine} </option>
-                         <option key="1" value="Santé">Santé</option>
-                         <option key="2" value="Informatique">Informatique</option>
-                         <option key="3" value="Commerce et Admnistration">Commerce et Admnistration</option>
-                         <option key="4" value="Agronomie">Agronomie</option>
-                         <option key="5" value="Science Humaine et Communication">Science Humaine et Communication</option>
-                         <option key="6" value="Tourisme">Tourisme</option>
-                         <option key="7" value="Industrie et BT">Industrie et BT</option>
-                         <option key="8" value="Justice et Force de l'ordre">Justice et Force de l'ordre</option>
-                    </select>
-                    <p className="text-red-500 italic">{errors.domaine?.message}</p>
-                  </div>
-                </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Mot de passe
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={compteCurrent.password}
-                      {...register('password')}
+          {
+            compteCurrent.map((compte) => (
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" key={compte.id}>
+                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                  Information de l'entreprise
+                </h6>
+                <div className="flex flex-wrap">
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Nom
+                      </label>
+                      <input
+                        type="text"
+                        name="nom"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Nom de l'entreprise"
+                        defaultValue={compte.nom}
+                        {...register('nom')}
                     />
-                    <p className="text-red-500 italic">{errors.password?.message}</p>
+                    <p className="text-red-500 italic">{errors.nom?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Type de compte
+                      </label>
+                      <select
+                        name="type"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        {...register('type')}
+                      >
+                          <option defaultValue={compte.type}  hidden>{compte.type}</option>
+                          <option key="1" value="ADMIN"> ADMIN</option>
+                          <option key="2" value="ENTREPRISE">ENTREPRISE</option>
+                      </select>
+                      <p className="text-red-500 italic">{errors.type?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Domaine
+                      </label>
+                      <select
+                        name="domaine"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        {...register('domaine')}
+                      >
+                          <option  defaultValue={compte.domaine} hidden>{compte.domaine} </option>
+                          <option key="1" value="Santé">Santé</option>
+                          <option key="2" value="Informatique">Informatique</option>
+                          <option key="3" value="Commerce et Admnistration">Commerce et Admnistration</option>
+                          <option key="4" value="Agronomie">Agronomie</option>
+                          <option key="5" value="Science Humaine et Communication">Science Humaine et Communication</option>
+                          <option key="6" value="Tourisme">Tourisme</option>
+                          <option key="7" value="Industrie et BT">Industrie et BT</option>
+                          <option key="8" value="Justice et Force de l'ordre">Justice et Force de l'ordre</option>
+                      </select>
+                      <p className="text-red-500 italic">{errors.domaine?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Mot de passe
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        defaultValue={compte.password}
+                        {...register('password')}
+                      />
+                      <p className="text-red-500 italic">{errors.password?.message}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <hr className="mt-6 border-b-1 border-blueGray-300" />
+                <hr className="mt-6 border-b-1 border-blueGray-300" />
 
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Information sur les contacts
-              </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Contact
-                    </label>
-                    <input
-                      type="text"
-                      name="tel"
-                      placeholder="VOtre numéro téléphone..."
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={compteCurrent.tel}
-                      {...register('tel')}
-                    />
-                    <p className="text-red-500 italic">{errors.tel?.message}</p>
+                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                  Information sur les contacts
+                </h6>
+                <div className="flex flex-wrap">
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Contact
+                      </label>
+                      <input
+                        type="text"
+                        name="tel"
+                        placeholder="VOtre numéro téléphone..."
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        defaultValue={compte.tel}
+                        {...register('tel')}
+                      />
+                      <p className="text-red-500 italic">{errors.tel?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        defaultValue={compte.email}
+                        {...register('email')}
+                      />
+                      <p className="text-red-500 italic">{errors.email?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Adresse
+                      </label>
+                      <input
+                        type="text"
+                        name="adresse"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Votre adresse..."
+                        defaultValue={compte.adresse}
+                        {...register('adresse')}
+                      />
+                      <p className="text-red-500 italic">{errors.adresse?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Site web
+                      </label>
+                      <input
+                        type="url"
+                        name="lien"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Lien vers votre site.."
+                        defaultValue={compte.lien}
+                        {...register('lien')}
+                      />
+                      <p className="text-red-500 italic">{errors.lien?.message}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={compteCurrent.email}
-                      {...register('email')}
-                    />
-                    <p className="text-red-500 italic">{errors.email?.message}</p>
-                  </div>
-                </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Adresse
-                    </label>
-                    <input
-                      type="text"
-                      name="adresse"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Votre adresse..."
-                      defaultValue={compteCurrent.adresse}
-                      {...register('adresse')}
-                    />
-                    <p className="text-red-500 italic">{errors.adresse?.message}</p>
-                  </div>
-                </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Site web
-                    </label>
-                    <input
-                      type="url"
-                      name="lien"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Lien vers votre site.."
-                      defaultValue={compteCurrent.lien}
-                      {...register('lien')}
-                    />
-                    <p className="text-red-500 italic">{errors.lien?.message}</p>
-                  </div>
-                </div>
-              </div>
-          </div>
+            </div>
+            ))
+          }
         </form>
         {erreur &&(
                   <div className="bg-rose-300 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

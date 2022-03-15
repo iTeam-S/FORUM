@@ -6,6 +6,7 @@ import CompteService from "utils/service/CompteService";
 
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
+  console.log(compte)
 
   const deleteOneCompte = (id) => {
     CompteService.DeleteOneCompte(id);

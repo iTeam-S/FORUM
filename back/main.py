@@ -320,7 +320,7 @@ def list_accounts():
     try:
         access = get_jwt_identity().split("+")[1]
 
-        if access == "ADMIN" or access == "ENTREPRISE":
+        if access == "ADMIN":
             CURSOR.execute("""
                 SELECT
                    Cp.id,
@@ -328,7 +328,6 @@ def list_accounts():
                    Cp.tel,
                    Cp.email,
                    Cp.type,
-                   Cp.description,
                    Cp.lien,
                    Cp.logo,
                    Cp.description,

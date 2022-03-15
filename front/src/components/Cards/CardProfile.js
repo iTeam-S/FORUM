@@ -32,7 +32,7 @@ export default function CardProfile() {
                     className="bg-teal-500 active:bg-lightBlue-600 uppercase px-4 py-2 text-white font-bold hover:shadow-md shadow rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                   >
                     <button
-                    className="text-sm font-bold px-4 py-2"
+                    className="text-sm font-bold px-4 py-"
                     type="button"
                 >
                     Modifier

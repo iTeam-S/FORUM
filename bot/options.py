@@ -296,46 +296,12 @@ class Options:
         return categ_max
 
     def resultat_generale(self, user_id, lang):
-        result_partie_1 = self.resultat_de_test_kavio(
-            self.req.calcul_categ_pari_partie(user_id, "1")
-        )
-
-        result_partie_2 = self.resultat_de_test_kavio(
-            self.req.calcul_categ_pari_partie(user_id, "2")
-        )
-        result_partie_3 = self.resultat_de_test_kavio(
-            self.req.calcul_categ_pari_partie(user_id, "3")
-        )
-
-        interet_global = self.resultat_de_test_kavio(
-            self.req.interet_global(user_id)
-        )
-        print(interet_global)
-        self.bot.send_message(
-            user_id,
-            const.resultat_partie_1(
-                result_partie_1,
-                lang
+        diff_reponse = const.resultat_metier(
+            self.resultat_de_test_kavio(
+                self.req.interet_global(user_id)), lang)
+        
+        for i in range(len(diff_reponse)):
+            self.bot.send_message(
+                user_id,
+                diff_reponse[i]
             )
-        )
-        self.bot.send_message(
-            user_id,
-            const.resultat_partie_2(
-                result_partie_2,
-                lang
-            )
-        )
-        self.bot.send_message(
-            user_id,
-            const.resultat_partie_3(
-                result_partie_3,
-                lang
-            )
-        )
-        self.bot.send_message(
-            user_id,
-            const.resultat_metier(
-                interet_global,
-                lang
-            )
-        )

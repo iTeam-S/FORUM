@@ -1261,68 +1261,6 @@ def retoure(types, lang, *args):
         }
 
 
-def resultat_partie_1(result_1, lang):
-    res_1 = []
-    result_partie_1 = []
-    for i in range(len(result_1)):
-        res_1.append(
-            translate(result_1[i] + "_1", lang)
-        )
-        result_partie_1.append(
-            translate(result_1[i], lang)
-        )
-
-    if lang == "fr":
-        return f"D'après ses longs tests que vous avez fait.On tire les conclusions suivantes: \
-\nPour la partie activités tout d'abord, vous êtes plutôt {' et '.join(result_partie_1) if len(result_partie_1)<3  else ' , '.join(result_partie_1[0:-1])+' et '+result_partie_1[-1]}\n\n{' '.join(res_1)}"
-
-    elif lang == "en":
-        return f"From his long tests you have done.The following conclusions are drawn: \
-\nFor the activities part first of all, you are rather {' and '.join(result_partie_1) if len(result_partie_1)<3  else ' , '.join(result_partie_1[0:-1])+' and '+result_partie_1[-1]}. \n\n{' '.join(res_1)}"
-
-    else:
-        return f"Araka ireo andrana maro be zay nataona teo ary dia toy izao manaraka zao no azo amehezana ny mombamombanao: \
-Voaloany amin'izany ary dia ny lafiny hetsika, Ianao dia olona {' sy '.join(result_partie_1) if len(result_partie_1)<3  else ' , '.join(result_partie_1[0:-1])+' ary '+result_partie_1[-1]}\n\n{' '.join(res_1)}"
-
-
-def resultat_partie_2(result_2, lang):
-    res_2 = []
-    result_partie_2 = []
-    for y in range(len(result_2)):
-        res_2.append(
-            translate(result_2[y] + "_2", lang)
-        )
-        result_partie_2.append(
-            translate(result_2[y], lang)
-        )
-
-    if lang == "fr":
-        return f"Ensuite, Celle des qualités: {' et '.join(result_partie_2) if len(result_partie_2)<3  else ' , '.join(result_partie_2[0:-1])+' et '+result_partie_2[-1]} \n\n{' '.join(res_2)}"
-    elif lang == "en":
-        return f"Then, that of the qualities: {' and '.join(result_partie_2) if len(result_partie_2)<3  else ' , '.join(result_partie_2[0:-1])+' and '+result_partie_2[-1]} \n\n{' '.join(res_2)}"
-    else:
-        return f"Faharoa manaraka izany dia ny Lafin'ny toetra izay isokajina anao ho manana toetra {' sy '.join(result_partie_2) if len(result_partie_2)<3  else ' , '.join(result_partie_2[0:-1])+' ary '+result_partie_2[-1]} \n\n{' '.join(res_2)}"
-
-
-def resultat_partie_3(result_3, lang):
-    res_3 = []
-    result_partie_3 = []
-    for x in range(len(result_3)):
-        res_3.append(
-            translate(result_3[x] + "_3", lang)
-        )
-        result_partie_3.append(
-            translate(result_3[x], lang)
-        )
-
-    if lang == "fr":
-        return f"Et enfin professions: {' et '.join(result_partie_3) if len(result_partie_3)<3  else ' , '.join(result_partie_3[0:-1])+' et '+result_partie_3[-1]} \n\n{' '.join(res_3)}"
-    elif lang == "en":
-        return f"And finally the professions: {' and '.join(result_partie_3) if len(result_partie_3)<3  else ' , '.join(result_partie_3[0:-1])+' and '+result_partie_3[-1]} \n\n{' '.join(res_3)}"
-    else:
-        return f"Ary farany dia eo amin'ny lafin'ny ASA izay nanehonao fa tinao kokoa ny sehetry ny asa {' sy '.join(result_partie_3) if len(result_partie_3)<3  else ' , '.join(result_partie_3[0:-1])+' sy '+result_partie_3[-1]} \n\n{' '.join(res_3)}"
-
-
 def resultat_metier(interet, lang):
     interet_global = []
     categ_global = []
@@ -1339,24 +1277,29 @@ def resultat_metier(interet, lang):
             translate(f"{interet[k]}_3", lang)
         )
 
-    print(metier)
+    categ = "\n\n".join(categ_global)
+    met = "\n".join(metier)
+
     if lang == "fr":
-        return f"Donc,si on etudie alors votre test. Nous avons le plaisir de vous annoncer vos intérêts globaux \
-que vous êtes une personne qui s'interesse à {' et '.join(interet_global) if len(interet_global)<3  else ' , '.join(interet_global[0:-1])+' et '+interet_global[-1]} \
-\tALORS, CI-DESSOUS UNE PETITE DESCRIPTION POUR CELA:\n{' '.join(categ_global)} \n\n Alors Voici donc les metiers \
-qui te correspondent \n{' '.join(metier)}"
+        reponse1 = f"D'apres ce long test que vous avez réaliser, Voici donc vos resultats:\n Nous avons le plaisir de vous annoncer vos intérêts globaux.\
+Vous êtes une personne {' et '.join(interet_global) if len(interet_global)<3  else ' , '.join(interet_global[0:-1])+' et '+interet_global[-1]}"
+        reponse2 = f'ALORS, CI-DESSOUS UNE PETITE DESCRIPTION POUR CELA:\n\n{categ}'
+        reponse3 = f"\n\nVOICI DONC LES METIERS QUI TE CORRESPONDENT\n\n{met}"
+        return reponse1, reponse2, reponse3
 
     elif lang == "en":
-        return f"So if we then study your test, we are pleased to announce your Global interests that you are a person \
-{' and '.join(interet_global) if len(interet_global)<3  else ' , '.join(interet_global[0:-1])+' and '+interet_global[-1]} \
-\n\n\tSO THAT BELOW A LITTLE DESCRIPTION FOR THIS: \n{' '.join(categ_global)}\n\nSo here are the professions \
-that match you:\n{' '.join(metier)}"
+        reponse1 = f"According to this long test that you have carried out, here are your results:\nWe are pleased to announce your global interests. \
+You are a person {' and '.join(interet_global) if len(interet_global)<3  else ' , '.join(interet_global[0:-1])+' and '+interet_global[-1]}"
+        reponse2 = f"\n\nSO THAT BELOW A LITTLE DESCRIPTION FOR THIS:\n\n{categ}"
+        reponse3 = f"\n\nSO HERE ARE THE PROFESSIONS THAT MATCH YOU:\n\n{met}"
+        return reponse1, reponse2, reponse3
 
     else:
-        return f"Rehefa nodinidinihaana sy nalalinina ary ny andrana izay nataona dia azo lazaina ary fa \
-{' sy '.join(interet_global) if len(interet_global)<3  else ' , '.join(interet_global[0:-1])+' ary '+interet_global[-1]} \
-ny sehatra metimety aminao kokoa \n\n\t\tKA TOY IZAO ARY IZANY:\n{' '.join(categ_global)} \
-\n\nKa noho izany ary dia ireto avy ny asa mifanaraka aminao:\n{' '.join(metier)}"
+        reponse1 = f"Rehefa nodinidinihaana sy nalalinina ary ny andrana izay nataona dia azo lazaina ary fa \
+{' sy '.join(interet_global) if len(interet_global)<3  else ' , '.join(interet_global[0:-1])+' ary '+interet_global[-1]} ny sehatra metimety aminao kokoa"
+        reponse2 = f"KA TOY IZAO ARY IZANY:\n\n{' '.join(categ)}"
+        reponse3 = f"KA NOHO IZANY ARY DIA IRETO AVY NY ASA MIFANARAKA AMINAO:\n\n{' '.join(met)}"
+        return reponse1, reponse2, reponse3
 
 
 def voir_liste_des_fiches_metiers(domaine="", lang="fr"):
@@ -1368,9 +1311,11 @@ def voir_liste_des_fiches_metiers(domaine="", lang="fr"):
 
     return f"Voici donc les listes des fiches métiers disponibles pour le domainde de {domaine}"
 
+
 def informations_stands(info):
     return f"DESCRITIONS: \n{info[4]}\n\nNOS CONTACTS:\nTel: {info[0]}\nEmail: {info[1]} \
         \n\nADRESSE: {info[3]}"
+
 
 def description_emploi(description):
     return f"DESCRIPTIONS:\n\n{description}"

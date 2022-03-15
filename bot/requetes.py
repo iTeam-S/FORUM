@@ -304,20 +304,6 @@ class Requete:
         return data
 
     @verif_db
-    def calcul_categ_pari_partie(self, user_id, id_part):
-        req = """
-            SELECT categorie , SUM(point) as point
-            FROM Test_KAVIO
-            WHERE id_part=%s
-            AND id_user=(SELECT id FROM Public WHERE facebook_id=%s)
-            GROUP BY categorie
-        """
-        self.cursor.execute(req, (id_part, user_id))
-        data = self.cursor.fetchall()
-        self.db.commit()
-        return data
-
-    @verif_db
     def interet_global(self, user_id):
         req = """
             SELECT categorie , SUM(point) as point

@@ -141,19 +141,16 @@ class Messenger:
         elif types == "domaine_de_fiche_metier":
             text = translate("domaine_de_fiche_metier", lang)
             quick_rep = [{"content_type": "text",
-                          "title": translate("sante",
+                          "title": "🔵" + translate("sante",
                                              lang).upper(),
-                          "image_url": "https://e7.pngegg.com/pngimages/291/741/png-clipart-blue-wikipedia-wikimedia-commons-blue-dots-miscellaneous-blue.png",
                           "payload": "__SANTE"},
                          {"content_type": "text",
-                          "title": translate("informatique",
+                          "title": "🔵" + translate("informatique",
                                              lang).upper(),
-                          "image_url": "https://e7.pngegg.com/pngimages/291/741/png-clipart-blue-wikipedia-wikimedia-commons-blue-dots-miscellaneous-blue.png",
                           "payload": "__INFORMATIQUE"},
                          {"content_type": "text",
-                          "title": translate("comm_et_admin",
+                          "title": "🔵" + translate("comm_et_admin",
                                              lang).upper(),
-                          "image_url": "https://e7.pngegg.com/pngimages/291/741/png-clipart-blue-wikipedia-wikimedia-commons-blue-dots-miscellaneous-blue.png",
                           "payload": "__COMMERCE"},
                          {"content_type": "text",
                           "title": "🟢" + translate("agronomie",
@@ -197,9 +194,8 @@ class Messenger:
 
             text = translate("visiter_stand", lang)
             quick_rep = [{"content_type": "text",
-                          "title": "" + translate("offre",
+                          "title": "💱" + translate("offre",
                                                   lang).upper(),
-                          "image_url": "https://png.pngtree.com/png-clipart/20210617/ourlarge/pngtree-job-vacancy-logo-with-finding-glass-png-image_3469306.jpg",
                           "payload": f"__EMPLOI {id_stand} page"},
                          {"content_type": "text",
                           "title": "📜" + translate("info",

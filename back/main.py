@@ -328,6 +328,7 @@ def list_accounts():
                    Cp.tel,
                    Cp.email,
                    Cp.type,
+                   Cp.description,
                    Cp.lien,
                    Cp.logo ,
                    Cp.domaine,
@@ -347,7 +348,6 @@ def list_accounts():
                     Cp.id;
             """)
             accounts = CURSOR.fetchall()
-            print(accounts)
 
             if accounts:
                 return {

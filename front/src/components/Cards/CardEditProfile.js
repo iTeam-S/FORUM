@@ -12,14 +12,7 @@ import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function CardEditProfile() {
   const {compte} = useContext(CompteContext);
-  const compteFromService = LoginService.getCurrentCompte();
-  const compteConv = Object.keys(compte).map((cle) =>{
-    return compte[cle];
-  })
-  
-  const compteCurrent = compteConv.filter((compteConvertis) => {
-    return compteConvertis.id === compteFromService.id;
-  })
+  const compteCurrent = LoginService.getOneCompteContexte(compte);
 
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
@@ -36,6 +29,9 @@ export default function CardEditProfile() {
           .required('Ce champ est obligatoire'),
         domaine: Yup.string()
           .required('le choix est obligatoire'),
+        description: Yup.string()
+          .required('Ce champ est obligatoire')
+          .max(8000, 'Password must not exceed 8000 characters'),
         lien: Yup.string()
           .required('Ce champ est obligatoire'),
         type: Yup.string()
@@ -58,7 +54,7 @@ export default function CardEditProfile() {
   const  handleEditAccount = async(data) => {
         try {
             if(compte !== null){
-                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse)
+                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.description, data.type,data.password,data.adresse)
                 history.push('/adminEntreprise/ProfilEntreprise');
                 window.location.reload();
             }else{
@@ -173,6 +169,27 @@ export default function CardEditProfile() {
                         {...register('password')}
                       />
                       <p className="text-red-500 italic">{errors.password?.message}</p>
+                    </div>
+                  </div>
+
+                  <div className="w-full px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                      Petite description de votre entreprise
+                      </label>
+                      <input
+                        type="text"
+                        name="description"
+                        className="flex flex-wrap border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Description de l'entreprise"
+                        style={{minHeight: '70px'}}
+                        defaultValue={compte.description}
+                        {...register('description')}
+                    />
+                    <p className="text-red-500 italic">{errors.description?.message}</p>
                     </div>
                   </div>
                 </div>

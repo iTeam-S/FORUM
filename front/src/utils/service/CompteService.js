@@ -121,6 +121,8 @@ class CompteService{
         ) 
     }
 
+            /*DELETE SERVICE*/
+
     UpdateCompte(nom, email, tel, domaine, lien, type, password, adresse){
         return RouteAxios.patch('/update_account', {
             nom, 
@@ -139,6 +141,7 @@ class CompteService{
         }
         )
     }
+
         
 }
 

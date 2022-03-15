@@ -329,7 +329,8 @@ def list_accounts():
                    Cp.email,
                    Cp.type,
                    Cp.lien,
-                   Cp.logo ,
+                   Cp.logo,
+                   Cp.description,
                    Cp.domaine,
                    Cp.adresse,
                    COUNT(DISTINCT Cs.id) visiteurs
@@ -523,7 +524,6 @@ def delete_account():
     try:
         access = get_jwt_identity().split("+")[1]
         data = request.get_json()
-        print(data)
         if data:
             account_id = data.get("compte_id")
         else:
@@ -630,6 +630,7 @@ def update_account():
                 str(
                     generate_password_hash(
                         str(data.get("password"))).decode()),
+                data.get("description"),
                 data.get("adresse"),
                 data.get("type"),
                 data.get("lien"),
@@ -645,6 +646,7 @@ def update_account():
                         tel = %s,
                         domaine = %s,
                         password = %s,
+                        description = %s,
                         adresse = %s,
                         type = %s,
                         lien = %s

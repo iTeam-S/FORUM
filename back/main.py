@@ -687,6 +687,7 @@ def update_content():
         les infos sur un contenus
     """
     try:
+        filename = None
         compte_id = get_jwt_identity().split("+")[0]
 
         if compte_id:
@@ -828,6 +829,45 @@ def get_attachement(attachement):
         )
         return send_from_directory(
             directory=compte_folder, path=attachement, as_attachment=True)
+
+
+@app.route('/api/v1/get_stats/<content_type>', methods=['GET'])
+@jwt_required()
+def get_stats(content_type):
+    compte_id = get_jwt_identity().split("+")[0]
+
+    if compte_id:
+        CURSOR.execute(
+            """
+                SELECT
+                    Cs.date, COUNT(Cs.id) Vues
+                FROM
+                    `Contenu` Ct
+                LEFT JOIN
+                    `Consultation` Cs
+                ON
+                    Ct.id = Cs.dimension
+                WHERE
+                    Ct.compte_id = %s
+            """ + (
+                " AND Ct.type = %s " if content_type in (
+                    'emploi', 'information', 'galerie'
+                ) else ''
+            ) + """
+                    GROUP BY
+                        Cs.date
+            """, (compte_id, content_type))
+
+        stats = CURSOR.fetchall()
+        print(stats)
+
+        if stats:
+            return {
+                stats.index(stat):
+                    dict(
+                        zip(CURSOR.column_names, stat)
+                    ) for stat in stats
+            }, 200
 
 
 if __name__ == "__main__":

@@ -765,15 +765,14 @@ def update_fiche_metier():
         les infos sur un contenus
     """
     try:
-        compte_id = get_jwt_identity().split("+")[0]
+        compte_id = int(get_jwt_identity().split("+")[0])
 
         if compte_id:
-            fiche_metier = (
+            fiche_metier_id = int(request.form.get("fiche_metier_id"))
+            fiche_metier = [
                 request.form.get("titre"),
                 request.form.get("domaine_id"),
-                request.form.get("fiche_metier_id"),
-                int(compte_id)
-            )
+            ]
 
             if request.files:
                 fichier = request.files['file']
@@ -789,14 +788,18 @@ def update_fiche_metier():
                      os.path.join(compte_folder, filename)
                 )
 
+                if filename:
+                    fiche_metier_id.append(filename)
+
+            fiche_metier += [fiche_metier_id, compte_id]
             try:
-                CURSOR.execute("""
+                CURSOR.execute(f"""
                     UPDATE
-                        Contenu
+                        Fiche_metier
                     SET
                         titre = %s,
                         domaine_id = %s
-                """ + (f'fichier = { filename }' if filename else '') + """
+                        {", fichier = %s " if filename else " "}
                     WHERE
                         id=%s AND compte_id=%s;
                 """, fiche_metier)

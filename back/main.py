@@ -688,16 +688,15 @@ def update_content():
     """
     try:
         filename = None
-        compte_id = get_jwt_identity().split("+")[0]
+        compte_id = int(get_jwt_identity().split("+")[0])
 
         if compte_id:
-            content = (
+            content_id = int(request.form.get("content_id"))
+            content = [
                 request.form.get("titre"),
                 request.form.get("description"),
                 request.form.get("type"),
-                request.form.get("content_id"),
-                int(compte_id)
-            )
+            ]
 
             if request.files:
                 fichier = request.files['file']
@@ -705,21 +704,30 @@ def update_content():
                 compte_folder = os.path.join(
                     app.config['UPLOAD_FOLDER'], str(compte_id)
                 )
+                print(compte_folder)
                 Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
+                print("HERE")
                 filename = str(time.time()) + '_' + secure_filename(
                     fichier.filename)
-                fichier.save(compte_folder, filename)
+                print(filename)
+                fichier.save(
+                     os.path.join(compte_folder, filename)
+                )
+
+                if filename:
+                    content.append(filename)
+            content += [content_id, compte_id]
 
             try:
-                CURSOR.execute("""
+                CURSOR.execute(f"""
                     UPDATE
                         Contenu
                     SET
                         titre = %s,
                         description = %s,
                         type = %s
-                """ + (f'fichier = { filename }' if filename else '') + """
+                        {", fichier = %s " if filename else " "}
                     WHERE
                         id=%s AND compte_id=%s;
                 """, content)
@@ -777,12 +785,14 @@ def update_fiche_metier():
 
                 filename = str(time.time()) + '_' + secure_filename(
                     fichier.filename)
-                fichier.save(compte_folder, filename)
+                fichier.save(
+                     os.path.join(compte_folder, filename)
+                )
 
             try:
                 CURSOR.execute("""
                     UPDATE
-                        Content
+                        Contenu
                     SET
                         titre = %s,
                         domaine_id = %s

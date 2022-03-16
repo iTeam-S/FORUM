@@ -7,6 +7,7 @@ import CompteService from "utils/service/CompteService";
 
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
+  console.log(compte)
   
   const deleteOneCompte = (id) => {
     CompteService.DeleteOneCompte(id);
@@ -90,7 +91,7 @@ export default function CardTable({ color}) {
                                 </th>
                                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                   <div className="flex justify-center">
-                                    <span className="mr-2">100</span>
+                                    <span className="mr-2">{compte[cle].visiteurs}</span>
                                   </div>
                                 </td>
                                 <td className="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-left">

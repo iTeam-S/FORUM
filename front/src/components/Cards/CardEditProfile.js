@@ -120,7 +120,7 @@ export default function CardEditProfile() {
                         {...register('type')}
                       >
                           <option defaultValue={compte.type}  hidden>{compte.type}</option>
-                          <option key="1" value="ADMIN"> ADMIN</option>
+                          {compte.type === "ADMIN" && (<option key="1" value="ADMIN"> ADMIN</option>)}
                           <option key="2" value="ENTREPRISE">ENTREPRISE</option>
                       </select>
                       <p className="text-red-500 italic">{errors.type?.message}</p>

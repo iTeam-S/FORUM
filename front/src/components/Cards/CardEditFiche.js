@@ -65,12 +65,8 @@ export default function CardEditFiche() {
           .positive('Nombre positive'),
         fiche_metier_id: Yup.number(),
         file: Yup.mixed()
-          .test('required', "N'oubliez pas votre fichier, c'est obligatoire", (value) => {
-            return value && value.length;
-          })
-          .test('fileSize', "Le fichier est trop gros", (value) => {
-            return value && value[0] && value[0].size <= 500000000;
-          })
+          .nullable()
+          .notRequired()
       });
       const {
         register,
@@ -83,7 +79,8 @@ export default function CardEditFiche() {
       const  handleEditFiche = async(data) => {
         try {
             if(compte !== null && compte.type === 'ADMIN'){
-                  await CompteService.UpdateFicheMetier(data.titre, data.domaine_id, data.fiche_metier_id , data.file[0]);
+                  const fichier = data.file[0] === undefined ? null : data.file[0];
+                  await CompteService.UpdateFicheMetier(data.titre, data.domaine_id, data.fiche_metier_id , fichier);
                   /*history.push('/admin/AllFicheMetier');
                   window.location.reload();*/
                   console.log(data)

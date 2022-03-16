@@ -21,7 +21,7 @@ export default function CardAllContenu() {
   return (
     <>
         {/* conver obj to array */}
-       { contenuConvert.map((content, index) => (
+       { contenuConvert.map((content) => (
          <div className="w-full  md:w-full lg:w-6/12 xl:w-4/12 px-4 text-center mt-4" key={content.id} >
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
             <div className="px-4 py-5 flex-auto">
@@ -33,11 +33,11 @@ export default function CardAllContenu() {
                 </div>
             </div>
             <div className="flex flex-wrap justify-between mx-4">
-              <p className="text-blueGray-500">300 vues</p>
+              <p className="text-blueGray-500">{content.Vues} vues</p>
               <p className="text-teal-500">Publié</p>
             </div>
             <div className="mt-8 flex flex-row mx-auto sm:w-full md:flex-wrap md:w-12/12 w-6/12">
-                <Link to="/adminEntreprise/CardEditContenu"
+                <Link to={`/adminEntreprise/CardEditContenu/${content.id}`}
                       className="bg-lightBlue-500 w-full text-white active:bg-amber-600 font-bold rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   <button className="uppercase text-xs px-4 py-2 font-bold  bg-lightBlue-500 w-full active:bg-amber-600" type="button">

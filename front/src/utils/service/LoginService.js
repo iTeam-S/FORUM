@@ -35,9 +35,20 @@ function getOneCompteContexte(compteFromContexte){
     return compteCurrent;
 }
 
+function getOneItemContexte(AllDataContexte, idParams){
+    const dataConvert = Object.keys(AllDataContexte).map((cle) => {
+        return AllDataContexte[cle];
+    })
+    const dataCurrent = dataConvert.filter((data) => {
+        return data.id === parseInt(idParams);
+    })
+    return dataCurrent;
+}
+
 export const LoginService={
     login,
     logout,
     getCurrentCompte,
-    getOneCompteContexte
+    getOneCompteContexte,
+    getOneItemContexte
 }

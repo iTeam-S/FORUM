@@ -59,7 +59,7 @@ ReactDOM.render(
             <EntrepriseRoute path="/adminEntreprise/CardEditProfile" exact >
               <CardEditProfile />
             </EntrepriseRoute>
-            <EntrepriseRoute path="/adminEntreprise/CardEditContenu" exact >
+            <EntrepriseRoute path="/adminEntreprise/CardEditContenu/:id" exact >
               <CardEditContenu />
             </EntrepriseRoute>
 
@@ -73,7 +73,7 @@ ReactDOM.render(
               <AdminRoute exact path="/adminEntreprise/ProfilEntreprise">
                 <ProfilEntreprise /> 
               </AdminRoute>
-              <AdminRoute exact path="/admin/CardEditFiche">
+              <AdminRoute exact path="/admin/CardEditFiche/:id">
                 <CardEditFiche />
               </AdminRoute>
               <AdminRoute exact path="/admin/AddEntreprise">

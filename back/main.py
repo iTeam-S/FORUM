@@ -440,7 +440,7 @@ def list_fiche_metier():
         if access == "ADMIN":
             CURSOR.execute("""
                 SELECT
-                    id, titre, fichier
+                    id, titre, fichier, domaine_id
                 FROM
                     Fiche_metier;
             """)
@@ -688,15 +688,14 @@ def update_content():
     """
     try:
         compte_id = get_jwt_identity().split("+")[0]
-        data = request.get_json()
 
         if compte_id:
             content = (
-                data.get("titre"),
-                data.get("description"),
-                data.get("type"),
-                data.get("content_id"),
-                compte_id
+                request.form.get("titre"),
+                request.form.get("description"),
+                request.form.get("type"),
+                request.form.get("content_id"),
+                int(compte_id)
             )
 
             if request.files:
@@ -758,13 +757,12 @@ def update_fiche_metier():
     """
     try:
         compte_id = get_jwt_identity().split("+")[0]
-        data = request.get_json()
 
         if compte_id:
             fiche_metier = (
-                data.get("titre"),
-                data.get("domaine_id"),
-                data.get("fiche_metier_id"),
+                request.form.get("titre"),
+                request.form.get("domaine_id"),
+                request.form.get("fiche_metier_id"),
                 int(compte_id)
             )
 

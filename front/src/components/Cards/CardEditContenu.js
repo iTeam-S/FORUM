@@ -1,15 +1,20 @@
-import React, {useState } from "react";
+import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import {useHistory} from "react-router";
 
 // components
 import CompteService from "utils/service/CompteService";
+import { CompteContext } from "utils/contexte/CompteContext";
 import { LoginService } from "utils/service/LoginService";
 
 export default function CardEditContenu() {
   const compte = LoginService.getCurrentCompte();
+  const {contenus} = useContext(CompteContext)
+  const {id} = useParams();
+  const contenuCurrent = LoginService.getOneItemContexte(contenus, id);
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
  
@@ -22,6 +27,7 @@ export default function CardEditContenu() {
           .required("Ce champ est obligatoire si le type n'est pas galerie"),
         type: Yup.string()
           .required('Ce champ est obligatoire'),
+        content_id: Yup.number(),
         file: Yup.mixed()
           .test('required', "N'oubliez pas votre fichier, c'est obligatoire", (value) => {
             return value && value.length;
@@ -43,9 +49,10 @@ export default function CardEditContenu() {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
-                  history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();
+                  await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, data.file[0]);
+                  /*history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();*/
+                  console.log(data)
                 }
             }else{
                 setErreur(true);
@@ -71,7 +78,8 @@ export default function CardEditContenu() {
               />
             </div>
           </div>
-          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+          { contenuCurrent.map((contenu) => (
+            <div className="flex-auto px-4 lg:px-10 py-10 pt-0" key={contenu.id}>
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Information sur le contenu
               </h6>
@@ -88,6 +96,7 @@ export default function CardEditContenu() {
                       type="text"
                       name="titre"
                       id="inpTitreContenu"
+                      defaultValue={contenu.titre}
                       {...register('titre')}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                    />
@@ -108,7 +117,7 @@ export default function CardEditContenu() {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       
                     >
-                         <option  hidden>Choisir le type de contenu</option>
+                         <option value={contenu.type}  hidden>{contenu.type}</option>
                          <option key="1" value="galerie"> galerie</option>
                          <option key="2" value="emploi">offre d'emploi</option>
                          <option key="3" value="information">information</option>
@@ -127,6 +136,7 @@ export default function CardEditContenu() {
                     <input
                       type="text"
                       name="description"
+                      defaultValue={contenu.description}
                       {...register('description')}
                       id="inpDescription"
                       style={{height: '100px'}}
@@ -136,6 +146,9 @@ export default function CardEditContenu() {
                   </div>
                 </div>
               </div>
+              <div>
+                  <input type="text" name="content_id" defaultValue={parseInt(id)} {...register('content_id')} hidden/>
+                </div>
 
               <hr className="mt-6 border-b-1 border-blueGray-300" />
 
@@ -163,7 +176,10 @@ export default function CardEditContenu() {
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
+          ))
+
+          }
         </form>
         {erreur &&(
                   <div className="bg-rose-300 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

@@ -573,16 +573,16 @@ def delete_fiche_metier():
     """
     try:
         access = get_jwt_identity().split("+")[1]
-        fiche_metier_id = request.get_json().get("fiche_metier_id")
+        fiche_metier_id = int(request.get_json().get("fiche_metier_id"))
 
-        if access == "ADMIN":
+        if access == "ADMIN" and fiche_metier_id:
             try:
                 CURSOR.execute("""
                     DELETE FROM
                         Fiche_metier
                     WHERE
                         id=%s;
-                """, (fiche_metier_id))
+                """, (fiche_metier_id,))
 
                 DB.commit()
 
@@ -788,7 +788,7 @@ def update_fiche_metier():
                 )
 
                 if filename:
-                    fiche_metier_id.append(filename)
+                    fiche_metier.append(filename)
 
             fiche_metier += [fiche_metier_id, compte_id]
             try:

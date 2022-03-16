@@ -13,7 +13,7 @@ export default function CardAllContenu() {
     return contenus[cle];
   })
 
-    async function deleteContent(id_content){
+  async function deleteContent(id_content){
      await CompteService.DeleteOneContent(id_content);
       window.location.reload();
   }

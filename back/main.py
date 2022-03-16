@@ -707,10 +707,8 @@ def update_content():
                 print(compte_folder)
                 Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
-                print("HERE")
                 filename = str(time.time()) + '_' + secure_filename(
                     fichier.filename)
-                print(filename)
                 fichier.save(
                      os.path.join(compte_folder, filename)
                 )
@@ -765,6 +763,7 @@ def update_fiche_metier():
         les infos sur un contenus
     """
     try:
+        filename = None
         compte_id = int(get_jwt_identity().split("+")[0])
 
         if compte_id:

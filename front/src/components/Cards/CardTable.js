@@ -1,4 +1,5 @@
 import React, {useContext} from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { CompteContext } from "utils/contexte/CompteContext";
@@ -6,7 +7,7 @@ import CompteService from "utils/service/CompteService";
 
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
-
+  
   const deleteOneCompte = (id) => {
     CompteService.DeleteOneCompte(id);
     window.location.reload();
@@ -70,39 +71,47 @@ export default function CardTable({ color}) {
             </thead>
             <tbody>
                  {
-                   Object.keys(compte).map((cle) => (
-                     <tr key={compte[cle].id}>
-                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                        <img
-                          src={compte[cle].logo ? compte[cle].logo : require("assets/img/logodefaut.png").default}
-                          className="h-12 w-12 bg-white rounded-full border"
-                          alt="..."
-                        ></img>{" "}
-                        <span
-                          className={
-                            "ml-3 font-bold " +
-                            +(color === "light" ? "text-blueGray-600" : "text-white")
-                          }
-                        >
-                          {compte[cle].nom}
-                        </span>
-                      </th>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex justify-center">
-                          <span className="mr-2">100</span>
-                        </div>
-                      </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <button
-                          className="bg-lightBlue-800  text-white active:bg-teal-500 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => deleteOneCompte(compte[cle].id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                   ))
+                    Object.keys(compte).map((cle) => (
+                          <tr key={compte[cle].id}>
+                              <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                  <img
+                                      src={compte[cle].logo ? compte[cle].logo : require("assets/img/logodefaut.png").default}
+                                      className="h-12 w-12 bg-white rounded-full border"
+                                      alt="..."
+                                  ></img>{" "}
+                                  <span
+                                      className={
+                                          "ml-3 font-bold " +
+                                          +(color === "light" ? "text-blueGray-600" : "text-white")
+                                        }
+                                  >
+                                        {compte[cle].nom}
+                                  </span>
+                                </th>
+                                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                  <div className="flex justify-center">
+                                    <span className="mr-2">100</span>
+                                  </div>
+                                </td>
+                                <td className="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-left">
+                                  <Link to={`/admin/profilDe/${compte[cle].id}`}>
+                                        <button
+                                            className="bg-emerald-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                        >
+                                          Voir profil
+                                        </button>
+                                  </Link>
+                                  <button
+                                      className="bg-lightBlue-800  text-white active:bg-teal-500 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                      type="button"
+                                      onClick={() => deleteOneCompte(compte[cle].id)}
+                                  >
+                                    Delete
+                                  </button>
+                                </td>
+                          </tr>
+                     ))
                  }
             </tbody>
           </table>

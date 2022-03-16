@@ -20,37 +20,23 @@ export default function CardEditContenu() {
 
   //disabling description if galerie
   let [isDisabled, setIsDisabled] = useState(false);
-  let [typeContenuDefault, setTypeContenuDefault] = useState("")
-
-  async function getTypeDefault(){
-      const cont = await contenuCurrent.map((item) => {
-        return item.type;
-      })
-      if(cont['0'] === "galerie"){
-        let choice = onChangeTypeSelect();
-        if (choice === "galerie"){
-          setIsDisabled(true);
-        }
-      } else {
-        return setIsDisabled(false);
-      }
-   }
-   getTypeDefault();
-
   const onChangeTypeSelect = (e) => {
       let choice = e.target.value;
-      return choice;
+      if(choice === "galerie"){
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false)
+      }
+      
   }
 
-
- 
   let history = useHistory();
 
   const validationSchema = Yup.object().shape({
         titre: Yup.string()
           .required('Ce champ est obligatoire'),
         description: Yup.string()
-          .required("Ce champ est obligatoire si le type n'est pas galerie")
+          .max(2000, "La description doit être inférieur à 2000 caractères")
           .nullable(true),
         type: Yup.string()
           .required('Ce champ est obligatoire'),
@@ -164,7 +150,6 @@ export default function CardEditContenu() {
                       style={{height: '100px'}}
                       className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       disabled={isDisabled}
-
                     />
                     <p className="text-red-500 italic">{errors.description?.message}</p>
                   </div>

@@ -19,8 +19,6 @@ export default function CardAddContenu() {
       choice != "galerie" ? setIsDisabled(false) : setIsDisabled(true);
   }
 
-
- 
   let history = useHistory();
 
   const validationSchema = Yup.object().shape({

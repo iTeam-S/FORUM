@@ -714,7 +714,7 @@ def update_content():
             try:
                 CURSOR.execute("""
                     UPDATE
-                        Content
+                        Contenu
                     SET
                         titre = %s,
                         description = %s,

@@ -59,8 +59,8 @@ export default function CardEditContenu() {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                   const fichier = data.file[0] === undefined ? null : data.file[0];
                   await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, fichier);
-                  /*history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();*/
+                  history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la modification du contenu");

@@ -20,30 +20,16 @@ export default function CardEditContenu() {
 
   //disabling description if galerie
   let [isDisabled, setIsDisabled] = useState(false);
-  let [typeContenuDefault, setTypeContenuDefault] = useState("")
-
-  async function getTypeDefault(){
-      const cont = await contenuCurrent.map((item) => {
-        return item.type;
-      })
-      if(cont['0'] === "galerie"){
-        let choice = onChangeTypeSelect();
-        if (choice === "galerie"){
-          setIsDisabled(true);
-        }
-      } else {
-        return setIsDisabled(false);
-      }
-   }
-   getTypeDefault();
-
   const onChangeTypeSelect = (e) => {
       let choice = e.target.value;
-      return choice;
+      if(choice === "galerie"){
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false)
+      }
+      
   }
 
-
- 
   let history = useHistory();
 
   const validationSchema = Yup.object().shape({

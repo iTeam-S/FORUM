@@ -1,17 +1,48 @@
-import React, {useState } from "react";
+import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import {useHistory} from "react-router";
 
 // components
 import CompteService from "utils/service/CompteService";
+import { CompteContext } from "utils/contexte/CompteContext";
 import { LoginService } from "utils/service/LoginService";
 
 export default function CardEditContenu() {
   const compte = LoginService.getCurrentCompte();
+  const {contenus} = useContext(CompteContext)
+  const {id} = useParams();
+  const contenuCurrent = LoginService.getOneItemContexte(contenus, id);
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+
+  //disabling description if galerie
+  let [isDisabled, setIsDisabled] = useState(false);
+  let [typeContenuDefault, setTypeContenuDefault] = useState("")
+
+  async function getTypeDefault(){
+      const cont = await contenuCurrent.map((item) => {
+        return item.type;
+      })
+      if(cont['0'] === "galerie"){
+        let choice = onChangeTypeSelect();
+        if (choice === "galerie"){
+          setIsDisabled(true);
+        }
+      } else {
+        return setIsDisabled(false);
+      }
+   }
+   getTypeDefault();
+
+  const onChangeTypeSelect = (e) => {
+      let choice = e.target.value;
+      return choice;
+  }
+
+
  
   let history = useHistory();
 
@@ -19,16 +50,14 @@ export default function CardEditContenu() {
         titre: Yup.string()
           .required('Ce champ est obligatoire'),
         description: Yup.string()
-          .required("Ce champ est obligatoire si le type n'est pas galerie"),
+          .required("Ce champ est obligatoire si le type n'est pas galerie")
+          .nullable(true),
         type: Yup.string()
           .required('Ce champ est obligatoire'),
+        content_id: Yup.number(),
         file: Yup.mixed()
-          .test('required', "N'oubliez pas votre fichier, c'est obligatoire", (value) => {
-            return value && value.length;
-          })
-          .test('fileSize', "Le fichier est trop gros", (value) => {
-            return value && value[0] && value[0].size <= 500000000;
-          })
+        .nullable()
+        .notRequired()
       });
       const {
         register,
@@ -42,11 +71,11 @@ export default function CardEditContenu() {
   const  handleEditContenu = async(data) => {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
-                if(data.file.length > 0){
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
-                  history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();
-                }
+                  const fichier = data.file[0] === undefined ? null : data.file[0];
+                  await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, fichier);
+                  /*history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();*/
+                  console.log(data)
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la modification du contenu");
@@ -71,7 +100,8 @@ export default function CardEditContenu() {
               />
             </div>
           </div>
-          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+          { contenuCurrent.map((contenu) => (
+            <div className="flex-auto px-4 lg:px-10 py-10 pt-0" key={contenu.id}>
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Information sur le contenu
               </h6>
@@ -88,6 +118,7 @@ export default function CardEditContenu() {
                       type="text"
                       name="titre"
                       id="inpTitreContenu"
+                      defaultValue={contenu.titre}
                       {...register('titre')}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                    />
@@ -106,12 +137,12 @@ export default function CardEditContenu() {
                       name="type"
                       {...register('type')}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      
+                      onChange={(e) => onChangeTypeSelect(e)}
                     >
-                         <option  hidden>Choisir le type de contenu</option>
-                         <option key="1" value="galerie"> galerie</option>
-                         <option key="2" value="emploi">offre d'emploi</option>
-                         <option key="3" value="information">information</option>
+                         <option key="1" value={contenu.type}  hidden>{contenu.type}</option>
+                         <option key="2" value="galerie"> galerie</option>
+                         <option key="3" value="emploi">offre d'emploi</option>
+                         <option key="4" value="information">information</option>
                     </select>
                     <p className="text-red-500 italic">{errors.type?.message}</p>
                   </div>
@@ -127,15 +158,21 @@ export default function CardEditContenu() {
                     <input
                       type="text"
                       name="description"
+                      defaultValue={contenu.description}
                       {...register('description')}
                       id="inpDescription"
                       style={{height: '100px'}}
                       className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      disabled={isDisabled}
+
                     />
                     <p className="text-red-500 italic">{errors.description?.message}</p>
                   </div>
                 </div>
               </div>
+              <div>
+                  <input type="text" name="content_id" defaultValue={parseInt(id)} {...register('content_id')} hidden/>
+                </div>
 
               <hr className="mt-6 border-b-1 border-blueGray-300" />
 
@@ -163,7 +200,10 @@ export default function CardEditContenu() {
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
+          ))
+
+          }
         </form>
         {erreur &&(
                   <div className="bg-rose-300 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

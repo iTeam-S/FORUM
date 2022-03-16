@@ -23,8 +23,32 @@ function getCurrentCompte(){
     return JSON.parse(localStorage.getItem('compte'));
 }
 
+function getOneCompteContexte(compteFromContexte){
+    const compteFromService = getCurrentCompte();
+    const compteConv = Object.keys(compteFromContexte).map((cle) =>{
+        return compteFromContexte[cle];
+    })
+    const compteCurrent = compteConv.filter((compteConvertis) => {
+        return compteConvertis.id === compteFromService.id;
+    })
+
+    return compteCurrent;
+}
+
+function getOneItemContexte(AllDataContexte, idParams){
+    const dataConvert = Object.keys(AllDataContexte).map((cle) => {
+        return AllDataContexte[cle];
+    })
+    const dataCurrent = dataConvert.filter((data) => {
+        return data.id === parseInt(idParams);
+    })
+    return dataCurrent;
+}
+
 export const LoginService={
     login,
     logout,
-    getCurrentCompte
+    getCurrentCompte,
+    getOneCompteContexte,
+    getOneItemContexte
 }

@@ -12,6 +12,14 @@ export default function CardAddContenu() {
   const compte = LoginService.getCurrentCompte();
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+  let [isDisabled, setIsDisabled] = useState(true);
+
+  const onChangeTypeSelect = (e) => {
+      let choice = e.target.value;
+      choice != "galerie" ? setIsDisabled(false) : setIsDisabled(true);
+  }
+
+
  
   let history = useHistory();
 
@@ -106,7 +114,7 @@ export default function CardAddContenu() {
                       name="type"
                       {...register('type')}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      
+                      onChange={onChangeTypeSelect}
                     >
                          <option  hidden>Choisir le type de contenu</option>
                          <option key="1" value="galerie"> galerie</option>
@@ -131,6 +139,7 @@ export default function CardAddContenu() {
                       id="inpDescription"
                       style={{height: '100px'}}
                       className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      disabled={isDisabled}
                     />
                     <p className="text-red-500 italic">{errors.description?.message}</p>
                   </div>

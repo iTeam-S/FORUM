@@ -110,7 +110,7 @@ export default function CardAllFiche({color}) {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <Link to="/admin/CardEditFiche">
+                        <Link to={`/admin/CardEditFiche/${fiche[cle].id}`}>
                           <button
                           className="bg-teal-500  text-white active:bg-lightBlue-800  font-bold  text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                             type="button"

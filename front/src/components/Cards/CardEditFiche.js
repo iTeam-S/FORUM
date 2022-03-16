@@ -81,8 +81,8 @@ export default function CardEditFiche() {
             if(compte !== null && compte.type === 'ADMIN'){
                   const fichier = data.file[0] === undefined ? null : data.file[0];
                   await CompteService.UpdateFicheMetier(data.titre, data.domaine_id, data.fiche_metier_id , fichier);
-                  /*history.push('/admin/AllFicheMetier');
-                  window.location.reload();*/
+                  history.push('/admin/AllFicheMetier');
+                  window.location.reload();
                   console.log(data)
             }else{
                 setErreur(true);

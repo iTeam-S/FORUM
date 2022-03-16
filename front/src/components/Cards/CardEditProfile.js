@@ -29,8 +29,6 @@ export default function CardEditProfile() {
           .required('Ce champ est obligatoire'),
         domaine: Yup.string()
           .required('le choix est obligatoire'),
-        description: Yup.string()
-          .required('Ce champ est obligatoire'),
         lien: Yup.string()
           .required('Ce champ est obligatoire'),
         type: Yup.string()
@@ -40,7 +38,9 @@ export default function CardEditProfile() {
           .min(6, 'Password must be at least 6 characters')
           .max(40, 'Password must not exceed 40 characters'),
         adresse:Yup.string()
-        .required("Ce champ est obligatoire")
+        .required("Ce champ est obligatoire"),
+        description: Yup.string()
+          .required('Ce champ est obligatoire')
       });
       const {
         register,
@@ -53,9 +53,9 @@ export default function CardEditProfile() {
   const  handleEditAccount = async(data) => {
         try {
             if(compte !== null){
-                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.description, data.type,data.password,data.adresse)
-                /*history.push('/adminEntreprise/ProfilEntreprise');
-                window.location.reload();*/
+                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.type,data.password,data.adresse, data.description)
+                history.push('/adminEntreprise/ProfilEntreprise');
+                window.location.reload();
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la registration");

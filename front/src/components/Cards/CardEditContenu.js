@@ -61,7 +61,6 @@ export default function CardEditContenu() {
                   await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, fichier);
                   /*history.push('/adminEntreprise/AllContenu');
                   window.location.reload();*/
-                  console.log(data)
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la modification du contenu");
@@ -139,7 +138,7 @@ export default function CardEditContenu() {
                       className="block  text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="inpDescription"
                     >
-                      Description   <span className="lowercase">(*à remplir si le type n'est pas galerie*)</span>
+                      Description   <span className="lowercase">(*à remplir si le type n'est pas galerie s'il vous plaît*)</span>
                     </label>
                     <input
                       type="text"
@@ -151,7 +150,6 @@ export default function CardEditContenu() {
                       className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       disabled={isDisabled}
                     />
-                    <p className="text-red-500 italic">{errors.description?.message}</p>
                   </div>
                 </div>
               </div>

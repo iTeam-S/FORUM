@@ -31,9 +31,16 @@ const Boutton = () =>{
 
 const AfficheForm = () => {
   if(localStorage.getItem('compte') !== null){
-    return (
-      <Boutton />
-    )
+    if(LoginService.getCurrentCompte().token !== null){
+      return(
+        <Boutton />
+      )
+    } else{
+      localStorage.removeItem('compte');
+      return(
+        <Login />
+      )
+    }
   } else{
     return(
       <Login />

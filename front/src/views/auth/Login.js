@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 export default function Login() {
   const [erreur,setErreur]=useState(false)
   const [errormessage,setErrorMessage]=useState("");
+  const [type, setType] = useState("password");
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required')
@@ -52,6 +54,11 @@ export default function Login() {
           setErrorMessage("Serveur en maintenance");
         }
   }
+
+  function viewPassword(e){
+    let check = e.target.checked;
+    check ? setType("text") : setType("password");
+  }
   return (
     <>
       <div className="container px-4 h-full">
@@ -88,7 +95,7 @@ export default function Login() {
                       Password
                     </label>
                     <input
-                      type="password"
+                      type={type}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Password"
                       name="password"
@@ -102,9 +109,10 @@ export default function Login() {
                         id="customCheckLogin"
                         type="checkbox"
                         className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                        onChange={(e) => viewPassword(e)}
                       />
                       <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                        Remember me
+                        Afficher mot de passe
                       </span>
                     </label>
                   </div>

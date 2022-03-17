@@ -19,7 +19,7 @@ export default function CardEditContenu() {
   const [errorMesssage,setErrorMessage]=useState("");
 
   //disabling description if galerie
-  let [isDisabled, setIsDisabled] = useState(false);
+  let [isDisabled, setIsDisabled] = useState(true);
   const onChangeTypeSelect = (e) => {
       let choice = e.target.value;
       if(choice === "galerie"){
@@ -97,7 +97,7 @@ export default function CardEditContenu() {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      Titre
+                      Titre 
                     </label>
                     <input
                       type="text"
@@ -113,10 +113,10 @@ export default function CardEditContenu() {
                 <div className="w-full lg:w-6/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      className="block  text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="inpCategorie"
                     >
-                      Type
+                     <span className="uppercase"> Type </span> <span className="lowercase">     (*N'oubliez pas de choisir le type!*)</span>
                     </label>
                     <select
                       name="type"

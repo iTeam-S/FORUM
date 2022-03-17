@@ -7,7 +7,7 @@ import CompteService from "utils/service/CompteService";
 
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
-  
+
   async function deleteOneCompte(id){
     await CompteService.DeleteOneCompte(id);
       window.location.reload();

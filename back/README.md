@@ -296,3 +296,10 @@ content-type: application/json
   GET http://<host>:5000/api/v1/get_attachement/<attachement_name>
   Authorization: Bearer <Token>
 ```
+
+## Get stats data (number of consultation within per day )
+NB : Can specify content_type (mandatory)
+```
+  GET http://127.0.0.1:5000/api/v1/get_stats?content_type=<content_type>
+  Authorization: Bearer <Token>
+```

@@ -29,12 +29,7 @@ export default function CardAddContenu() {
         type: Yup.string()
           .required('Ce champ est obligatoire'),
         file: Yup.mixed()
-          .test('required', "N'oubliez pas votre fichier, c'est obligatoire", (value) => {
-            return value && value.length;
-          })
-          .test('fileSize', "Le fichier est trop gros", (value) => {
-            return value && value[0] && value[0].size <= 500000000;
-          })
+          .required("N'oubliez pas le fichier")
       });
       const {
         register,
@@ -49,9 +44,10 @@ export default function CardAddContenu() {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
-                  history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();
+                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file);
+                 /*history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();*/
+                  console.log(data.file)
                 }
             }else{
                 setErreur(true);
@@ -122,7 +118,7 @@ export default function CardAddContenu() {
                     <p className="text-red-500 italic">{errors.type?.message}</p>
                   </div>
                 </div>
-                <div className="w-full lg:w-12/12 px-4">
+                <div className="w-full lg:w-12/12 px-4" hidden={isDisabled}>
                   <div className="relative w-full mb-3">
                     <label
                       className="block  text-blueGray-600 text-xs font-bold mb-2"
@@ -137,7 +133,6 @@ export default function CardAddContenu() {
                       id="inpDescription"
                       style={{height: '100px'}}
                       className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      disabled={isDisabled}
                     />
                     <p className="text-red-500 italic">{errors.description?.message}</p>
                   </div>

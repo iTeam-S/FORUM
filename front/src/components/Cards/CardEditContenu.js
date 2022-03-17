@@ -57,10 +57,10 @@ export default function CardEditContenu() {
   const  handleEditContenu = async(data) => {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
-                  const fichier = data.file[0] === undefined ? null : data.file[0];
-                  await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, fichier);
-                  history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();
+                  await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, data.file);
+                  /*history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();*/
+                  console.log(data.file)
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la modification du contenu");
@@ -132,7 +132,7 @@ export default function CardEditContenu() {
                     <p className="text-red-500 italic">{errors.type?.message}</p>
                   </div>
                 </div>
-                <div className="w-full lg:w-12/12 px-4">
+                <div className="w-full lg:w-12/12 px-4" hidden={isDisabled}>
                   <div className="relative w-full mb-3">
                     <label
                       className="block  text-blueGray-600 text-xs font-bold mb-2"
@@ -148,7 +148,6 @@ export default function CardEditContenu() {
                       id="inpDescription"
                       style={{height: '100px'}}
                       className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      disabled={isDisabled}
                     />
                   </div>
                 </div>
@@ -177,6 +176,7 @@ export default function CardEditContenu() {
                       {...register('file')}
                       id="inpImageContenu"
                       accept="image/jpeg, image/jpg, image/png, .pdf, video/*"
+                      multiple
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                     <p className="text-red-500 italic">{errors.file?.message}</p>

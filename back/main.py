@@ -843,16 +843,17 @@ def get_attachement(attachement):
             directory=compte_folder, path=attachement, as_attachment=True)
 
 
-@app.route('/api/v1/get_stats/<content_type>', methods=['GET'])
+@app.route('/api/v1/get_stats', methods=['GET'])
 @jwt_required()
-def get_stats(content_type):
-    compte_id = get_jwt_identity().split("+")[0]
+def get_stats():
+    compte_id = int(get_jwt_identity().split("+")[0])
+    content_type = request.args.get("content_type")
 
     if compte_id:
         CURSOR.execute(
-            """
+            f"""
                 SELECT
-                    Cs.date, COUNT(Cs.id) Vues
+                    Cs.date, Ct.type, COUNT(Cs.id) Vues
                 FROM
                     `Contenu` Ct
                 LEFT JOIN
@@ -860,15 +861,14 @@ def get_stats(content_type):
                 ON
                     Ct.id = Cs.dimension
                 WHERE
-                    Ct.compte_id = %s
-            """ + (
-                " AND Ct.type = %s " if content_type in (
-                    'emploi', 'information', 'galerie'
-                ) else ''
-            ) + """
+                    Ct.compte_id = %s AND Cs.date IS NOT NULL
+                {
+                    " AND Ct.type = %s " if content_type in (
+                        'emploi', 'information', 'galerie') else ''
+                }
                     GROUP BY
                         Cs.date
-            """, (compte_id, content_type))
+            """, [3] + ([content_type] if content_type else []))
 
         stats = CURSOR.fetchall()
         print(stats)

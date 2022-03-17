@@ -7,7 +7,7 @@ import '../../assets/styles/cardStyle.css';
 
 export default function CardAllContenu({allContenu}) {
 
-
+  //Fonction delete contenus
   async function deleteContent(id_content){
      await CompteService.DeleteOneContent(id_content);
       window.location.reload();

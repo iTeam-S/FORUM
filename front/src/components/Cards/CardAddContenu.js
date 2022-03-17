@@ -16,7 +16,7 @@ export default function CardAddContenu() {
 
   const onChangeTypeSelect = (e) => {
       let choice = e.target.value;
-      choice != "galerie" ? setIsDisabled(false) : setIsDisabled(true);
+      choice !== "galerie" ? setIsDisabled(false) : setIsDisabled(true);
   }
 
   let history = useHistory();
@@ -25,7 +25,7 @@ export default function CardAddContenu() {
         titre: Yup.string()
           .required('Ce champ est obligatoire'),
         description: Yup.string()
-          .required("Ce champ est obligatoire si le type n'est pas galerie"),
+          .nullable(true),
         type: Yup.string()
           .required('Ce champ est obligatoire'),
         file: Yup.mixed()
@@ -161,6 +161,7 @@ export default function CardAddContenu() {
                     <input
                       type="file"
                       name="file"
+                      multiple
                       {...register('file')}
                       id="inpImageContenu"
                       accept="image/jpeg, image/jpg, image/png, .pdf, video/*"

@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext} from "react";
 
 // components
 
@@ -31,7 +31,7 @@ export default function HeaderStats() {
                   <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                     <CardStats
                       statSubtitle="Entreprise"
-                      statTitle={totalCompte}
+                      statTitle={totalCompte.toString()}
                       statArrow="up"
                       statPercent="2"
                       statPercentColor="text-emerald-500"
@@ -55,7 +55,7 @@ export default function HeaderStats() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Contenus"
-                  statTitle={totalContenu}
+                  statTitle={totalContenu.toString()}
                   statArrow="up"
                   statPercent="1"
                   statPercentColor="text-emerald-500"

@@ -1,17 +1,12 @@
-import React, {useContext} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { CompteContext } from "utils/contexte/CompteContext";
 import CompteService from "utils/service/CompteService";
 
 import '../../assets/styles/cardStyle.css';
 
 
-export default function CardAllContenu() {
-  const {contenus} = useContext(CompteContext); //contenus still obj
+export default function CardAllContenu({allContenu}) {
 
-  const contenuConvert = Object.keys(contenus).map((cle) => {
-    return contenus[cle];
-  })
 
   async function deleteContent(id_content){
      await CompteService.DeleteOneContent(id_content);
@@ -21,7 +16,7 @@ export default function CardAllContenu() {
   return (
     <>
         {/* conver obj to array */}
-       { contenuConvert.map((content) => (
+       { allContenu.map((content) => (
          <div className="w-full  md:w-full lg:w-6/12 xl:w-4/12 px-4 text-center mt-4" key={content.id} >
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
             <div className="px-4 py-5 flex-auto">

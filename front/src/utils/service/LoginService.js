@@ -52,11 +52,47 @@ function convertItemToArray(itemFromContexte){
     return itemConvertis;
 }
 
+function getComptePerDomaine(item, domaine){
+    const itemPerDomaine = item.filter((data) => {
+        if(domaine !== ""){
+            return data.domaine === domaine;
+        } else{
+            return data.domaine
+        }
+    })
+    return itemPerDomaine;
+}
+
+function getFichePerDomaine(fiche, domaine_id){
+    const fichePerDomaine = fiche.filter((data) => {
+        if(domaine_id !== 0){
+            return data.domaine_id === domaine_id;
+        } else {
+            return data.domaine_id;
+        }
+    })
+    return fichePerDomaine;
+}
+
+function getContenuPerDomaine(contenu, type){
+    const contenuPerDomaine = contenu.filter((data) => {
+        if(type !== ""){
+            return data.type === type;
+        } else {
+            return data.type;
+        }
+    })
+    return contenuPerDomaine;
+}
+
 export const LoginService={
     login,
     logout,
     getCurrentCompte,
     getOneCompteContexte,
     getOneItemContexte,
-    convertItemToArray
+    convertItemToArray,
+    getComptePerDomaine,
+    getFichePerDomaine,
+    getContenuPerDomaine
 }

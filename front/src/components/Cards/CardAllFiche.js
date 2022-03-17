@@ -14,10 +14,10 @@ export default function CardAllFiche({color}) {
   const {fiche} = useContext(CompteContext); //fiche still obj
   const history = useHistory();
 
-  const deleteFiche = (id_fiche) => {
-    CompteService.DeleteFicheMetier(id_fiche);
-    history.push("/adminEntreprise/Statistiques");
-    window.location.reload();
+  async function deleteFiche(id_fiche){
+    await CompteService.DeleteFicheMetier(id_fiche);
+      history.push("/admin/AllFicheMetier");
+      window.location.reload();
   }
 
   return (

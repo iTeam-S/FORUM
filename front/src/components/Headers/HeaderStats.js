@@ -1,11 +1,24 @@
-import React from "react";
+import React, {useContext, useState, useEffect} from "react";
 
 // components
 
 import CardStats from "components/Cards/CardStats.js";
+import { LoginService } from "utils/service/LoginService";
+import { CompteContext } from "utils/contexte/CompteContext";
+
 
 export default function HeaderStats() {
+  let totalCompte, totalContenu = 0;
+  const {contenus} = useContext(CompteContext);
+  const {compte} = useContext(CompteContext);
   const type = JSON.parse(localStorage.getItem('compte')).type;
+
+  const compteArray = LoginService.convertItemToArray(compte);
+  const contenuArray = LoginService.convertItemToArray(contenus);
+  totalCompte = compteArray.length;
+  totalContenu = contenuArray.length;
+
+
   return (
     <>
       {/* Header */}
@@ -18,7 +31,7 @@ export default function HeaderStats() {
                   <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                     <CardStats
                       statSubtitle="Entreprise"
-                      statTitle="39"
+                      statTitle={totalCompte}
                       statArrow="up"
                       statPercent="2"
                       statPercentColor="text-emerald-500"
@@ -41,8 +54,8 @@ export default function HeaderStats() {
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="Contenu"
-                  statTitle="41"
+                  statSubtitle="Contenus"
+                  statTitle={totalContenu}
                   statArrow="up"
                   statPercent="1"
                   statPercentColor="text-emerald-500"

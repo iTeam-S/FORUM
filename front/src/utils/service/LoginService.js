@@ -45,10 +45,18 @@ function getOneItemContexte(AllDataContexte, idParams){
     return dataCurrent;
 }
 
+function convertItemToArray(itemFromContexte){
+     const itemConvertis = Object.keys(itemFromContexte).map((cle) =>{
+        return itemFromContexte[cle];
+    })
+    return itemConvertis;
+}
+
 export const LoginService={
     login,
     logout,
     getCurrentCompte,
     getOneCompteContexte,
-    getOneItemContexte
+    getOneItemContexte,
+    convertItemToArray
 }

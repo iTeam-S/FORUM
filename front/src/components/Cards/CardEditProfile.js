@@ -31,12 +31,6 @@ export default function CardEditProfile() {
           .required('le choix est obligatoire'),
         lien: Yup.string()
           .required('Ce champ est obligatoire'),
-        type: Yup.string()
-          .required('le choix est obligatoire'),
-        password: Yup.string()
-          .required('Ce champ est obligatoire')
-          .min(6, 'Password must be at least 6 characters')
-          .max(40, 'Password must not exceed 40 characters'),
         adresse:Yup.string()
         .required("Ce champ est obligatoire"),
         description: Yup.string()
@@ -53,7 +47,7 @@ export default function CardEditProfile() {
   const  handleEditAccount = async(data) => {
         try {
             if(compte !== null){
-                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.type,data.password,data.adresse, data.description)
+                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.adresse, data.description)
                 history.push('/adminEntreprise/ProfilEntreprise');
                 window.location.reload();
             }else{
@@ -76,7 +70,7 @@ export default function CardEditProfile() {
               <input 
                 className="bg-teal-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="submit"              
-                value="Modifier"
+                value="Sauvegarder"
               />
             </div>
           </div>
@@ -84,7 +78,7 @@ export default function CardEditProfile() {
             compteCurrent.map((compte) => (
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0" key={compte.id}>
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                  Information de l'entreprise
+                  Information
                 </h6>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4">
@@ -104,26 +98,6 @@ export default function CardEditProfile() {
                         {...register('nom')}
                     />
                     <p className="text-red-500 italic">{errors.nom?.message}</p>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
-                      >
-                        Type de compte
-                      </label>
-                      <select
-                        name="type"
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        {...register('type')}
-                      >
-                          <option defaultValue={compte.type}  hidden>{compte.type}</option>
-                          {compte.type === "ADMIN" && (<option key="1" value="ADMIN"> ADMIN</option>)}
-                          <option key="2" value="ENTREPRISE">ENTREPRISE</option>
-                      </select>
-                      <p className="text-red-500 italic">{errors.type?.message}</p>
                     </div>
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
@@ -152,22 +126,23 @@ export default function CardEditProfile() {
                       <p className="text-red-500 italic">{errors.domaine?.message}</p>
                     </div>
                   </div>
-                  <div className="w-full lg:w-6/12 px-4">
+                  <div className="w-full lg:w-12/12 px-4">
                     <div className="relative w-full mb-3">
                       <label
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Mot de passe
+                        Adresse
                       </label>
                       <input
-                        type="password"
-                        name="password"
+                        type="text"
+                        name="adresse"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        defaultValue={compte.password}
-                        {...register('password')}
+                        placeholder="Votre adresse..."
+                        defaultValue={compte.adresse}
+                        {...register('adresse')}
                       />
-                      <p className="text-red-500 italic">{errors.password?.message}</p>
+                      <p className="text-red-500 italic">{errors.adresse?.message}</p>
                     </div>
                   </div>
 
@@ -196,7 +171,7 @@ export default function CardEditProfile() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
 
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                  Information sur les contacts
+                  Contacts
                 </h6>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4">
@@ -205,7 +180,7 @@ export default function CardEditProfile() {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Contact
+                        Numéro téléphone
                       </label>
                       <input
                         type="text"
@@ -236,26 +211,7 @@ export default function CardEditProfile() {
                       <p className="text-red-500 italic">{errors.email?.message}</p>
                     </div>
                   </div>
-                  <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
-                      >
-                        Adresse
-                      </label>
-                      <input
-                        type="text"
-                        name="adresse"
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        placeholder="Votre adresse..."
-                        defaultValue={compte.adresse}
-                        {...register('adresse')}
-                      />
-                      <p className="text-red-500 italic">{errors.adresse?.message}</p>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-6/12 px-4">
+                  <div className="w-full lg:w-12/12 px-4">
                     <div className="relative w-full mb-3">
                       <label
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -272,6 +228,97 @@ export default function CardEditProfile() {
                         {...register('lien')}
                       />
                       <p className="text-red-500 italic">{errors.lien?.message}</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            ))
+          }
+        </form>
+        {erreur &&(
+                  <div className="bg-rose-300 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                      <strong className="font-bold">Erreur!</strong>
+                          <span className="block sm:inline">{errorMesssage} </span>
+                          <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+                              <svg onClick={()=>{setErreur(false)}} className="fill-current h-5 w-12 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                            </span>
+                  </div>
+          )}
+      </div>
+
+
+       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0" style={{margin: '80px 0px 0px 0px'}}>
+        <form>
+          <div className="rounded-t bg-white mb-0 px-6 py-6">
+            <div className="text-center flex justify-between">
+              <h6 className="text-blueGray-700 text-xl font-bold">Modifier mot de passe</h6>
+              <input 
+                className="bg-teal-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                type="submit"              
+                value="Sauvegarder"
+              />
+            </div>
+          </div>
+          {
+            compteCurrent.map((compte) => (
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" key={compte.id}>
+                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                </h6>
+                <div className="flex flex-wrap">
+                  <div className="w-full lg:w-12/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Ancien mot de passe
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Ancien mot de passe"
+                        defaultValue={compte.password}
+                        {...register('password')}
+                    />
+                    <p className="text-red-500 italic">{errors.password?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Nouveau mot de passe
+                      </label>
+                      <input
+                        type="password"
+                        name="passwordNouveau"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Nouveau mot de passe"
+                        defaultValue={compte.password}
+                        {...register('password')}
+                    />
+                      <p className="text-red-500 italic">{errors.password?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Confirmer le mot de passe
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        defaultValue={compte.password}
+                        {...register('password')}
+                      />
+                      <p className="text-red-500 italic">{errors.password?.message}</p>
                     </div>
                   </div>
                 </div>

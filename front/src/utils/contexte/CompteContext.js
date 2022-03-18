@@ -38,7 +38,9 @@ export const CompteContextProvider = (props) =>{
         if(LoginService.getCurrentCompte() != null){
              async function fetchContenu(){
                  await CompteService.getAllContenu().then((response) => {
-                    setContenu(response.data);
+                    if(response.data['error'] === undefined){
+                        setContenu(response.data);
+                    } 
                     fetchCompte();
                 })
             }
@@ -46,7 +48,9 @@ export const CompteContextProvider = (props) =>{
         } else if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ENTREPRISE'){
             async function fetchContenu(){
                 await CompteService.getAllContenu().then((response) => {
-                    setContenu(response.data);
+                        if(response.data['error'] === undefined){
+                        setContenu(response.data);
+                    } 
                 })
             }
             fetchContenu();

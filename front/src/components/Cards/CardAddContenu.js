@@ -45,8 +45,8 @@ export default function CardAddContenu() {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
                   await CompteService.AddContenu(data.titre,data.description,data.type, data.file);
-                 /*history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();*/
+                  history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();
                   console.log(data.file)
                 }
             }else{

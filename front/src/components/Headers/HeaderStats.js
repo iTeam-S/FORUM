@@ -32,10 +32,6 @@ export default function HeaderStats() {
                     <CardStats
                       statSubtitle="Entreprise"
                       statTitle={totalCompte.toString()}
-                      statArrow="up"
-                      statPercent="2"
-                      statPercentColor="text-emerald-500"
-                      statDescripiron="Since yesterday"
                       statIconName="far fa-chart-bar"
                       statIconColor="bg-red-500"
                     />
@@ -44,10 +40,6 @@ export default function HeaderStats() {
                 <CardStats
                   statSubtitle="Visiteurs"
                   statTitle="100"
-                  statArrow="up"
-                  statPercent="5"
-                  statPercentColor="text-emerald-500"
-                  statDescripiron="Since yesterday"
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"
                 />
@@ -56,10 +48,6 @@ export default function HeaderStats() {
                 <CardStats
                   statSubtitle="Contenus"
                   statTitle={totalContenu.toString()}
-                  statArrow="up"
-                  statPercent="1"
-                  statPercentColor="text-emerald-500"
-                  statDescripiron="Since yesterday"
                   statIconName="fas fa-chart-pie"
                   statIconColor="bg-orange-500"
                 />

@@ -34,6 +34,7 @@ import AddContenu from "views/admin-entreprise/AddContenu.js";
 import AllFicheMetier from "views/admin/AllFicheMetier";
 import CardEditContenu from "components/Cards/CardEditContenu";
 import CardEditFiche from "components/Cards/CardEditFiche";
+import CardEditPassword from "components/Cards/CardEditPassword";
 
 
 ReactDOM.render(
@@ -62,6 +63,9 @@ ReactDOM.render(
             </EntrepriseRoute>
             <EntrepriseRoute path="/adminEntreprise/CardEditContenu/:id" exact >
               <CardEditContenu />
+            </EntrepriseRoute>
+            <EntrepriseRoute path="/adminEntreprise/CardEditPassword/:id" exact >
+                <CardEditPassword />
             </EntrepriseRoute>
 
             {/*admin route */}

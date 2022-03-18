@@ -133,17 +133,17 @@ class CompteService{
 
             /*UPDATE SERVICE*/
 
-    UpdateCompte(nom, email, tel, domaine, lien, type, password, adresse, description){
+    UpdateCompte(nom, email, tel, domaine, lien, adresse, description, lienf, lienv){
         return RouteAxios.patch('/update_account', {
             nom, 
             email, 
             tel, 
             domaine, 
-            lien, 
-            type, 
-            password, 
+            lien,  
             adresse,
-            description
+            description,
+            lienf,
+            lienv
         }, {
             headers: {
                 'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,

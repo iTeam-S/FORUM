@@ -31,15 +31,8 @@ export default function CardAddContenu() {
         file: Yup.mixed()
           .required("N'oubliez pas le fichier")
       });
-      const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm({
-        resolver: yupResolver(validationSchema)
-      });
 
-
+  
   const  handleAddContenu = async(data) => {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
@@ -58,6 +51,15 @@ export default function CardAddContenu() {
             setErrorMessage(error.response.data.message)
         }
     }
+    
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+      } = useForm({
+        resolver: yupResolver(validationSchema)
+  });
+
 
   return (
     <>

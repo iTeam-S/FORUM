@@ -1,17 +1,15 @@
-import Chart from "chart.js";
+import Chart, {useContext} from "chart.js";
 import React, { useEffect, useState} from 'react';
+
 import CompteService from 'utils/service/CompteService';
+import { CompteContext } from "utils/contexte/CompteContext";
 import { LoginService } from 'utils/service/LoginService';
 
 export default function CardLineChart() {
-  let tab = [];
 
   useEffect(() => {
 
     function nombre(){
-      let valeur = Math.floor(Math.random() * 100);
-      tab.push(valeur);
-
       
           var config = {
           type: "line",
@@ -31,7 +29,7 @@ export default function CardLineChart() {
                 label: "Nombre visiteur",
                 backgroundColor: "#02d47c",
                 borderColor: "#02d47c",
-                data: tab,
+                data: [0, 12],
                 fill: false,
               },
             ],
@@ -112,7 +110,7 @@ export default function CardLineChart() {
     }
     async function LineChart (){
       try{
-        setInterval(nombre, 5000);
+        nombre()
         
       } catch(erreur){
         console.log(erreur);

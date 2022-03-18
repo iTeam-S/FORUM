@@ -849,38 +849,53 @@ def get_stats():
     compte_id = int(get_jwt_identity().split("+")[0])
     content_type = request.args.get("content_type")
 
-    if compte_id:
-        CURSOR.execute(
-            f"""
-                SELECT
-                    Cs.date, Ct.type, COUNT(Cs.id) Vues
-                FROM
-                    `Contenu` Ct
-                LEFT JOIN
-                    `Consultation` Cs
-                ON
-                    Ct.id = Cs.dimension
-                WHERE
-                    Ct.compte_id = %s AND Cs.date IS NOT NULL
-                {
-                    " AND Ct.type = %s " if content_type in (
-                        'emploi', 'information', 'galerie') else ''
-                }
-                    GROUP BY
-                        Cs.date
-            """, [3] + ([content_type] if content_type else []))
+    try:
+        if compte_id:
+            CURSOR.execute(
+                f"""
+                    SELECT
+                        Cs.date, Ct.type, COUNT(Cs.id) Vues
+                    FROM
+                        `Contenu` Ct
+                    LEFT JOIN
+                        `Consultation` Cs
+                    ON
+                        Ct.id = Cs.dimension
+                    WHERE
+                        Ct.compte_id = %s AND Cs.date IS NOT NULL
+                    {
+                        " AND Ct.type = %s " if content_type in (
+                            'emploi', 'information', 'galerie') else ''
+                    }
+                        GROUP BY
+                            Cs.date
+                """, [3] + (
+                    [content_type] if content_type in (
+                        'emploi', 'information', 'galerie') else []))
 
-        stats = CURSOR.fetchall()
-        print(stats)
+            stats = CURSOR.fetchall()
+            print(stats)
 
-        if stats:
-            return {
-                stats.index(stat):
-                    dict(
-                        zip(CURSOR.column_names, stat)
-                    ) for stat in stats
-            }, 200
+            if stats:
+                return {
+                    stats.index(stat):
+                        dict(
+                            zip(CURSOR.column_names, stat)
+                        ) for stat in stats
+                }, 200
+            else:
+                return {
+                    "error": False,
+                    "message": "no data for the moment"
+                }, 200
 
+        return {
+            "error": True,
+            "message": "Pas d'access"
+        }, 403
+    except Exception as err:
+        print(err)
+        abort(500, description="Something went wrong !")
 
 if __name__ == "__main__":
     app.run(debug=True)

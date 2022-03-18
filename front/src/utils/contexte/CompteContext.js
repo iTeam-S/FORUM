@@ -7,6 +7,7 @@ export const CompteContext = createContext();
 
 export const CompteContextProvider = (props) =>{
     const [contenus, setContenu] = useState([]);
+    const [statGallerie, setStateGallerie] = useState([]);
     const [compte, setCompte] = useState([]);
     const [fiche, setFiche] = useState([]);
 
@@ -15,13 +16,20 @@ export const CompteContextProvider = (props) =>{
             setFiche(response.data);
         });
     }
+
+    async function fetchStat(){
+            await CompteService.getStatGallerie().then((response) => {
+                 setStateGallerie(response.data);
+                 if(LoginService.getCurrentCompte().type === 'ADMIN'){
+                    fetchFicheMetier();
+                }
+            })
+        }
     
     async function fetchCompte(){
             await CompteService.getAllCompte().then((response) => {
                 setCompte(response.data);
-                if(LoginService.getCurrentCompte().type === 'ADMIN'){
-                    fetchFicheMetier();
-                }
+                fetchStat();
             });
     }
     

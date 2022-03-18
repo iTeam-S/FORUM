@@ -80,6 +80,16 @@ class CompteService{
         })
     }
 
+    getStatGallerie(){
+        return RouteAxios.get("/get_stats", {
+            headers: {
+                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            }
+        }).then(response => {
+            return response;
+        })
+    }
+
 
                 /*DELETE SERVICE*/
     DeleteOneCompte(compte_id){
@@ -173,6 +183,7 @@ class CompteService{
             }
         })
     }
+
 }
 
 export default new CompteService();

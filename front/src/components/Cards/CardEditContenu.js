@@ -58,8 +58,8 @@ export default function CardEditContenu() {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                   await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, data.file);
-                  /*history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();*/
+                  history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();
                   console.log(data.file)
             }else{
                 setErreur(true);

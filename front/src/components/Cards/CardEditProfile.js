@@ -62,6 +62,9 @@ export default function CardEditProfile() {
         lienv: Yup.mixed()
           .nullable(true)
           .notRequired(),
+        logo: Yup.mixed()
+          .nullable(true)
+          .notRequired(),
   });
 
   const {
@@ -75,12 +78,12 @@ export default function CardEditProfile() {
   const  handleEditAccount = async(data) => {
         try {
             if(compte !== null){
-                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.adresse, data.description, data.lienf, data.lienv)
+                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.adresse, data.description, data.lienf, data.lienv, data.logo)
                 history.push('/adminEntreprise/ProfilEntreprise');
                 window.location.reload();
             }else{
                 setErreur(true);
-                setErrorMessage("Echec à la registration");
+                setErrorMessage("Echec à la Modification");
             }
         } catch (error) {
             setErreur(true);
@@ -94,7 +97,7 @@ export default function CardEditProfile() {
         <form onSubmit={handleSubmit(handleEditAccount)}>
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold">Edit compte</h6>
+              <h6 className="text-blueGray-700 text-xl font-bold">Modifier compte</h6>
               <input 
                 className="bg-teal-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="submit"              
@@ -174,6 +177,24 @@ export default function CardEditProfile() {
                     </div>
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Votre logo
+                      </label>
+                      <input
+                        type="file"
+                        name="logo"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Logo de votre entreprise.."
+                        {...register('logo')}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-12/12 px-4">
                     <div className="relative w-full mb-3">
                       <label
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -263,7 +284,7 @@ export default function CardEditProfile() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
 
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                  Média  (*Vous pouvez insérer soit par fichier soit via lien facebook*)
+                  Vidéo de presentation  (*Vous pouvez insérer soit par fichier soit via lien facebook*)
                 </h6>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4" hidden={hiddenLien}>

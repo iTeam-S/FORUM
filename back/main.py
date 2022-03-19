@@ -108,7 +108,7 @@ def login():
         }, 412
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -176,7 +176,7 @@ def add_account():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -249,7 +249,7 @@ def add_content():
         }, 412
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -303,7 +303,7 @@ def add_fiche_metier():
             }, 412
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -367,7 +367,7 @@ def list_accounts():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -421,7 +421,7 @@ def list_contents():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -464,7 +464,7 @@ def list_fiche_metier():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -495,7 +495,7 @@ def delete_content():
                     "message": "Content Deleted!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -508,7 +508,7 @@ def delete_content():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -547,7 +547,7 @@ def delete_account():
                     "message": "Account Deleted!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 return {
                     "error": True,
                     "message": "le compte est encore utilisé !"
@@ -559,7 +559,7 @@ def delete_account():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -591,7 +591,7 @@ def delete_fiche_metier():
                     "message": "Fiche Metier Deleted!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -604,7 +604,7 @@ def delete_fiche_metier():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -626,12 +626,8 @@ def update_account():
                 data.get("email"),
                 data.get("tel"),
                 data.get("domaine"),
-                str(
-                    generate_password_hash(
-                        str(data.get("password"))).decode()),
                 data.get("description"),
                 data.get("adresse"),
-                data.get("type"),
                 data.get("lien"),
                 int(compte_id)
             )
@@ -644,12 +640,10 @@ def update_account():
                         email = %s,
                         tel = %s,
                         domaine = %s,
-                        password = %s,
                         description = %s,
                         adresse = %s,
-                        type = %s,
-                        lien = %s
-
+                        lien = %s,
+                        logo = %s
                     WHERE
                         id=%s;
                 """, account)
@@ -661,7 +655,7 @@ def update_account():
                     "message": "Account Updated!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -674,7 +668,7 @@ def update_account():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -737,7 +731,7 @@ def update_content():
                     "message": "Account Updated!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -750,7 +744,7 @@ def update_content():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -810,7 +804,7 @@ def update_fiche_metier():
                     "message": "Fiche Metier Updated!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -823,7 +817,7 @@ def update_fiche_metier():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -894,8 +888,60 @@ def get_stats():
             "message": "Pas d'access"
         }, 403
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
+
+
+@app.route('/api/v1/change_password', methods=['PATCH'])
+@jwt_required()
+def change_password():
+    compte_id = int(get_jwt_identity().split("+")[0])
+    data = request.get_json()
+    old_password = data.get("old_password")
+    new_password = data.get("new_password")
+
+    if compte_id and old_password and new_password:
+        try:
+            hashed_new_pass = str(
+                generate_password_hash(new_password).decode())
+
+            CURSOR.execute(
+                "SELECT password FROM Compte WHERE id=%s", (compte_id,))
+
+            hashed_old_pass = CURSOR.fetchone()[0]
+            if hashed_old_pass and check_password_hash(
+                hashed_old_pass, old_password
+            ):
+                CURSOR.execute("""
+                    UPDATE
+                        Compte
+                    SET
+                        password=%s
+                    WHERE
+                        id=%s;
+                    """, (hashed_new_pass, compte_id)
+                )
+
+                DB.commit()
+                if CURSOR.rowcount > 0:
+                    return {
+                        "error": False,
+                        "message": "Password changed successfuly"
+                    }, 200
+
+            return {
+                "error": True,
+                "message": "Password incorrect or account don't exists"
+            }, 403
+
+        except Exception as err:
+            print(f"[ERROR] : { err }")
+            abort(500, description="Something went wrong !")
+    return {
+        "error": True,
+        "message": "Needed Data not enough"
+    }, 412
+
 
 if __name__ == "__main__":
     app.run(debug=True)

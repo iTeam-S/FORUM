@@ -300,6 +300,17 @@ content-type: application/json
 ## Get stats data (number of consultation within per day )
 NB : Can specify content_type (mandatory)
 ```
-  GET http://127.0.0.1:5000/api/v1/get_stats?content_type=<content_type>
+  GET http://<host>:5000/api/v1/get_stats?content_type=<content_type>
   Authorization: Bearer <Token>
+```
+
+## Change Password
+```
+PATCH http://<host>:5000/api/v1/change_password
+Authorization: Bearer <Token>
+Content-Type: application/json
+{
+    "old_password": <old_password>,
+    "new_password": <new_password>
+}
 ```

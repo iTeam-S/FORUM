@@ -1,105 +1,126 @@
-import React from "react";
-import Chart from "chart.js";
+import Chart, {useContext} from "chart.js";
+import React, { useEffect, useState} from 'react';
+
+import CompteService from 'utils/service/CompteService';
+import { CompteContext } from "utils/contexte/CompteContext";
+import { LoginService } from 'utils/service/LoginService';
 
 export default function CardLineChart() {
-  React.useEffect(() => {
-    var config = {
-      type: "line",
-      data: {
-        labels: [
-          "Samedi",
-          "Dimanche",
-          "Lundi",
-          "Mardi",
-          "Mercredi",
-          "Jeudi",
-          "Vendredi",
-          "Samedi",
-        ],
-        datasets: [
-          {
-            label: "Nombre visiteur",
-            backgroundColor: "#02d47c",
-            borderColor: "#02d47c",
-            data: [0, 10, 30, 24, 65, 32, 22, 36],
-            fill: false,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        title: {
-          display: false,
-          text: "Stats chart",
-          fontColor: "white",
-        },
-        legend: {
-          labels: {
-            fontColor: "white",
-          },
-          align: "end",
-          position: "bottom",
-        },
-        tooltips: {
-          mode: "index",
-          intersect: false,
-        },
-        hover: {
-          mode: "nearest",
-          intersect: true,
-        },
-        scales: {
-          xAxes: [
-            {
-              ticks: {
-                fontColor: "rgba(255,255,255,.7)",
+
+  useEffect(() => {
+
+    function nombre(){
+      
+          var config = {
+          type: "line",
+          data: {
+            labels: [
+              "Samedi",
+              "Dimanche",
+              "Lundi",
+              "Mardi",
+              "Mercredi",
+              "Jeudi",
+              "Vendredi",
+              "Samedi",
+            ],
+            datasets: [
+              {
+                label: "Nombre visiteur",
+                backgroundColor: "#02d47c",
+                borderColor: "#02d47c",
+                data: [0, 12],
+                fill: false,
               },
-              display: true,
-              scaleLabel: {
-                display: false,
-                labelString: "Day",
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            title: {
+              display: false,
+              text: "Stats chart",
+              fontColor: "white",
+            },
+            legend: {
+              labels: {
                 fontColor: "white",
               },
-              gridLines: {
-                display: false,
-                borderDash: [2],
-                borderDashOffset: [2],
-                color: "rgba(33, 37, 41, 0.3)",
-                zeroLineColor: "rgba(0, 0, 0, 0)",
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
-              },
+              align: "end",
+              position: "bottom",
             },
-          ],
-          yAxes: [
-            {
-              ticks: {
-                fontColor: "rgba(255,255,255,.7)",
-              },
-              display: true,
-              scaleLabel: {
-                display: false,
-                labelString: "Value",
-                fontColor: "white",
-              },
-              gridLines: {
-                borderDash: [3],
-                borderDashOffset: [3],
-                drawBorder: false,
-                color: "rgba(255, 255, 255, 0.15)",
-                zeroLineColor: "rgba(33, 37, 41, 0)",
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
-              },
+            tooltips: {
+              mode: "index",
+              intersect: false,
             },
-          ],
-        },
-      },
-    };
-    var ctx = document.getElementById("line-chart").getContext("2d");
-    window.myLine = new Chart(ctx, config);
-  }, []);
+            hover: {
+              mode: "nearest",
+              intersect: true,
+            },
+            scales: {
+              xAxes: [
+                {
+                  ticks: {
+                    fontColor: "rgba(255,255,255,.7)",
+                  },
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Day",
+                    fontColor: "white",
+                  },
+                  gridLines: {
+                    display: false,
+                    borderDash: [2],
+                    borderDashOffset: [2],
+                    color: "rgba(33, 37, 41, 0.3)",
+                    zeroLineColor: "rgba(0, 0, 0, 0)",
+                    zeroLineBorderDash: [2],
+                    zeroLineBorderDashOffset: [2],
+                  },
+                },
+              ],
+              yAxes: [
+                {
+                  ticks: {
+                    fontColor: "rgba(255,255,255,.7)",
+                  },
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Value",
+                    fontColor: "white",
+                  },
+                  gridLines: {
+                    borderDash: [3],
+                    borderDashOffset: [3],
+                    drawBorder: false,
+                    color: "rgba(255, 255, 255, 0.15)",
+                    zeroLineColor: "rgba(33, 37, 41, 0)",
+                    zeroLineBorderDash: [2],
+                    zeroLineBorderDashOffset: [2],
+                  },
+                },
+              ],
+            },
+          },
+        };
+        var ctx = document.getElementById("line-chart").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    }
+    async function LineChart (){
+      try{
+        nombre()
+        
+      } catch(erreur){
+        console.log(erreur);
+      }
+      
+    }
+    LineChart();
+  }, [])
+
+    
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-700">

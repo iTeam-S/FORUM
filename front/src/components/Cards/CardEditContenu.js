@@ -1,22 +1,33 @@
-import React, {useState } from "react";
+import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import {useHistory} from "react-router";
 
 // components
 import CompteService from "utils/service/CompteService";
+import { CompteContext } from "utils/contexte/CompteContext";
 import { LoginService } from "utils/service/LoginService";
 
-export default function CardAddContenu() {
+export default function CardEditContenu() {
   const compte = LoginService.getCurrentCompte();
+  const {contenus} = useContext(CompteContext)
+  const {id} = useParams();
+  const contenuCurrent = LoginService.getOneItemContexte(contenus, id);
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
-  let [isDisabled, setIsDisabled] = useState(true);
 
+  //disabling description if galerie
+  let [isDisabled, setIsDisabled] = useState(true);
   const onChangeTypeSelect = (e) => {
       let choice = e.target.value;
-      choice !== "galerie" ? setIsDisabled(false) : setIsDisabled(true);
+      if(choice === "galerie"){
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false)
+      }
+      
   }
 
   let history = useHistory();
@@ -25,57 +36,57 @@ export default function CardAddContenu() {
         titre: Yup.string()
           .required('Ce champ est obligatoire'),
         description: Yup.string()
+          .max(2000, "La description doit être inférieur à 2000 caractères")
           .nullable(true),
         type: Yup.string()
           .required('Ce champ est obligatoire'),
+        content_id: Yup.number(),
         file: Yup.mixed()
-          .required("N'oubliez pas le fichier")
+        .nullable()
+        .notRequired()
+      });
+      const {
+        register,
+        handleSubmit,
+        formState: { errors }
+      } = useForm({
+        resolver: yupResolver(validationSchema)
       });
 
-  
-  const  handleAddContenu = async(data) => {
+
+  const  handleEditContenu = async(data) => {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
-                if(data.file.length > 0){
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file);
+                  await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, data.file);
                   history.push('/adminEntreprise/AllContenu');
                   window.location.reload();
                   console.log(data.file)
-                }
             }else{
                 setErreur(true);
-                setErrorMessage("Echec à l'ajout du nouveau contenu");
+                setErrorMessage("Echec à la modification du contenu");
             }
         } catch (error) {
             setErreur(true)
             setErrorMessage(error.response.data.message)
         }
     }
-    
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm({
-        resolver: yupResolver(validationSchema)
-  });
-
 
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-        <form onSubmit={handleSubmit(handleAddContenu)}>
+        <form onSubmit={handleSubmit(handleEditContenu)}>
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold">Nouveau contenu pour le forum</h6>
+              <h6 className="text-blueGray-700 text-xl font-bold">Modifier le contenu</h6>
               <input 
                 className="bg-teal-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="submit"              
-                value="Ajouter"
+                value="Sauvegarder"
               />
             </div>
           </div>
-          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+          { contenuCurrent.map((contenu) => (
+            <div className="flex-auto px-4 lg:px-10 py-10 pt-0" key={contenu.id}>
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Information sur le contenu
               </h6>
@@ -86,12 +97,13 @@ export default function CardAddContenu() {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      Titre
+                      Titre 
                     </label>
                     <input
                       type="text"
                       name="titre"
                       id="inpTitreContenu"
+                      defaultValue={contenu.titre}
                       {...register('titre')}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                    />
@@ -101,21 +113,21 @@ export default function CardAddContenu() {
                 <div className="w-full lg:w-6/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      className="block  text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="inpCategorie"
                     >
-                      Type
+                     <span className="uppercase"> Type </span> <span className="lowercase">     (*N'oubliez pas de choisir le type!*)</span>
                     </label>
                     <select
                       name="type"
                       {...register('type')}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      onChange={onChangeTypeSelect}
+                      onChange={(e) => onChangeTypeSelect(e)}
                     >
-                         <option  hidden>Choisir le type de contenu</option>
-                         <option key="1" value="galerie"> galerie</option>
-                         <option key="2" value="emploi">offre d'emploi</option>
-                         <option key="3" value="information">information</option>
+                         <option key="1" value={contenu.type}  hidden>{contenu.type}</option>
+                         <option key="2" value="galerie"> galerie</option>
+                         <option key="3" value="emploi">offre d'emploi</option>
+                         <option key="4" value="information">information</option>
                     </select>
                     <p className="text-red-500 italic">{errors.type?.message}</p>
                   </div>
@@ -126,20 +138,23 @@ export default function CardAddContenu() {
                       className="block  text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="inpDescription"
                     >
-                      Description   <span className="lowercase">(*à remplir si le type n'est pas galerie*)</span>
+                      Description   <span className="lowercase">(*à remplir si le type n'est pas galerie s'il vous plaît*)</span>
                     </label>
                     <input
                       type="text"
                       name="description"
+                      defaultValue={contenu.description}
                       {...register('description')}
                       id="inpDescription"
                       style={{height: '100px'}}
                       className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
-                    <p className="text-red-500 italic">{errors.description?.message}</p>
                   </div>
                 </div>
               </div>
+              <div>
+                  <input type="text" name="content_id" defaultValue={parseInt(id)} {...register('content_id')} hidden/>
+                </div>
 
               <hr className="mt-6 border-b-1 border-blueGray-300" />
 
@@ -158,17 +173,20 @@ export default function CardAddContenu() {
                     <input
                       type="file"
                       name="file"
-                      multiple
                       {...register('file')}
                       id="inpImageContenu"
                       accept="image/jpeg, image/jpg, image/png, .pdf, video/*"
+                      multiple
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                     <p className="text-red-500 italic">{errors.file?.message}</p>
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
+          ))
+
+          }
         </form>
         {erreur &&(
                   <div className="bg-rose-300 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

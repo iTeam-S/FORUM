@@ -18,7 +18,7 @@ export default function AdminRoute({children, ...rest}){
             <HeaderStats />
             <div className="px-4 md:px-10 mx-auto w-full -m-24">
                 <Route {...rest} render = {() => {
-                    return compte !== null && compte.type === 'ADMIN'
+                    return compte !== null && compte.type === 'ADMIN' && LoginService.getCurrentCompte().token !== null
                     ? children
                     : <Redirect to='/error' />
             }} />

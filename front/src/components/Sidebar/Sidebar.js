@@ -176,6 +176,7 @@ export default function Sidebar() {
                     Profile entreprise
                   </Link>
                 </li>
+
                       
                 <li className="items-center">
                   <Link

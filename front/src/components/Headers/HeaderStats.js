@@ -1,11 +1,24 @@
-import React from "react";
+import React, {useContext} from "react";
 
 // components
 
 import CardStats from "components/Cards/CardStats.js";
+import { LoginService } from "utils/service/LoginService";
+import { CompteContext } from "utils/contexte/CompteContext";
+
 
 export default function HeaderStats() {
+  let totalCompte, totalContenu = 0;
+  const {contenus} = useContext(CompteContext);
+  const {compte} = useContext(CompteContext);
   const type = JSON.parse(localStorage.getItem('compte')).type;
+
+  const compteArray = LoginService.convertItemToArray(compte);
+  const contenuArray = LoginService.convertItemToArray(contenus);
+  totalCompte = compteArray.length;
+  totalContenu = contenuArray.length;
+
+
   return (
     <>
       {/* Header */}
@@ -18,11 +31,7 @@ export default function HeaderStats() {
                   <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                     <CardStats
                       statSubtitle="Entreprise"
-                      statTitle="39"
-                      statArrow="up"
-                      statPercent="2"
-                      statPercentColor="text-emerald-500"
-                      statDescripiron="Since yesterday"
+                      statTitle={totalCompte.toString()}
                       statIconName="far fa-chart-bar"
                       statIconColor="bg-red-500"
                     />
@@ -31,22 +40,14 @@ export default function HeaderStats() {
                 <CardStats
                   statSubtitle="Visiteurs"
                   statTitle="100"
-                  statArrow="up"
-                  statPercent="5"
-                  statPercentColor="text-emerald-500"
-                  statDescripiron="Since yesterday"
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="Contenu"
-                  statTitle="41"
-                  statArrow="up"
-                  statPercent="1"
-                  statPercentColor="text-emerald-500"
-                  statDescripiron="Since yesterday"
+                  statSubtitle="Contenus"
+                  statTitle={totalContenu.toString()}
                   statIconName="fas fa-chart-pie"
                   statIconColor="bg-orange-500"
                 />

@@ -186,6 +186,19 @@ class CompteService{
         })
     }
 
+    UpdatePassword(old_password, new_password){
+        return RouteAxios.patch('/change_password', {
+            old_password,
+            new_password
+        }, {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
+                'Content-Type': 'application/json'
+            }
+        }
+        )
+    }
+
 }
 
 export default new CompteService();

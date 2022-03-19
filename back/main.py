@@ -205,7 +205,6 @@ def add_content():
                     if size > 25000000 and allowed_file_video(
                         fichier.filename
                     ):
-                        print("Here")
                         filename = link
                         return
                     else:
@@ -642,8 +641,7 @@ def update_account():
                         domaine = %s,
                         description = %s,
                         adresse = %s,
-                        lien = %s,
-                        logo = %s
+                        lien = %s
                     WHERE
                         id=%s;
                 """, account)
@@ -698,7 +696,6 @@ def update_content():
                 compte_folder = os.path.join(
                     app.config['UPLOAD_FOLDER'], str(compte_id)
                 )
-                print(compte_folder)
                 Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
                 filename = str(time.time()) + '_' + secure_filename(
@@ -821,20 +818,17 @@ def update_fiche_metier():
         abort(500, description="Something went wrong !")
 
 
-@app.route('/api/v1/get_attachement/<attachement>', methods=['GET'])
-@jwt_required()
-def get_attachement(attachement):
+@app.route('/api/v1/get_attachement/<compte_id>/<attachement>', methods=['GET'])
+def get_attachement(compte_id, attachement):
     """
         DESC : Fonction permettant de récuperer un fichier
     """
-    compte_id = get_jwt_identity().split("+")[0]
-
     if compte_id:
         compte_folder = os.path.join(
             app.config['UPLOAD_FOLDER'], str(compte_id)
         )
         return send_from_directory(
-            directory=compte_folder, path=attachement, as_attachment=True)
+            directory=compte_folder, path=attachement)
 
 
 @app.route('/api/v1/get_stats', methods=['GET'])
@@ -941,6 +935,54 @@ def change_password():
         "error": True,
         "message": "Needed Data not enough"
     }, 412
+
+
+@app.route('/api/v1/update_logo', methods=['PATCH'])
+@jwt_required()
+def update_logo():
+    compte_id = int(get_jwt_identity().split("+")[0])
+    try:
+        if request.files:
+            logo = request.files['logo']
+
+            compte_folder = os.path.join(
+                    app.config['UPLOAD_FOLDER'], str(compte_id)
+                )
+            Path(compte_folder).mkdir(parents=True, exist_ok=True)
+
+            filename = str(time.time()) + '_' + secure_filename(
+                logo.filename)
+
+            logo.save(
+                    os.path.join(compte_folder, filename)
+            )
+
+            if filename:
+                CURSOR.execute("""
+                    UPDATE
+                        Compte
+                    SET
+                        logo=%s
+                    WHERE
+                        id=%s;
+                    """, (filename, compte_id)
+                )
+
+                DB.commit()
+                if CURSOR.rowcount > 0:
+                    return {
+                        "error": False,
+                        "message": "Logo_updated",
+                        "logo": filename
+                    }, 200
+        return {
+            "error": True,
+            "message": "No file uploaded"
+        }, 412
+
+    except Exception as err:
+        print(f"[ERROR] : { err }")
+        abort(500, description="Something went wrong !")
 
 
 if __name__ == "__main__":

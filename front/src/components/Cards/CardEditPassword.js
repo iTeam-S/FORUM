@@ -2,7 +2,7 @@ import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
-import {useHistory} from "react-router";
+// import {useHistory} from "react-router";
 
 // components
 import CompteService from "utils/service/CompteService";
@@ -16,8 +16,7 @@ export default function CardEditPassword() {
 
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
-
-  let history = useHistory();
+  // let history = useHistory();
 
   const validationPassword = Yup.object().shape({
       password: Yup.string()

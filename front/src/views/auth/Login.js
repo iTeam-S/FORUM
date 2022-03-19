@@ -46,7 +46,7 @@ export default function Login() {
                   }
                   else {
                     setErreur(true);
-                    setErrorMessage("Probleme de connexion au serveur!");
+                    setErrorMessage("Email ou mot de passe incorrecte!");
                   }
                 })
         } catch (error) {

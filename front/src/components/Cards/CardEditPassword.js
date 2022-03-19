@@ -2,7 +2,7 @@ import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
-// import {useHistory} from "react-router";
+import {useHistory} from "react-router";
 
 // components
 import CompteService from "utils/service/CompteService";
@@ -16,10 +16,31 @@ export default function CardEditPassword() {
 
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
-  // let history = useHistory();
+
+  const [pass, setPass] = useState("");
+
+  const firstP = (premier) => {
+    let valeur = premier.target.value;
+    setPass(valeur);
+  }
+  const secondP = (second) => {
+    let valeur = second.target.value;
+    if(valeur !== pass){
+      setErreur(true);
+      setErrorMessage("Confirmation et nouveau mot de passe doit être les mêmes!")
+    } else{
+      setErreur(false);
+    }
+  }
+
+  let history = useHistory();
 
   const validationPassword = Yup.object().shape({
-      password: Yup.string()
+      old_password: Yup.string()
+          .required('Ce champ est obligatoire')
+          .min(6, 'Password doit être au minimum 6 characters')
+          .max(40, 'Password ne doit pas dépasser les 40 characters'),
+      new_password: Yup.string()
           .required('Ce champ est obligatoire')
           .min(6, 'Password doit être au minimum 6 characters')
           .max(40, 'Password ne doit pas dépasser les 40 characters'),
@@ -36,8 +57,8 @@ export default function CardEditPassword() {
   const  handleEditPassword = async(data) => {
         try {
             if(compte !== null){
-                await CompteService.UpdateCompte(data.password)
-                /*history.push('/adminEntreprise/ProfilEntreprise');*/
+                await CompteService.UpdatePassword(data.old_password, data.new_password)
+                history.push('/adminEntreprise/ProfilEntreprise');
                 window.location.reload();
             }else{
                 setErreur(true);
@@ -82,10 +103,9 @@ export default function CardEditPassword() {
                         name="password"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         placeholder="Ancien mot de passe"
-                        defaultValue={compte.password}
-                        {...register('password')}
+                        {...register('old_password')}
                     />
-                    <p className="text-red-500 italic">{errors.password?.message}</p>
+                    <p className="text-red-500 italic">{errors.old_password?.message}</p>
                     </div>
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
@@ -101,8 +121,7 @@ export default function CardEditPassword() {
                         name="passwordNouveau"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         placeholder="Nouveau mot de passe"
-                        defaultValue={compte.password}
-                        {...register('password')}
+                        onChange={(premier) => firstP(premier)}
                     />
                       <p className="text-red-500 italic">{errors.password?.message}</p>
                     </div>
@@ -113,15 +132,16 @@ export default function CardEditPassword() {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Confirmer le mot de passe
+                        Confirm mot de passe
                       </label>
                       <input
                         type="password"
-                        name="password"
+                        name="new_password"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        defaultValue={compte.password}
-                        {...register('password')}
-                      />
+                        placeholder="Nouveau mot de passe"
+                        {...register('new_password')}
+                        onChange={(second) => secondP(second)}
+                    />
                       <p className="text-red-500 italic">{errors.password?.message}</p>
                     </div>
                   </div>

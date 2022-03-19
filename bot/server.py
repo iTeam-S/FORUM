@@ -45,12 +45,12 @@ def get_file(filename):
         )
     except FileNotFoundError:
         abort(404)
-        
+
 @webserver.route("/<user_id>/<filename>")
-def get_file_for_content(user_id,filename):
+def get_file_for_content(user_id, filename):
     try:
         return send_from_directory(
-            './../back/data/'+user_id+'/',
+            './../back/data/' + user_id + '/',
             path=filename,
             as_attachment=True
         )

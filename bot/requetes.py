@@ -253,7 +253,13 @@ class Requete:
 
     @verif_db
     def insert_kavio(
-        self, id_user, num_question, id_part, serie, categorie, point
+        self,
+        id_user,
+        num_question,
+        id_part,
+        serie,
+        categorie,
+        point
     ):
         req = """
             INSERT into Test_KAVIO(
@@ -266,21 +272,62 @@ class Requete:
             VALUES(
                 (SELECT id FROM Public WHERE facebook_id = %s),%s,%s,%s,%s,%s
             )
-        """
-        self.cursor.execute(req, (
-            id_user, num_question, id_part, serie, categorie, point))
+    """
+        self.cursor.execute(
+            req,
+            (id_user,
+             num_question,
+             id_part,
+             serie,
+             categorie,
+             point))
         self.db.commit()
 
     @verif_db
-    def verif_trois_vrai(self, id_part, serie):
+    def verif_trois_vrai(self, id_part, serie, user_id):
         req = """
             SELECT COUNT(point)
             FROM Test_KAVIO
             WHERE id_part=%s
             AND serie=%s
             AND point=1
+            AND id_user=(SELECT id FROM Public WHERE facebook_id = %s)
         """
-        self.cursor.execute(req, (id_part, serie))
+        self.cursor.execute(req, (id_part, serie, user_id))
         data = self.cursor.fetchone()[0]
         self.db.commit()
         return data
+
+    @verif_db
+    def verif_test_kavio(self, user_id):
+        req = """
+            SELECT COUNT(*)
+            FROM Test_KAVIO
+            WHERE id_user=(SELECT id FROM Public WHERE facebook_id=%s)
+        """
+        self.cursor.execute(req, (user_id,))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        return data
+
+    @verif_db
+    def interet_global(self, user_id):
+        req = """
+            SELECT categorie , SUM(point) as point
+            FROM Test_KAVIO
+            WHERE id_user=(SELECT id FROM Public WHERE facebook_id=%s)
+            GROUP BY categorie
+        """
+        self.cursor.execute(req, (user_id,))
+        data = self.cursor.fetchall()
+        self.db.commit()
+        return data
+
+    @verif_db
+    def suppression_test_kavio(self, user_id):
+        req = """
+            DELETE FROM Test_KAVIO
+            WHERE id_user=(SELECT id FROM Public WHERE facebook_id=%s)
+        """
+        self.cursor.execute(req, (user_id,))
+        self.db.commit()

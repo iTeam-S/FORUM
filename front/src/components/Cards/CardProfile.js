@@ -73,14 +73,20 @@ export default function CardProfile() {
                   <a href={account.lien} target="_blank" rel="noreferrer" >Site web</a>
               </div>
             </div>
-            <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+            <div className="mt-10 py-10 border-t border-blueGray-200 text-center" style={{margin: '0px 0px 20px 0px'}}>
               <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-9/12 px-4">
                   <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                     {account.description}
                   </p>
-                  <div className="w-full flex">
-                    {/*<video src={video} controls="controls" autoPlay={true} />*/}
+                  <div className="w-full flex justify-center relative h-full" >
+                    {/*<video src={`https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&appId=823777418309594&height=280`} controls="controls" autoPlay={true} />*/}
+                     <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&appId=823777418309594&height=280" style={{ border:'none', overflow: 'hidden'}} 
+                          className="w-full flex justify-center relative"
+                          frameBorder="0" 
+                          title="Video facebook"
+                          allowFullScreen={true} 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" />
                   </div>
                 </div>
               </div>

@@ -16,6 +16,27 @@ export default function CardEditProfile() {
 
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+
+  const [hiddenLien, setHiddenLien] = useState(false);
+  const [hiddenFile, setHiddenFile] = useState(false);
+
+  //fonction pour controller le choix de l'user
+  function HiddenFile(e){
+    let valeur = e.target.value;
+    if(valeur.length > 0){
+      setHiddenFile(true);
+    } else {
+      setHiddenFile(false)
+    }
+  }
+  function HiddenLien(e){
+    let valeur = e.target.value;
+    if(valeur.length > 0){
+      setHiddenLien(true);
+    } else{
+      setHiddenLien(false);
+    }
+  }
  
   let history = useHistory();
 
@@ -31,34 +52,38 @@ export default function CardEditProfile() {
           .required('le choix est obligatoire'),
         lien: Yup.string()
           .required('Ce champ est obligatoire'),
-        type: Yup.string()
-          .required('le choix est obligatoire'),
-        password: Yup.string()
-          .required('Ce champ est obligatoire')
-          .min(6, 'Password must be at least 6 characters')
-          .max(40, 'Password must not exceed 40 characters'),
         adresse:Yup.string()
         .required("Ce champ est obligatoire"),
         description: Yup.string()
-          .required('Ce champ est obligatoire')
-      });
-      const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm({
-        resolver: yupResolver(validationSchema)
-      });
+          .required('Ce champ est obligatoire'), 
+        lienf: Yup.string()
+          .nullable(true)
+          .notRequired(),
+        lienv: Yup.mixed()
+          .nullable(true)
+          .notRequired(),
+        logo: Yup.mixed()
+          .nullable(true)
+          .notRequired(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
 
   const  handleEditAccount = async(data) => {
         try {
             if(compte !== null){
-                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.type,data.password,data.adresse, data.description)
+                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.lien, data.adresse, data.description, data.lienf, data.lienv, data.logo)
                 history.push('/adminEntreprise/ProfilEntreprise');
                 window.location.reload();
             }else{
                 setErreur(true);
-                setErrorMessage("Echec à la registration");
+                setErrorMessage("Echec à la Modification");
             }
         } catch (error) {
             setErreur(true);
@@ -72,11 +97,11 @@ export default function CardEditProfile() {
         <form onSubmit={handleSubmit(handleEditAccount)}>
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold">Edit compte</h6>
+              <h6 className="text-blueGray-700 text-xl font-bold">Modifier compte</h6>
               <input 
                 className="bg-teal-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="submit"              
-                value="Modifier"
+                value="Sauvegarder"
               />
             </div>
           </div>
@@ -84,7 +109,7 @@ export default function CardEditProfile() {
             compteCurrent.map((compte) => (
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0" key={compte.id}>
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                  Information de l'entreprise
+                  Information
                 </h6>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4">
@@ -104,26 +129,6 @@ export default function CardEditProfile() {
                         {...register('nom')}
                     />
                     <p className="text-red-500 italic">{errors.nom?.message}</p>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
-                      >
-                        Type de compte
-                      </label>
-                      <select
-                        name="type"
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        {...register('type')}
-                      >
-                          <option defaultValue={compte.type}  hidden>{compte.type}</option>
-                          {compte.type === "ADMIN" && (<option key="1" value="ADMIN"> ADMIN</option>)}
-                          <option key="2" value="ENTREPRISE">ENTREPRISE</option>
-                      </select>
-                      <p className="text-red-500 italic">{errors.type?.message}</p>
                     </div>
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
@@ -158,16 +163,54 @@ export default function CardEditProfile() {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Mot de passe
+                        Adresse
                       </label>
                       <input
-                        type="password"
-                        name="password"
+                        type="text"
+                        name="adresse"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        defaultValue={compte.password}
-                        {...register('password')}
+                        placeholder="Votre adresse..."
+                        defaultValue={compte.adresse}
+                        {...register('adresse')}
                       />
-                      <p className="text-red-500 italic">{errors.password?.message}</p>
+                      <p className="text-red-500 italic">{errors.adresse?.message}</p>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Votre logo
+                      </label>
+                      <input
+                        type="file"
+                        name="logo"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Logo de votre entreprise.."
+                        {...register('logo')}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-12/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Site web
+                      </label>
+                      <input
+                        type="url"
+                        name="lien"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Lien vers votre site.."
+                        defaultValue={compte.lien}
+                        {...register('lien')}
+                      />
+                      <p className="text-red-500 italic">{errors.lien?.message}</p>
                     </div>
                   </div>
 
@@ -196,7 +239,7 @@ export default function CardEditProfile() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
 
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                  Information sur les contacts
+                  Contacts
                 </h6>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4">
@@ -205,7 +248,7 @@ export default function CardEditProfile() {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Contact
+                        Numéro téléphone
                       </label>
                       <input
                         type="text"
@@ -236,42 +279,50 @@ export default function CardEditProfile() {
                       <p className="text-red-500 italic">{errors.email?.message}</p>
                     </div>
                   </div>
-                  <div className="w-full lg:w-6/12 px-4">
+                </div>
+
+                <hr className="mt-6 border-b-1 border-blueGray-300" />
+
+                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                  Vidéo de presentation  (*Vous pouvez insérer soit par fichier soit via lien facebook*)
+                </h6>
+                <div className="flex flex-wrap">
+                  <div className="w-full lg:w-6/12 px-4" hidden={hiddenLien}>
                     <div className="relative w-full mb-3">
                       <label
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Adresse
-                      </label>
-                      <input
-                        type="text"
-                        name="adresse"
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        placeholder="Votre adresse..."
-                        defaultValue={compte.adresse}
-                        {...register('adresse')}
-                      />
-                      <p className="text-red-500 italic">{errors.adresse?.message}</p>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
-                      >
-                        Site web
+                        Video via lien facebook
                       </label>
                       <input
                         type="url"
                         name="lien"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        placeholder="Lien vers votre site.."
-                        defaultValue={compte.lien}
-                        {...register('lien')}
+                        {...register('lienf')}
+                        placeholder="Lien vers le video sur facebook..."
+                        onChange={(e) => HiddenFile(e)}
                       />
-                      <p className="text-red-500 italic">{errors.lien?.message}</p>
+                    </div>
+                  </div>
+
+                   <div className="w-full lg:w-6/12 px-4" hidden={hiddenFile}>
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Video via fichier (*.mp4 et inférieur à 25 Mb*)
+                      </label>
+                      <input
+                        type="file"
+                        name="fileVideo"
+                        accept="video/mp4"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        {...register('lienv')}
+                        onChange={(e) => HiddenLien(e)}
+                      />
+                      <p className="text-red-500 italic">{errors.lienf?.message}</p>
                     </div>
                   </div>
                 </div>

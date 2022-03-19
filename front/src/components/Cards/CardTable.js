@@ -12,6 +12,8 @@ export default function CardTable({ color}) {
   const allCompte = LoginService.convertItemToArray(compte);
   const compteParDomaine = LoginService.getComptePerDomaine(allCompte, domaine);
 
+  const [termSearch, setTermSearch] = useState("");
+
   async function deleteOneCompte(id){
     await CompteService.DeleteOneCompte(id);
       window.location.reload();
@@ -21,6 +23,10 @@ export default function CardTable({ color}) {
     setDomaine(domCheck);
   }
 
+const recherche = (e) => {
+  let valeur = e.target.value;
+  setTermSearch(valeur);
+}
 
   return (
     <>
@@ -32,7 +38,7 @@ export default function CardTable({ color}) {
       >
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+            <div className="relative w-full sm:text-center px-4 max-w-full flex-grow flex-1">
               <h3
                 className={
                   "font-semibold text-lg " +
@@ -42,6 +48,18 @@ export default function CardTable({ color}) {
                 Listes des entreprises
               </h3>
             </div>
+             <div className="w-full lg:w-4/12 px-4 mx-4 sm:mb-3">
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      name="searchBar"
+                      id="searchBar"
+                      className="border-0 px-3 py-3 placeholder-blueGray-500 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Entrer la clé de la recherche..."
+                      onChange={(e) => recherche(e)}
+                   />
+                </div>
+              </div>
             <select
                 name="type"
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-3/12 ease-linear transition-all duration-150"
@@ -96,7 +114,9 @@ export default function CardTable({ color}) {
             </thead>
             <tbody>
                  {
-                    compteParDomaine.map((account) => (
+                    compteParDomaine.filter((account) => {
+                      return account.nom.toLowerCase().includes(termSearch.toLocaleLowerCase());
+                    }).map((account) => (
                           <tr key={account.id}>
                               <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                                   <img

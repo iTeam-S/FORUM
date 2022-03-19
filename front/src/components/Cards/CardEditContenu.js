@@ -58,8 +58,8 @@ export default function CardEditContenu() {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                   await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, data.file);
-                  /*history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();*/
+                  history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();
                   console.log(data.file)
             }else{
                 setErreur(true);
@@ -81,7 +81,7 @@ export default function CardEditContenu() {
               <input 
                 className="bg-teal-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="submit"              
-                value="Modifier"
+                value="Sauvegarder"
               />
             </div>
           </div>

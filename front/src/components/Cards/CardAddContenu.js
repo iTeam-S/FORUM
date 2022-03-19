@@ -31,22 +31,15 @@ export default function CardAddContenu() {
         file: Yup.mixed()
           .required("N'oubliez pas le fichier")
       });
-      const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm({
-        resolver: yupResolver(validationSchema)
-      });
 
-
+  
   const  handleAddContenu = async(data) => {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
                   await CompteService.AddContenu(data.titre,data.description,data.type, data.file);
-                 /*history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();*/
+                  history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();
                   console.log(data.file)
                 }
             }else{
@@ -58,6 +51,15 @@ export default function CardAddContenu() {
             setErrorMessage(error.response.data.message)
         }
     }
+    
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+      } = useForm({
+        resolver: yupResolver(validationSchema)
+  });
+
 
   return (
     <>

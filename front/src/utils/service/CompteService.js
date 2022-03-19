@@ -133,24 +133,26 @@ class CompteService{
 
             /*UPDATE SERVICE*/
 
-    UpdateCompte(nom, email, tel, domaine, lien, type, password, adresse, description){
-        return RouteAxios.patch('/update_account', {
-            nom, 
-            email, 
-            tel, 
-            domaine, 
-            lien, 
-            type, 
-            password, 
-            adresse,
-            description
-        }, {
+    UpdateCompte(nom, email, tel, domaine, lien, adresse, description, lienf, lienv, logo){
+        var content = new FormData();
+
+        content.append("nom", nom);
+        content.append("email", email);
+        content.append("tel", tel);
+        content.append("domaine", domaine);
+        content.append("lien", lien);
+        content.append("adresse", adresse);
+        content.append("description", description);
+        content.append("lienf", lienf);
+        content.append("lienv", lienv);
+        content.append("logo", logo);
+
+        return RouteAxios.patch('/update_account', content,{
             headers: {
                 'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
                 'Content-Type': 'application/json'
             }
-        }
-        )
+        })
     }
 
     UpdateFicheMetier(titre, domaine_id, fiche_metier_id, file){

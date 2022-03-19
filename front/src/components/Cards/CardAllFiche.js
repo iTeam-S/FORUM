@@ -53,6 +53,8 @@ export default function CardAllFiche({color}) {
   const allFiche = LoginService.convertItemToArray(fiche);
   const ficheParDomaine = LoginService.getFichePerDomaine(allFiche, domaine);
 
+  const [termSearch, setTermSearch] = useState("");
+
   const choixDomaine = (e) => {
     let domCheck = parseInt(e.target.value);
      return setDomaine(domCheck);
@@ -66,7 +68,10 @@ export default function CardAllFiche({color}) {
       window.location.reload();
   }
   
-
+  const recherche = (e) => {
+    let valeur = e.target.value;
+    setTermSearch(valeur);
+}
 
   return (
     <>
@@ -87,6 +92,18 @@ export default function CardAllFiche({color}) {
               >
                 Listes des fiches métiers
               </h3>
+            </div>
+            <div className="w-full lg:w-4/12 px-4 mx-4 sm:mb-3">
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      name="searchBar"
+                      id="searchBar"
+                      className="bg-lightBlue-900 border-0 px-3 py-3 placeholder-blueGray-300 text-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Entrer la clé de la recherche..."
+                      onChange={(e) => recherche(e)}
+                   />
+                </div>
             </div>
             <select
                 name="type"
@@ -151,7 +168,9 @@ export default function CardAllFiche({color}) {
               </tr>
             </thead>
             <tbody>
-                 { ficheParDomaine.map((fiche) => (
+                 { ficheParDomaine.filter((fiche) => {
+                      return fiche.titre.toLowerCase().includes(termSearch.toLocaleLowerCase());
+                    }).map((fiche) => (
                     <tr key={fiche.id}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                         <img
@@ -169,7 +188,7 @@ export default function CardAllFiche({color}) {
                         </span>
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex justify-center">
+                        <div className="flex">
                           <span className="mr-2">
                               <DomaineName domaine_id={fiche.domaine_id} />
                           </span>

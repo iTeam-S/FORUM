@@ -57,16 +57,11 @@ const UserDropdown = () => {
         }
       > 
         { compteCurrent.map((account) => (
-            <div>
+            <div key={account.id}>
                  <Link to={`/adminEntreprise/CardEditPassword/${account.id}`}>
-                    <a
-                    href="/"
-                    className={
-                      "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                    }
-                  >
-                    Paramètre
-                  </a>
+                    <p className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+                      Paramètre
+                    </p>
                   </Link>
                   <a
                     href="/"

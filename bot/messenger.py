@@ -75,13 +75,13 @@ class Messenger:
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "📑" + translate("fiches_metiers", lang).upper(),
-                    "payload": "__FICHE_METIER"
+                    "title": "🏠" + translate("visiter_stands", lang).upper(),
+                    "payload": "__VISITE_STAND"
                 },
                 {
                     "content_type": "text",
-                    "title": "🏠" + translate("visiter_stands", lang).upper(),
-                    "payload": "__VISITE_STAND"
+                    "title": "📑" + translate("fiches_metiers", lang).upper(),
+                    "payload": "__FICHE_METIER"
                 },
                 {
                     "content_type": "text",
@@ -266,7 +266,7 @@ class Messenger:
                     "payload": "__NON_REFAIRE"
                 }
             ]
-
+        
         else:
             return
 

@@ -125,9 +125,9 @@
         "mg": "Hikaroka sa hijery avy hatrany ireo lisitry ny stand"
     },
     "recherche_stand": {
-        "en": "Enter the name of the stand you want to search\n\nExample:BFV",
-        "fr": "Entrer le nom de stand que vous voulez rechercher\n\nExample: BFV",
-        "mg": "Apidiro ary ny anaran'ny Stand izay tiana karohina\n\nOhatra: BFV"
+        "en": "Enter the part of name for the stand you want to search\n\nExample: iteam for ITEAM-$",
+        "fr": "Entrer quelques parties du nom de stand que vous voulez rechercher\n\nExample: iteam pour ITEAM-$",
+        "mg": "Apidiro ary ny ampahan'anaran'ny Trano eva izay tiana karohina\n\nOhatra: iteam hoan'i ITEAM-$"
     },
     "resultat_de_recherche_stand_vide": {
         "en": "At the moment, there is no stand corresponding to your search\n\nSo you can now even choose the two options below by searching again",

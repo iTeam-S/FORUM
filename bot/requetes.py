@@ -143,7 +143,6 @@ class Requete:
         req = """
             SELECT id,logo,nom,description
             FROM Compte
-            WHERE type = "ENTREPRISE"
             ORDER BY classe ASC
         """
         self.cursor.execute(req)
@@ -158,7 +157,6 @@ class Requete:
                 FROM Compte
                 WHERE (LOWER(nom) LIKE %s
                 OR SOUNDEX(nom)=SOUNDEX(%s))
-                AND type = "ENTREPRISE"
                 LIMIT 10
         """
         self.cursor.execute(req, (f"%{query.lower()}%", query))
@@ -196,7 +194,7 @@ class Requete:
         req = """
                 SELECT video
                 FROM Compte
-                WHERE Id = %s
+                WHERE id = %s
         """
         self.cursor.execute(req, (id_stand,))
         data = self.cursor.fetchone()[0]
@@ -324,3 +322,11 @@ class Requete:
         """
         self.cursor.execute(req, (user_id,))
         self.db.commit()
+
+    @verif_db
+    def description_de_chaque_stand(self, id):
+        req = "SELECT description FROM Compte WHERE id = %s"
+        self.cursor.execute(req, (id,))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        return data

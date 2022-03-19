@@ -62,7 +62,15 @@ class Traitement(Options):
             sender_id,
             translate("salutation", user_lang)
         )
+        self.bot.send_media(
+            sender_id,
+            "https://www.facebook.com/iTeam.Community/photos/a.102143328508332/102143775174954/",
+            "image"
+        )
         self.bot.send_quick_reply(sender_id, user_lang, "choix_langues")
+    
+    def divers(self, user_id, user_lang, commande):
+        self.bot.send_quick_reply(user_id, user_lang, "bienvenue")
         return True
 
     def traitement_cmd(self, user_id, user_lang, commande):
@@ -78,6 +86,10 @@ class Traitement(Options):
             self.bot.send_quick_reply(user_id, user_lang, "bienvenue")
             return True
 
+        elif commande == "get_started":
+            self.salutation(user_id, user_lang)
+            return True
+            
         elif cmd[0] == '__SET_LANG' and cmd[-1] in ('fr', 'en', 'mg'):
             self.req.update_lang(user_id, cmd[-1])
             self.bot.send_message(
@@ -397,21 +409,36 @@ class Traitement(Options):
         elif cmd[0] == "__PRESENTATION":
             presentation = self.req.presentation_stand(cmd[-1])
             if presentation:
-                self.bot.send_message(
-                    user_id, translate(
-                        "present_video", user_lang))
-                self.bot.send_file_url(
-                    user_id,
-                    f"{URL_SERVER}{cmd[-1]}/{presentation}",
-                    filetype="video"
-                )
-                self.bot.send_quick_reply(
-                    user_id,
-                    user_lang,
-                    "retourne_stand_emploi",
-                    cmd[-1]
-                )
-                return True
+
+                if presentation.startswith("http"):
+                    self.bot.send_message(
+                        user_id, translate(
+                            "present_video", user_lang))
+                    self.bot.send_media(user_id, presentation, "video")
+                    self.bot.send_quick_reply(
+                        user_id,
+                        user_lang,
+                        "retourne_stand_emploi",
+                        cmd[-1]
+                    )
+                    return True
+                
+                else:
+                    self.bot.send_message(
+                        user_id, translate(
+                            "present_video", user_lang))
+                    self.bot.send_file_url(
+                        user_id,
+                        f"{URL_SERVER}{cmd[-1]}/{presentation}",
+                        filetype="video"
+                    )
+                    self.bot.send_quick_reply(
+                        user_id,
+                        user_lang,
+                        "retourne_stand_emploi",
+                        cmd[-1]
+                    )
+                    return True
 
             else:
                 self.bot.send_message(
@@ -843,6 +870,10 @@ class Traitement(Options):
             return True
 
         elif postback_payload[0] == "__VISITER":
+            self.bot.send_message(user_id,
+                                  "DESCRIPTION:\n\n" + self.req.description_de_chaque_stand(
+                                      postback_payload[-1]
+                                  ))
             self.bot.send_quick_reply(
                 user_id,
                 user_lang,
@@ -948,7 +979,9 @@ class Traitement(Options):
         self.bot.send_action(user_id, 'mark_seen')
 
         self.req.verif_utilisateur(user_id)
+
         statut = self.req.get_action(user_id)
+
         user_lang = self.req.get_user_lang(user_id)
 
         if self.traitement_action(user_id, user_lang, commande, statut):
@@ -960,5 +993,5 @@ class Traitement(Options):
         if self.traitement_cmd(user_id, user_lang, commande):
             return
 
-        if self.salutation(user_id, user_lang):
+        if self.divers(user_id, user_lang, commande):
             return

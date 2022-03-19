@@ -251,15 +251,22 @@ class Requete:
 
     @verif_db
     def insert_kavio(
-            self,
-            id_user,
-            num_question,
-            id_part,
-            serie,
-            categorie,
-            point):
+        self,
+        id_user,
+        num_question,
+        id_part,
+        serie,
+        categorie,
+        point
+    ):
         req = """
-            INSERT into Test_KAVIO(id_user,num_question,id_part,serie,categorie,point)
+            INSERT into Test_KAVIO(
+                id_user,
+                num_question,
+                id_part,
+                serie,
+                categorie,
+                point)
             VALUES(
                 (SELECT id FROM Public WHERE facebook_id = %s),%s,%s,%s,%s,%s
             )

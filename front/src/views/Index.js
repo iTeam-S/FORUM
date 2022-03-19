@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {Link} from "react-router-dom"
 
 import bg from '../assets/img/bg.jpg';
+import "../assets/styles/Home.css";
 
 import Login from "./auth/Login";
 import { LoginService } from "utils/service/LoginService";
@@ -27,13 +28,20 @@ const Boutton = () =>{
     </Link>
   )
   }
-}
+  }
 
 const AfficheForm = () => {
   if(localStorage.getItem('compte') !== null){
-    return (
-      <Boutton />
-    )
+    if(LoginService.getCurrentCompte().token !== null){
+      return(
+        <Boutton />
+      )
+    } else{
+      localStorage.removeItem('compte');
+      return(
+        <Login />
+      )
+    }
   } else{
     return(
       <Login />
@@ -45,20 +53,20 @@ export default function Index() {
   
   return (
     <> 
-      <div className="h-screen" style={styles.body}>
+      <div className="h-screen body" style={styles.body}>
         <section className="w-11/12 p-4 flex flex-col flex-wrap items-center sm:flex-row sm:w-full md:flex-row md:w-full justify-between">
             <div className="w-full sm:w-5/12 md:w-5/12">
-                <div className="w-8/12">
+                <div className="w-8/12 xl:w-12/12">
                   Sesame
                 </div>
-                <div className="sm:w-4/12 md:w-4/12 flex flex-col" style={styles.content_left}>
+                <div className="sm:w-12/12 md:w-4/12 flex flex-col  content_left">
                   <h1 className="font-semibold text-4xl text-blueGray-600 mb-4">Forum des métiers</h1>
                   <p>
                     Il s’agit d’une plateforme permettant au public de visiter en ligne le forum de 
                     l’emploi et des entreprises  organisé par l’association SÉSAME du 26 mars au 2 avril. 
                     Deux plateforme seront mis à disposition de SÉSAME dans ce projet : chatBot et plateforme web
                   </p>
-                  <div className="mt-12">
+                  <div className="boutton mt-12">
                       <a
                         href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/notus?ref=nr-index"
                         target="_blank"
@@ -77,7 +85,7 @@ export default function Index() {
                   </div>
                 </div>
             </div>
-            <div className="w-full flex flex-col sm:w-5/12 md:w-5/12" style={styles.right} >
+            <div className="w-full flex flex-col sm:w-5/12 md:w-5/12 right">
               <AfficheForm />
             </div>
         </section>
@@ -92,13 +100,5 @@ const styles = {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-  },
-  content_left: {
-    margin: '146px 0px',
-    width: '450px'
-  },
-  right: {
-    margin: '90px 0px 0px 0px',
-
   }
 }

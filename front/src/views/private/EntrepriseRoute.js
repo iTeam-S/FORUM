@@ -18,7 +18,7 @@ export default function EntrepriseRoute({children, ...rest}){
             <HeaderStats />
             <div className="px-4 md:px-10 mx-auto w-full -m-24">
                 <Route {...rest} render = {() => {
-                    return compte !== null
+                    return compte !== null && LoginService.getCurrentCompte().token !== null
                     ? children
                     : <Redirect to='/error' />
             }} />

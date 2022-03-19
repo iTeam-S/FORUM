@@ -80,6 +80,16 @@ class CompteService{
         })
     }
 
+    getStatGallerie(){
+        return RouteAxios.get("/get_stats", {
+            headers: {
+                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            }
+        }).then(response => {
+            return response;
+        })
+    }
+
 
                 /*DELETE SERVICE*/
     DeleteOneCompte(compte_id){
@@ -119,6 +129,74 @@ class CompteService{
             }
         }
         ) 
+    }
+
+            /*UPDATE SERVICE*/
+
+    UpdateCompte(nom, email, tel, domaine, lien, adresse, description, lienf, lienv, logo){
+        var content = new FormData();
+
+        content.append("nom", nom);
+        content.append("email", email);
+        content.append("tel", tel);
+        content.append("domaine", domaine);
+        content.append("lien", lien);
+        content.append("adresse", adresse);
+        content.append("description", description);
+        content.append("lienf", lienf);
+        content.append("lienv", lienv);
+        content.append("logo", logo);
+
+        return RouteAxios.patch('/update_account', content,{
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+
+    UpdateFicheMetier(titre, domaine_id, fiche_metier_id, file){
+        var content = new FormData();
+
+        content.append("titre", titre);
+        content.append("domaine_id", domaine_id);
+        content.append("fiche_metier_id", fiche_metier_id);
+        content.append("file", file);
+
+        return RouteAxios.patch('/update_fiche_metier', content,{
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            }
+        })
+    }
+        
+    UpdateOneContent(titre, description, type, content_id, file){
+        var content = new FormData();
+
+        content.append("titre", titre);
+        content.append("description", description);
+        content.append("type", type);
+        content.append("content_id", content_id);
+        content.append("file", file);
+
+        return RouteAxios.patch('/update_content', content,{
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            }
+        })
+    }
+
+    UpdatePassword(old_password, new_password){
+        return RouteAxios.patch('/change_password', {
+            old_password,
+            new_password
+        }, {
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
+                'Content-Type': 'application/json'
+            }
+        }
+        )
     }
 
 }

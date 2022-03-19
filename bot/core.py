@@ -682,6 +682,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype='file'
                     )
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -700,6 +701,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype="image"
                     )
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -742,6 +744,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype='file'
                     )
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -773,6 +776,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype='video'
                     )
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -786,13 +790,14 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype='video'
                     )
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
                         "retourne_stand_emploi",
                         postback_payload[-2].split("/")[-2]
                     )
-
+        
             elif postback_payload[-1] == "CONTENU_URL":
                 description_url = self.req.description_de_chaque_contenu(
                     postback_payload[1])
@@ -805,6 +810,7 @@ class Traitement(Options):
                         user_id,
                         postback_payload[-2]
                     )
+              
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -842,6 +848,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype="image"
                     )
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -855,6 +862,7 @@ class Traitement(Options):
                         postback_payload[-2],
                         filetype="image"
                     )
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,

@@ -3,7 +3,7 @@ import mysql.connector
 from werkzeug.utils import secure_filename
 # ---------------------------------------
 from flask_cors import CORS
-from flask import Flask, request, abort
+from flask import Flask, request, abort, send_from_directory
 from flask_bcrypt import check_password_hash, generate_password_hash
 # ---------------------------------------
 from flask_jwt_extended import JWTManager
@@ -66,6 +66,16 @@ def internal_server_error(e):
 # *************************** ___________ *****************************
 
 
+# ************************ Handle Allowed file ************************
+ALLOWED_EXTENSIONS_VIDEOS = set(['mp4', 'mkv', 'avi', 'webm'])
+
+
+def allowed_file_video(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower(
+        ) in ALLOWED_EXTENSIONS_VIDEOS
+# *************************** ___________ *****************************
+
+
 @verif_db
 @app.route("/api/v1/login", methods=['POST'])
 def login():
@@ -98,7 +108,7 @@ def login():
         }, 412
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -166,7 +176,7 @@ def add_account():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -180,46 +190,66 @@ def add_content():
     try:
         compte_id = get_jwt_identity().split("+")[0]
 
-        filename = None
-        titre = request.form.get("titre")
-        description = request.form.get("description")
-        type = request.form.get("type")
+        if request.form:
+            filename = None
+            titre = request.form.get("titre")
+            description = request.form.get("description")
+            type = request.form.get("type")
+            link = request.form.get("link")
 
-        if request.files:
-            fichier = request.files['file']
-            compte_folder = os.path.join(
-                app.config['UPLOAD_FOLDER'], str(compte_id)
-            )
-            Path(compte_folder).mkdir(parents=True, exist_ok=True)
+            if request.files:
+                fichier = request.files['file']
 
-            filename = str(time.time()) + '_' + secure_filename(
-                fichier.filename)
+                if fichier:
+                    size = len(fichier.read())
+                    if size > 25000000 and allowed_file_video(
+                        fichier.filename
+                    ):
+                        print("Here")
+                        filename = link
+                        return
+                    else:
+                        compte_folder = os.path.join(
+                            app.config['UPLOAD_FOLDER'], str(compte_id)
+                        )
+                        Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
-            fichier.save(
-                os.path.join(compte_folder, filename)
-            )
+                        filename = str(time.time()) + '_' + secure_filename(
+                            fichier.filename)
 
-        if titre and type and compte_id:
-            CURSOR.execute("""
-                INSERT INTO
-                    Contenu(titre, description, type, fichier, compte_id)
-                    VALUES (%s, %s, %s, %s, %s)
-                """, (titre, description, type, filename or None, compte_id)
-            )
-            DB.commit()
+                        fichier.save(
+                            os.path.join(compte_folder, filename)
+                        )
+                    fichier.close()
+
+            if titre and type and compte_id:
+                CURSOR.execute("""
+                    INSERT INTO
+                        Contenu(titre, description, type, fichier, compte_id)
+                        VALUES (%s, %s, %s, %s, %s)
+                    """, (
+                        titre, description, type, filename or None, compte_id
+                    )
+                )
+                DB.commit()
+
+                return {
+                    "error": False,
+                    "message": "Contenu inserted"
+                }, 200
 
             return {
-                "error": False,
-                "message": "Contenu inserted"
-            }, 200
+                "error": True,
+                "message": "Donnees obligatoires manquants"
+            }, 412
 
         return {
             "error": True,
-            "message": "Donnees obligatoires manquants"
+            "message": "Pas de donnee envoye dans le formulaire."
         }, 412
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -273,7 +303,7 @@ def add_fiche_metier():
             }, 412
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -290,12 +320,32 @@ def list_accounts():
     try:
         access = get_jwt_identity().split("+")[1]
 
-        if access == "ADMIN":
+        if access == "ADMIN" or access == "ENTREPRISE":
             CURSOR.execute("""
                 SELECT
-                   id, nom, tel, email, type, lien, logo , domaine, adresse
+                   Cp.id,
+                   Cp.nom,
+                   Cp.tel,
+                   Cp.email,
+                   Cp.type,
+                   Cp.lien,
+                   Cp.logo,
+                   Cp.description,
+                   Cp.domaine,
+                   Cp.adresse,
+                   COUNT(DISTINCT Cs.id) visiteurs
                 FROM
-                    Compte;
+                    Compte Cp
+                LEFT JOIN
+                    Contenu Ct
+                ON
+                    Cp.id = Ct.compte_id
+                LEFT JOIN
+                    Consultation Cs
+                ON
+                    Ct.id = Cs.dimension
+                GROUP BY
+                    Cp.id;
             """)
             accounts = CURSOR.fetchall()
 
@@ -317,7 +367,7 @@ def list_accounts():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -335,11 +385,22 @@ def list_contents():
         if compte_id:
             CURSOR.execute("""
                 SELECT
-                    id, titre, description, type, fichier
+                    Ct.id,
+                    Ct.titre,
+                    Ct.description,
+                    Ct.type,
+                    Ct.fichier,
+                    COUNT(DISTINCT Cs.id) Vues
                 FROM
-                    Contenu
+                    `Contenu` Ct
+                LEFT JOIN
+                    `Consultation` Cs
+                ON
+                    Ct.id = Cs.dimension
                 WHERE
-                    compte_id=%s;
+                    Ct.compte_id=%s
+                GROUP BY
+                    Ct.id;
             """, (compte_id,))
             contents = CURSOR.fetchall()
             if contents:
@@ -360,7 +421,7 @@ def list_contents():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -379,7 +440,7 @@ def list_fiche_metier():
         if access == "ADMIN":
             CURSOR.execute("""
                 SELECT
-                    id, titre, fichier
+                    id, titre, fichier, domaine_id
                 FROM
                     Fiche_metier;
             """)
@@ -403,7 +464,7 @@ def list_fiche_metier():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -434,7 +495,7 @@ def delete_content():
                     "message": "Content Deleted!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -447,7 +508,7 @@ def delete_content():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -462,7 +523,6 @@ def delete_account():
     try:
         access = get_jwt_identity().split("+")[1]
         data = request.get_json()
-        print(data)
         if data:
             account_id = data.get("compte_id")
         else:
@@ -487,7 +547,7 @@ def delete_account():
                     "message": "Account Deleted!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 return {
                     "error": True,
                     "message": "le compte est encore utilisé !"
@@ -499,7 +559,7 @@ def delete_account():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
@@ -513,16 +573,16 @@ def delete_fiche_metier():
     """
     try:
         access = get_jwt_identity().split("+")[1]
-        fiche_metier_id = request.get_json().get("fiche_metier_id")
+        fiche_metier_id = int(request.get_json().get("fiche_metier_id"))
 
-        if access == "ADMIN":
+        if access == "ADMIN" and fiche_metier_id:
             try:
                 CURSOR.execute("""
                     DELETE FROM
                         Fiche_metier
                     WHERE
                         id=%s;
-                """, (fiche_metier_id))
+                """, (fiche_metier_id,))
 
                 DB.commit()
 
@@ -531,7 +591,7 @@ def delete_fiche_metier():
                     "message": "Fiche Metier Deleted!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -544,12 +604,12 @@ def delete_fiche_metier():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
 @verif_db
-@app.route("/api/v1/update_account/", methods=['PATCH'])
+@app.route("/api/v1/update_account", methods=['PATCH'])
 @jwt_required()
 def update_account():
     """
@@ -566,13 +626,10 @@ def update_account():
                 data.get("email"),
                 data.get("tel"),
                 data.get("domaine"),
-                str(
-                    generate_password_hash(
-                        str(data.get("password"))).decode()),
+                data.get("description"),
                 data.get("adresse"),
-                data.get("type"),
                 data.get("lien"),
-                compte_id
+                int(compte_id)
             )
             try:
                 CURSOR.execute("""
@@ -583,11 +640,10 @@ def update_account():
                         email = %s,
                         tel = %s,
                         domaine = %s,
-                        password = %s,
+                        description = %s,
                         adresse = %s,
-                        type = %s,
                         lien = %s,
-
+                        logo = %s
                     WHERE
                         id=%s;
                 """, account)
@@ -599,7 +655,7 @@ def update_account():
                     "message": "Account Updated!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -612,12 +668,12 @@ def update_account():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
 @verif_db
-@app.route("/api/v1/update_content/", methods=['PATCH'])
+@app.route("/api/v1/update_content", methods=['PATCH'])
 @jwt_required()
 def update_content():
     """
@@ -625,17 +681,16 @@ def update_content():
         les infos sur un contenus
     """
     try:
-        compte_id = get_jwt_identity().split("+")[0]
-        data = request.get_json()
+        filename = None
+        compte_id = int(get_jwt_identity().split("+")[0])
 
         if compte_id:
-            content = (
-                data.get("titre"),
-                data.get("description"),
-                data.get("type"),
-                data.get("content_id"),
-                compte_id
-            )
+            content_id = int(request.form.get("content_id"))
+            content = [
+                request.form.get("titre"),
+                request.form.get("description"),
+                request.form.get("type"),
+            ]
 
             if request.files:
                 fichier = request.files['file']
@@ -643,21 +698,28 @@ def update_content():
                 compte_folder = os.path.join(
                     app.config['UPLOAD_FOLDER'], str(compte_id)
                 )
+                print(compte_folder)
                 Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
                 filename = str(time.time()) + '_' + secure_filename(
                     fichier.filename)
-                fichier.save(compte_folder, filename)
+                fichier.save(
+                     os.path.join(compte_folder, filename)
+                )
+
+                if filename:
+                    content.append(filename)
+            content += [content_id, compte_id]
 
             try:
-                CURSOR.execute("""
+                CURSOR.execute(f"""
                     UPDATE
-                        Content
+                        Contenu
                     SET
                         titre = %s,
                         description = %s,
                         type = %s
-                """ + (filename or '') + """
+                        {", fichier = %s " if filename else " "}
                     WHERE
                         id=%s AND compte_id=%s;
                 """, content)
@@ -669,7 +731,7 @@ def update_content():
                     "message": "Account Updated!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
@@ -682,12 +744,12 @@ def update_content():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
 @verif_db
-@app.route("/api/v1/update_fiche_metier/", methods=['PATCH'])
+@app.route("/api/v1/update_fiche_metier", methods=['PATCH'])
 @jwt_required()
 def update_fiche_metier():
     """
@@ -695,17 +757,15 @@ def update_fiche_metier():
         les infos sur un contenus
     """
     try:
-        compte_id = get_jwt_identity().split("+")[0]
-        data = request.get_json()
+        filename = None
+        compte_id = int(get_jwt_identity().split("+")[0])
 
         if compte_id:
-            content = (
-                data.get("titre"),
-                data.get("description"),
-                data.get("type"),
-                data.get("content_id"),
-                compte_id
-            )
+            fiche_metier_id = int(request.form.get("fiche_metier_id"))
+            fiche_metier = [
+                request.form.get("titre"),
+                request.form.get("domaine_id"),
+            ]
 
             if request.files:
                 fichier = request.files['file']
@@ -717,33 +777,38 @@ def update_fiche_metier():
 
                 filename = str(time.time()) + '_' + secure_filename(
                     fichier.filename)
-                fichier.save(compte_folder, filename)
+                fichier.save(
+                     os.path.join(compte_folder, filename)
+                )
 
+                if filename:
+                    fiche_metier.append(filename)
+
+            fiche_metier += [fiche_metier_id, compte_id]
             try:
-                CURSOR.execute("""
+                CURSOR.execute(f"""
                     UPDATE
-                        Content
+                        Fiche_metier
                     SET
                         titre = %s,
-                        description = %s,
-                        type = %s
-                """ + (filename or '') + """
+                        domaine_id = %s
+                        {", fichier = %s " if filename else " "}
                     WHERE
                         id=%s AND compte_id=%s;
-                """, content)
+                """, fiche_metier)
 
                 DB.commit()
 
                 return {
                     "error": False,
-                    "message": "Account Updated!"
+                    "message": "Fiche Metier Updated!"
                 }, 200
             except Exception as err:
-                print(err)
+                print(f"[ERROR] : { err }")
                 DB.close()
                 return {
                     "error": True,
-                    "message": "le Compte est encore utilisé !"
+                    "message": "le Fiche metier est encore utilisé !"
                 }, 400
 
         return {
@@ -752,8 +817,130 @@ def update_fiche_metier():
         }, 403
 
     except Exception as err:
-        print(err)
+        print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
+
+
+@app.route('/api/v1/get_attachement/<attachement>', methods=['GET'])
+@jwt_required()
+def get_attachement(attachement):
+    """
+        DESC : Fonction permettant de récuperer un fichier
+    """
+    compte_id = get_jwt_identity().split("+")[0]
+
+    if compte_id:
+        compte_folder = os.path.join(
+            app.config['UPLOAD_FOLDER'], str(compte_id)
+        )
+        return send_from_directory(
+            directory=compte_folder, path=attachement, as_attachment=True)
+
+
+@app.route('/api/v1/get_stats', methods=['GET'])
+@jwt_required()
+def get_stats():
+    compte_id = int(get_jwt_identity().split("+")[0])
+    content_type = request.args.get("content_type")
+
+    try:
+        if compte_id:
+            CURSOR.execute(
+                f"""
+                    SELECT
+                        Cs.date, Ct.type, COUNT(Cs.id) Vues
+                    FROM
+                        `Contenu` Ct
+                    LEFT JOIN
+                        `Consultation` Cs
+                    ON
+                        Ct.id = Cs.dimension
+                    WHERE
+                        Ct.compte_id = %s AND Cs.date IS NOT NULL
+                    {
+                        " AND Ct.type = %s " if content_type in (
+                            'emploi', 'information', 'galerie') else ''
+                    }
+                        GROUP BY
+                            Cs.date
+                """, [3] + (
+                    [content_type] if content_type in (
+                        'emploi', 'information', 'galerie') else []))
+
+            stats = CURSOR.fetchall()
+            print(stats)
+
+            if stats:
+                return {
+                    stats.index(stat):
+                        dict(
+                            zip(CURSOR.column_names, stat)
+                        ) for stat in stats
+                }, 200
+            else:
+                return {
+                    "error": False,
+                    "message": "no data for the moment"
+                }, 200
+
+        return {
+            "error": True,
+            "message": "Pas d'access"
+        }, 403
+    except Exception as err:
+        print(f"[ERROR] : { err }")
+        abort(500, description="Something went wrong !")
+
+
+@app.route('/api/v1/change_password', methods=['PATCH'])
+@jwt_required()
+def change_password():
+    compte_id = int(get_jwt_identity().split("+")[0])
+    data = request.get_json()
+    old_password = data.get("old_password")
+    new_password = data.get("new_password")
+
+    if compte_id and old_password and new_password:
+        try:
+            hashed_new_pass = str(
+                generate_password_hash(new_password).decode())
+
+            CURSOR.execute(
+                "SELECT password FROM Compte WHERE id=%s", (compte_id,))
+
+            hashed_old_pass = CURSOR.fetchone()[0]
+            if hashed_old_pass and check_password_hash(
+                hashed_old_pass, old_password
+            ):
+                CURSOR.execute("""
+                    UPDATE
+                        Compte
+                    SET
+                        password=%s
+                    WHERE
+                        id=%s;
+                    """, (hashed_new_pass, compte_id)
+                )
+
+                DB.commit()
+                if CURSOR.rowcount > 0:
+                    return {
+                        "error": False,
+                        "message": "Password changed successfuly"
+                    }, 200
+
+            return {
+                "error": True,
+                "message": "Password incorrect or account don't exists"
+            }, 403
+
+        except Exception as err:
+            print(f"[ERROR] : { err }")
+            abort(500, description="Something went wrong !")
+    return {
+        "error": True,
+        "message": "Needed Data not enough"
+    }, 412
 
 
 if __name__ == "__main__":

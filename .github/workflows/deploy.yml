@@ -1,0 +1,31 @@
+name: Deploiement CD
+on:
+  push:
+    branches :
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  CD:
+    name: Continuous Delivery
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into production server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.CD_HOST}}
+          username: ${{secrets.CD_USER}}
+          password: ${{secrets.CD_SK}}
+          port: 22
+          script: |
+            cd /opt/FORUM/
+            # Mise a jour du code
+            git pull
+            cd front/
+            # Install dependencies
+            npm install
+            # Build Front 
+            npm run build
+            # Relancement du code back
+            pm2 restart forum

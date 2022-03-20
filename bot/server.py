@@ -39,7 +39,7 @@ def receive_message():
 def get_file(filename):
     try:
         return send_from_directory(
-            './../back/data/fiches_metiers/', #mitifitra id_sesame ty fa tsy fiche_metier
+            './../back/data/1/', #mitifitra id_sesame ty fa tsy fiche_metier
             path=filename,
             as_attachment=True
         )

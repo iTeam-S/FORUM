@@ -215,6 +215,14 @@ class Traitement(Options):
             )
             self.req.set_action(user_id, "CHERCHER_FICHE_METIER")
             return True
+        
+        elif commande == "__OUI_AUTRE_DOMAINE":
+            self.bot.send_quick_reply(user_id, user_lang, "domaine_de_fiche_metier")
+            return True
+        
+        elif commande == "__NON_AUTRE_DOMAINE":
+            self.bot.send_message(user_id,"😔😔")
+            return True
 
         elif commande == "__VISITE_STAND":
             self.bot.send_quick_reply(
@@ -387,7 +395,7 @@ class Traitement(Options):
             if info[2]:
                 self.bot.send_message(
                     user_id,
-                    f"{translate('lien',user_lang)}\n\n{info[2]}"
+                    f"{translate('lien',user_lang)}\n{info[2]}"
                 )
                 self.bot.send_quick_reply(
                     user_id,
@@ -609,10 +617,12 @@ class Traitement(Options):
                         return True
                     else:
                         self.resultat_generale(user_id, user_lang)
+                        self.bot.send_quick_reply(user_id, user_lang, "fin_kavio")
                         return True
 
         elif commande == "__VOIR_RESULTAT":
             self.resultat_generale(user_id, user_lang)
+            self.bot.send_quick_reply(user_id, user_lang, "fin_kavio")
             return True
 
         elif commande == "__RETOURE_FICHEMETIER":
@@ -878,10 +888,15 @@ class Traitement(Options):
             return True
 
         elif postback_payload[0] == "__VISITER":
-            self.bot.send_message(user_id,
-                                  "DESCRIPTION:\n\n" + self.req.description_de_chaque_stand(
+            description = self.req.description_de_chaque_stand(
                                       postback_payload[-1]
-                                  ))
+                                  )
+            if description : 
+                self.bot.send_message(user_id,
+                                    "DESCRIPTION:\n\n" + description)
+            else:
+                pass
+
             self.bot.send_quick_reply(
                 user_id,
                 user_lang,

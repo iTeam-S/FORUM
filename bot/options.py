@@ -70,6 +70,7 @@ class Options:
                     res[deb_indice:deb_indice + 10],
                     next=[const.retoure("FICHES_METIERS_RECHERCHE", lang)]
                 )
+                
 
         else:
             if len(res) > deb_indice + 10:
@@ -87,8 +88,9 @@ class Options:
                 self.bot.send_template(
                     dest_id,
                     res[deb_indice:deb_indice + 10],
-                    next=[const.retoure("FICHES_METIERS", lang)]
+                    # next=[const.retoure("FICHES_METIERS", lang)]
                 )
+                self.bot.send_quick_reply(dest_id, lang, "autre_domaine")
 
     def fiche_metier_par_domaine(
             self,
@@ -126,17 +128,19 @@ class Options:
         liste_des_stands = []
         for i in range(len(data)):
             liste_des_stands.append({
-                "title": f"{data[i][2].upper()}",
-                "image_url": f"{URL_SERVER}{data[i][0]}/{data[i][1]}",
-                "buttons": [
-                    {
-                        "type": "postback",
-                        "title": translate("visiter", lang).upper(),
-                        "payload": f"__VISITER {data[i][0]}"
-                    }
-                ]
-            }
+                    "title": f"{data[i][2].upper()}",
+                    "image_url": f"{URL_SERVER}{data[i][0]}/{data[i][1]}" if data[i][1] \
+                    else "https://forum.iteam-s.mg/static/media/logodefaut.6ac1d227.png",
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": translate("visiter", lang).upper(),
+                            "payload": f"__VISITER {data[i][0]}"
+                        }
+                    ]
+                }
             )
+        
 
         return liste_des_stands
 

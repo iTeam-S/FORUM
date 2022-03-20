@@ -1313,7 +1313,7 @@ def voir_liste_des_fiches_metiers(domaine="", lang="fr"):
 
 
 def informations_stands(info):
-    return f"DESCRITIONS: \n{info[4]}\n\nNOS CONTACTS:\nTel: {info[0]}\nEmail: {info[1]} \
+    return f"NOS CONTACTS:\nTel: {info[0]}\nEmail: {info[1]} \
         \n\nADRESSE: {info[3]}"
 
 

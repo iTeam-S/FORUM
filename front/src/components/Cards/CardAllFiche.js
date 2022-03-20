@@ -100,7 +100,7 @@ export default function CardAllFiche({color}) {
                       name="searchBar"
                       id="searchBar"
                       className="bg-lightBlue-900 border-0 px-3 py-3 placeholder-blueGray-300 text-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Entrer la clé de la recherche..."
+                      placeholder="Entrer le titre à recherché..."
                       onChange={(e) => recherche(e)}
                    />
                 </div>

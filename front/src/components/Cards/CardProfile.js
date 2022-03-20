@@ -26,6 +26,8 @@ export default function CardProfile() {
     return compte.id;
   })
 
+  console.log(compte)
+
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
   const btnDropdownRef = React.createRef();
@@ -180,7 +182,7 @@ export default function CardProfile() {
                   </p>
                   <div className="w-full flex justify-center relative h-full" >
                     {/*<video src={`https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&appId=823777418309594&height=280`} controls="controls" autoPlay={true} />*/}
-                     <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&appId=823777418309594&height=280" style={{ border:'none', overflow: 'hidden'}} 
+                     <iframe src = {`https://www.facebook.com/plugins/video.php?href=${account.video}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
                           className="w-full flex justify-center relative"
                           frameBorder="0" 
                           title="Video facebook"

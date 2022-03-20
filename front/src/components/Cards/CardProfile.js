@@ -26,7 +26,7 @@ export default function CardProfile() {
     return compte.id;
   })
 
-  console.log(compte)
+  console.log()
 
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);

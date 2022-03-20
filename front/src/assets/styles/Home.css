@@ -1,5 +1,5 @@
 .content_left{
-    margin: 146px 0px;
+    margin: 160px 0px;
     width: 450px;
 }
 
@@ -55,4 +55,9 @@
         margin: 0px auto;
 
     }
+}
+
+.image-size{
+    border-radius: 15px;
+    top: 10px;
 }

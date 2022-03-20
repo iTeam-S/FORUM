@@ -66,10 +66,11 @@ export default function Index() {
                 <div className="sm:w-12/12 md:w-4/12 flex flex-col  content_left">
                   <h1 className="font-semibold text-4xl text-blueGray-600 mb-4">Forum des métiers</h1>
                   <p>
-                    Il s’agit d’une plateforme permettant au public de visiter en ligne le forum de 
+                    Il s’agit d’une plateforme permettant aux entreprises d'ajouter des contenus pour le forum de 
                     l’emploi et des entreprises  organisé par l’association SÉSAME du 26 mars au 2 avril. 
-                    Deux plateforme seront mis à disposition de SÉSAME dans ce projet : chatBot et plateforme web
+                    Deux plateforme seront mis à disposition de SÉSAME durant cet forum : un bot messenger et une plateforme web
                   </p>
+                  
                   <div className="boutton mt-12">
                       <a
                         href="http://programme-sesame.mg/"

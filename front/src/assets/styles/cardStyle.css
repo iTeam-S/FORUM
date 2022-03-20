@@ -13,3 +13,13 @@
     width: 130px;
     height: 130px;
 }
+
+/*style pour modification photo profil card profil*/
+
+#imageprofil { 
+    margin: 10px 0px;
+}
+
+.sauvegarde {
+    margin: 0px 80px;
+}

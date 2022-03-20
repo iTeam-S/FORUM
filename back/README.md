@@ -291,10 +291,9 @@ content-type: application/json
   }
 ```
 
-## Get an attachement (image, video, pdf, ...) 
+## Get file link (image, video, pdf, ...) 
 ```
-  GET http://<host>:5000/api/v1/get_attachement/<attachement_name>
-  Authorization: Bearer <Token>
+  GET http://<host>:5000/api/v1/get_attachement/<compte_id>/<attachement_name>
 ```
 
 ## Get stats data (number of consultation within per day )
@@ -306,11 +305,22 @@ NB : Can specify content_type (mandatory)
 
 ## Change Password
 ```
-PATCH http://<host>:5000/api/v1/change_password
-Authorization: Bearer <Token>
-Content-Type: application/json
-{
-    "old_password": <old_password>,
-    "new_password": <new_password>
-}
+  PATCH http://<host>:5000/api/v1/change_password
+  Authorization: Bearer <Token>
+  Content-Type: application/json
+  {
+      "old_password": <old_password>,
+      "new_password": <new_password>
+  }
+```
+
+## Update enterprise logo
+```
+  PATCH http://<host>:5000/api/v1/update_logo
+  Authorization: Bearer <Token>
+  enctype: 'multipart/form-data'
+  Content-Type: false
+  {
+      "logo": <file_logo>
+  }
 ```

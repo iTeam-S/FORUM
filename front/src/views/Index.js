@@ -60,7 +60,7 @@ export default function Index() {
                   <img
                       alt="..."
                       src={require("assets/img/sesame.jpg").default}
-                      className=" image-size border-none absolute  max-w-150-px"
+                      className="logo-sesame border-none absolute  max-w-150-px"
                     />
                 </div>
                 <div className="sm:w-12/12 md:w-4/12 flex flex-col  content_left">

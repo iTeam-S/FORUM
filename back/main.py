@@ -985,5 +985,17 @@ def update_logo():
         abort(500, description="Something went wrong !")
 
 
+# @app.route('/api/v1/update_video', methods=['PATCH'])
+# @jwt_required()
+# def update_video():
+#     compte_id = int(get_jwt_identity().split("+")[0])
+
+#     try:
+#         if compte_id:
+
+#     except Exception as err:
+#         print(f"[ERROR] : { err }")
+#         abort(500, description="Something went wrong !")
+
 if __name__ == "__main__":
     app.run(debug=True)

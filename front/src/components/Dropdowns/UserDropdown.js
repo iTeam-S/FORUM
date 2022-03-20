@@ -60,7 +60,7 @@ const UserDropdown = () => {
             <div key={account.id}>
                  <Link to={`/adminEntreprise/CardEditPassword/${account.id}`}>
                     <p className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-                      Paramètre
+                      Modifier mot de passe
                     </p>
                   </Link>
                   <a

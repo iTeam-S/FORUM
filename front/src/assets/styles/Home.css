@@ -1,5 +1,5 @@
 .content_left{
-    margin: 140px 0px;
+    margin: 160px 0px;
     width: 450px;
 }
 
@@ -13,6 +13,8 @@
         background-color: #008080;
         padding: 0px 0px;
         border-radius: 20px;
+        position: absolute;
+        top: 670px;
     }
     .content_left{
         width: 100%;

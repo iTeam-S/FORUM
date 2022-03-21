@@ -21,12 +21,40 @@ export default function CardProfile() {
   const compteCurrent = LoginService.getOneCompteContexte(compte);
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+  console.log(compte)
+
   //get one item from comptecurrent
   const idCompte = compteCurrent.map((compte) => {
     return compte.id;
   })
-
-  console.log()
+  const linkVideo = compteCurrent.map((compte) => {
+    return compte.video;
+  })
+  //regex video facebook
+  const regexVideo = /^(https?:\/\/){0,1}(www\.){0,1}facebook\.com\/([a-z]|[A-Z]|[0-9]){5,}\/videos\/[0-9]{15}/;
+  const ComponentVideo = () => {
+    if (regexVideo.test(linkVideo[0])){
+      return (
+          <iframe src = {`https://www.facebook.com/plugins/video.php?href=${linkVideo[0]}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
+                  className="w-full flex justify-center relative"
+                  frameBorder="0" 
+                  title="Video facebook"
+                  allowFullScreen={true} 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          />
+    )
+    } else{
+      if(linkVideo[0] !== null){
+          return(
+              <video src={`${uRI}/get_attachement/${idCompte}/${linkVideo[0]}`} controls="controls" autoPlay={true} />
+          )
+      } else {
+          return(
+              <p className="text-xs font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Il n'a pas encore de vidéo de présentation</p>
+            )
+      }
+    }
+  }
 
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
@@ -181,13 +209,7 @@ export default function CardProfile() {
                     {account.description}
                   </p>
                   <div className="w-full flex justify-center relative h-full" >
-                    {/*<video src={`https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&appId=823777418309594&height=280`} controls="controls" autoPlay={true} />*/}
-                     <iframe src = {`https://www.facebook.com/plugins/video.php?href=${account.video}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
-                          className="w-full flex justify-center relative"
-                          frameBorder="0" 
-                          title="Video facebook"
-                          allowFullScreen={true} 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" />
+                    <ComponentVideo />
                   </div>
                 </div>
               </div>

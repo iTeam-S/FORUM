@@ -28,6 +28,7 @@ export const CompteContextProvider = (props) =>{
     
     async function fetchCompte(){
             await CompteService.getAllCompte().then((response) => {
+                console.log(response.data)
                 setCompte(response.data);
                 fetchStat();
             });

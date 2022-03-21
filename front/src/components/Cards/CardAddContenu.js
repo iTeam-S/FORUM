@@ -41,7 +41,6 @@ export default function CardAddContenu() {
             if(compte !== null){
                 if(data.file.length > 0){
                   history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();
                 }
             }else{
                 setErreur(true);

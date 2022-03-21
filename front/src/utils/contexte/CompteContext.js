@@ -63,12 +63,15 @@ export const CompteContextProvider = (props) =>{
    
     const addFiche = (newFiche)=> {
         setFiche([...fiche,newFiche]);
+        window.location.reload();
     }
     const addCompte = (newCompte)=> {
         setCompte([...compte,newCompte]);
+        window.location.reload();
     }
     const addContenu = (newContent)=> {
         setContenu([...contenus,newContent]);
+        window.location.reload();
     }
 
     return(

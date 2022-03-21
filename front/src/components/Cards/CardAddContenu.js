@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -7,11 +7,13 @@ import {useHistory} from "react-router";
 // components
 import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
+import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function CardAddContenu() {
   const compte = LoginService.getCurrentCompte();
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+    const {addContenu}=useContext(CompteContext)
   let [isDisabled, setIsDisabled] = useState(true);
 
   const onChangeTypeSelect = (e) => {
@@ -35,17 +37,17 @@ export default function CardAddContenu() {
   
   const  handleAddContenu = async(data) => {
         try {
-            if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
+            let newContent = await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
+            if(compte !== null){
                 if(data.file.length > 0){
-                  console.log(data.file)
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
-                  /*history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();*/
+                  history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();
                 }
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à l'ajout du nouveau contenu");
             }
+            addContenu(newContent.data);
         } catch (error) {
             setErreur(true)
             setErrorMessage(error.response.data.message)

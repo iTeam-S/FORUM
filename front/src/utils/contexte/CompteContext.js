@@ -41,7 +41,8 @@ export const CompteContextProvider = (props) =>{
              async function fetchContenu(){
                  await CompteService.getAllContenu().then((response) => {
                     if(response.data['error'] === undefined){
-                        setContenu(response.data);
+                        let reponseContent = LoginService.convertItemToArray(response.data);
+                        setContenu(reponseContent);
                     } 
                     fetchCompte();
                 })
@@ -66,11 +67,14 @@ export const CompteContextProvider = (props) =>{
     const addCompte = (newCompte)=> {
         setCompte([...compte,newCompte]);
     }
+    const addContenu = (newContent)=> {
+        setContenu([...contenus,newContent]);
+    }
 
     return(
         <CompteContext.Provider 
             value= {{ compte, setCompte, addCompte,
-                      contenus, 
+                      contenus, setContenu, addContenu,
                       fiche, setFiche, addFiche,
                       stat 
         }}>

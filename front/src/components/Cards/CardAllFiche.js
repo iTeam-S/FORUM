@@ -48,11 +48,10 @@ function DomaineName({domaine_id}){
   }
 
 export default function CardAllFiche({color}) {
-  const {fiche} = useContext(CompteContext); //fiche still obj
+  const {fiche} = useContext(CompteContext); //fiche still array
+  console.log(fiche)
   const [domaine, setDomaine] = useState(0);
-  const allFiche = LoginService.convertItemToArray(fiche);
-  const ficheParDomaine = LoginService.getFichePerDomaine(allFiche, domaine);
-
+  const ficheParDomaine = LoginService.getFichePerDomaine(fiche, domaine);
   const [termSearch, setTermSearch] = useState("");
 
   const choixDomaine = (e) => {

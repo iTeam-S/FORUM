@@ -83,7 +83,6 @@ export default function CardEditFiche() {
                   await CompteService.UpdateFicheMetier(data.titre, data.domaine_id, data.fiche_metier_id , fichier);
                   history.push('/admin/AllFicheMetier');
                   window.location.reload();
-                  console.log(data)
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la modification du fiche métier");

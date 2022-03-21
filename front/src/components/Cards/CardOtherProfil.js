@@ -1,14 +1,53 @@
 import React, {useContext} from "react";
 import { useParams } from "react-router";
 
+
 //contexte
 import { CompteContext } from "utils/contexte/CompteContext";
 import { LoginService } from "utils/service/LoginService";
+import {uRI} from "utils/urlAxios/UrlAxios";
+
 
 export default function CardOtherProfil() {
   const {id} = useParams();
   const {compte} = useContext(CompteContext);
   const compteCurrent = LoginService.getOneItemContexte(compte, id);
+
+   //get one item from comptecurrent
+  const idCompte = compteCurrent.map((compte) => {
+    return compte.id;
+  })
+  const linkVideo = compteCurrent.map((compte) => {
+    return compte.video;
+  })
+  //regex video facebook
+  const regexVideoFb = /^(https?:\/\/){0,1}(www\.){0,1}facebook\.com\/(.){5,}\/videos\/[0-9]{15}/;
+  const ComponentVideo = () => {
+    if (regexVideoFb.test(linkVideo[0])){
+      return (
+          <iframe src = {`https://www.facebook.com/plugins/video.php?href=${linkVideo[0]}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
+                  className="w-full flex justify-center relative"
+                  frameBorder="0" 
+                  title="Video facebook"
+                  allowFullScreen={true} 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          />
+    )
+    } else{
+      if(linkVideo[0] !== null){
+          return(
+              <video src={`${uRI}/get_attachement/${idCompte}/${linkVideo[0]}`} controls="controls" autoPlay={true} />
+          )
+      } else {
+          return(
+              <p className="text-xs font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Il n'a pas encore de vidéo de présentation</p>
+            )
+      }
+    }
+  }
+
+
+
   return (
     <>
       { compteCurrent.map((account) => (
@@ -19,7 +58,7 @@ export default function CardOtherProfil() {
                     <div className="relative">
                       <img
                         alt="..."
-                        src={account.logo ? account.logo : require("assets/img/logodefaut.png").default}
+                        src={account.logo ? `${uRI}/get_attachement/${id}/${account.logo}` : require("assets/img/logodefaut.png").default}
                         className="shadow-xl rounded-full image-size align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                       />
                     </div>
@@ -61,7 +100,7 @@ export default function CardOtherProfil() {
                         {account.description}
                       </p>
                       <div className="w-full flex">
-                        {/*<video src={video} controls="controls" autoPlay={true} />*/}
+                         <ComponentVideo />
                       </div>
                     </div>
                   </div>

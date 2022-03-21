@@ -220,7 +220,7 @@ def add_content():
                             os.path.join(compte_folder, filename)
                         )
                     fichier.close()
-
+            print(titre, type, description)
             if titre and type and compte_id:
                 CURSOR.execute("""
                     INSERT INTO
@@ -331,6 +331,7 @@ def list_accounts():
                    Cp.logo,
                    Cp.description,
                    Cp.domaine,
+                   Cp.video,
                    Cp.adresse,
                    COUNT(DISTINCT Cs.id) visiteurs
                 FROM

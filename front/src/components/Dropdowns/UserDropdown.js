@@ -4,12 +4,17 @@ import { createPopper } from "@popperjs/core";
 
 import {LoginService} from "utils/service/LoginService";
 import { CompteContext } from "utils/contexte/CompteContext";
+import {uRI} from "utils/urlAxios/UrlAxios";
 
 
 const UserDropdown = () => {
-  const logoEntreprise = LoginService.getCurrentCompte().logo;
+  const idLocal = LoginService.getCurrentCompte().id;
   const {compte} = useContext(CompteContext);
   const compteCurrent = LoginService.getOneCompteContexte(compte);
+  //get one item from comptecurrent
+  const logo = compteCurrent.map((compte) => {
+    return compte.logo;
+  })
 
   const Deconnexion = () => {
     LoginService.logout();
@@ -39,15 +44,15 @@ const UserDropdown = () => {
           dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }}
       >
-        <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="..."
-              className="h-12 w-12 bg-white rounded-full align-middle border-none shadow-lg"
-              src={logoEntreprise ? logoEntreprise : require("assets/img/logodefaut.png").default}
-            />
-          </span>
-        </div>
+          <div className="items-center flex">
+            <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+              <img
+                alt="..."
+                className="h-12 w-12 bg-white rounded-full align-middle border-none shadow-lg"
+                src={logo[0] ? `${uRI}/get_attachement/${idLocal}/${logo[0]}` : require("assets/img/logodefaut.png").default}
+              />
+            </span>
+          </div>
       </a>
       <div
         ref={popoverDropdownRef}

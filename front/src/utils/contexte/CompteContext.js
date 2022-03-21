@@ -13,7 +13,8 @@ export const CompteContextProvider = (props) =>{
 
     async function fetchFicheMetier(){
         await CompteService.getAllFiche().then((response) => {
-            setFiche(response.data);
+            let reponseFiche = LoginService.convertItemToArray(response.data)
+            setFiche(reponseFiche);
         });
     }
 
@@ -58,9 +59,17 @@ export const CompteContextProvider = (props) =>{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
+    const addFiche = (newFiche)=> {
+        setFiche([...fiche,newFiche]);
+    }
 
     return(
-        <CompteContext.Provider value={{ compte, contenus, fiche, stat }}>
+        <CompteContext.Provider 
+            value= {{ compte, 
+                      contenus, 
+                      fiche, setFiche, addFiche,
+                      stat 
+        }}>
             {props.children}
         </CompteContext.Provider>
     )

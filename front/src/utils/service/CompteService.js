@@ -21,13 +21,13 @@ class CompteService{
         }
         )
     }
-    AddContenu(titre, description, type, file){
+    AddContenu(titre, description, type, link){
         var content = new FormData();
 
         content.append("titre", titre);
         content.append("description", description);
         content.append("type", type);
-        content.append("file", file);
+        content.append("file", link);
 
         return RouteAxios.post('/add_content', content,{
             headers: {

@@ -60,7 +60,6 @@ export default function CardEditContenu() {
                   await CompteService.UpdateOneContent(data.titre,data.description,data.type, data.content_id, data.file);
                   history.push('/adminEntreprise/AllContenu');
                   window.location.reload();
-                  console.log(data.file)
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la modification du contenu");

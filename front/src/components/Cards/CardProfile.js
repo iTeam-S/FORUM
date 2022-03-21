@@ -21,7 +21,6 @@ export default function CardProfile() {
   const compteCurrent = LoginService.getOneCompteContexte(compte);
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
-  console.log(compte)
 
   //get one item from comptecurrent
   const idCompte = compteCurrent.map((compte) => {
@@ -50,7 +49,20 @@ export default function CardProfile() {
           )
       } else {
           return(
-              <p className="text-xs font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Il n'a pas encore de vidéo de présentation</p>
+              <div>
+                <p className="text-xs font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Il n'a pas encore de vidéo de présentation</p>
+                <Link
+                      to={`/adminEntreprise/CardAddVideo/${idCompte}`}
+                      className="bg-teal-500 active:bg-lightBlue-600 uppercase px-4 py-2 text-white font-bold hover:shadow-md shadow rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                    >
+                      <button
+                      className="text-xl font-bold px-5 py-1"
+                      type="button"
+                  >
+                      +
+                  </button>
+                  </Link>
+              </div>
             )
       }
     }

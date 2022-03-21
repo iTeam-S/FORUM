@@ -35,12 +35,12 @@ export default function CardAddContenu() {
   
   const  handleAddContenu = async(data) => {
         try {
-            if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
+            if(compte !== null){
                 if(data.file.length > 0){
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file);
-                  history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();
                   console.log(data.file)
+                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
+                  /*history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();*/
                 }
             }else{
                 setErreur(true);

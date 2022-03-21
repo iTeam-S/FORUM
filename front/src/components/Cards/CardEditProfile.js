@@ -30,7 +30,8 @@ export default function CardEditProfile() {
         domaine: Yup.string()
           .required('le choix est obligatoire'),
         description: Yup.string()
-          .required('Ce champ est obligatoire'),
+          .required('Ce champ est obligatoire')
+          .max(600, "Limité à 97 mots"),
         adresse:Yup.string()
         .required("Ce champ est obligatoire"),
         lien: Yup.string()
@@ -64,7 +65,7 @@ export default function CardEditProfile() {
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-        <form onSubmit={handleSubmit(handleEditAccount)}>
+        <form onSubmit={handleSubmit(handleEditAccount)}   style={{margin: '0px 0px 100px 0px'}}>
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
               <h6 className="text-blueGray-700 text-xl font-bold">Modifier compte</h6>

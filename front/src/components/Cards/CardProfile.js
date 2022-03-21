@@ -202,13 +202,13 @@ export default function CardProfile() {
                   <a href={account.lien} target="_blank" rel="noreferrer" >Site web</a>
               </div>
             </div>
-            <div className="mt-10 py-10 border-t border-blueGray-200 text-center" style={{margin: '0px 0px 20px 0px'}}>
+            <div className="mt-10 py-10 border-t border-blueGray-200 text-center" style={{margin: '0px 0px 100px 0px'}}>
               <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-9/12 px-4">
                   <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                     {account.description}
                   </p>
-                  <div className="w-full flex justify-center relative h-full" >
+                  <div className="w-full flex justify-center h-full" >
                     <ComponentVideo />
                   </div>
                 </div>

@@ -35,7 +35,7 @@ export default function CardAddContenu() {
   
   const  handleAddContenu = async(data) => {
         try {
-            if(compte !== null){
+            if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
                   console.log(data.file)
                   await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);

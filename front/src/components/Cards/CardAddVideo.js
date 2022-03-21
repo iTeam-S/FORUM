@@ -1,6 +1,5 @@
 import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import {useHistory} from "react-router";

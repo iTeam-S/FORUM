@@ -6,6 +6,7 @@ import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function AllContenu() {
   const {contenus} = useContext(CompteContext);
+  console.log(contenus)
   const [type, setType] = useState("");
   const allContenus = LoginService.convertItemToArray(contenus);
   const contenuParDomaine = LoginService.getContenuPerDomaine(allContenus, type);

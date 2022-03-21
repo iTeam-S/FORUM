@@ -51,7 +51,6 @@ export default function CardAddEntreprise() {
             const newCompte = await CompteService.AddAccount(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse);
             if(compte !== null && compte.type === 'ADMIN'){
                 history.push('/admin/TablesEntreprises');
-                window.location.reload();
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la registration");

@@ -15,7 +15,6 @@ export default function CardAllContenu({ allContenu, termSearch}) {
      setContenu(contenus.filter((contenu) => {
        return contenu.id !== id_content;
      }))
-      window.location.reload();
   }
 
   return (

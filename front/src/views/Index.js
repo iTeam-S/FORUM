@@ -57,18 +57,23 @@ export default function Index() {
         <section className="w-11/12 p-4 flex flex-col flex-wrap items-center sm:flex-row sm:w-full md:flex-row md:w-full justify-between">
             <div className="w-full sm:w-5/12 md:w-5/12">
                 <div className="w-8/12 xl:w-12/12">
-                  Sesame
+                  <img
+                      alt="..."
+                      src={require("assets/img/sesame.jpg").default}
+                      className="logo-sesame border-none absolute  max-w-150-px"
+                    />
                 </div>
                 <div className="sm:w-12/12 md:w-4/12 flex flex-col  content_left">
                   <h1 className="font-semibold text-4xl text-blueGray-600 mb-4">Forum des métiers</h1>
                   <p>
-                    Il s’agit d’une plateforme permettant au public de visiter en ligne le forum de 
+                    Il s’agit d’une plateforme permettant aux entreprises d'ajouter des contenus pour le forum de 
                     l’emploi et des entreprises  organisé par l’association SÉSAME du 26 mars au 2 avril. 
-                    Deux plateforme seront mis à disposition de SÉSAME dans ce projet : chatBot et plateforme web
+                    Deux plateforme seront mis à disposition de SÉSAME durant cet forum : un bot messenger et une plateforme web
                   </p>
+                  
                   <div className="boutton mt-12">
                       <a
-                        href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/notus?ref=nr-index"
+                        href="http://programme-sesame.mg/"
                         target="_blank"
                         className="get-started text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1  active:bg-teal-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
                         style={{backgroundColor: '#057885'}}
@@ -76,7 +81,7 @@ export default function Index() {
                         Site web
                       </a>
                       <a
-                        href="https://github.com/creativetimofficial/notus-react?ref=nr-index"
+                        href="https://www.facebook.com/promes.sesame/"
                         className="github-star ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
                         target="_blank"
                       >
@@ -100,5 +105,6 @@ const styles = {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
+    height: '627px'
   }
 }

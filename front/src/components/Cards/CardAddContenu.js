@@ -37,10 +37,10 @@ export default function CardAddContenu() {
         try {
             if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
                 if(data.file.length > 0){
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file);
-                  history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();
                   console.log(data.file)
+                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
+                  /*history.push('/adminEntreprise/AllContenu');
+                  window.location.reload();*/
                 }
             }else{
                 setErreur(true);
@@ -115,7 +115,7 @@ export default function CardAddContenu() {
                          <option  hidden>Choisir le type de contenu</option>
                          <option key="1" value="galerie"> galerie</option>
                          <option key="2" value="emploi">offre d'emploi</option>
-                         <option key="3" value="information">information</option>
+                         <option key="3" value="actualite">actualité</option>
                     </select>
                     <p className="text-red-500 italic">{errors.type?.message}</p>
                   </div>

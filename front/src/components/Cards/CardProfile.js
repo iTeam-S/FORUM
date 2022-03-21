@@ -21,10 +21,52 @@ export default function CardProfile() {
   const compteCurrent = LoginService.getOneCompteContexte(compte);
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+
   //get one item from comptecurrent
   const idCompte = compteCurrent.map((compte) => {
     return compte.id;
   })
+  const linkVideo = compteCurrent.map((compte) => {
+    return compte.video;
+  })
+  //regex video facebook
+  const regexVideoFb = /^(https?:\/\/){0,1}(www\.){0,1}facebook\.com\/(.){5,}\/videos\/[0-9]{15}/;
+  const ComponentVideo = () => {
+    if (regexVideoFb.test(linkVideo[0])){
+      return (
+          <iframe src = {`https://www.facebook.com/plugins/video.php?href=${linkVideo[0]}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
+                  className="w-full flex justify-center relative"
+                  frameBorder="0" 
+                  title="Video facebook"
+                  allowFullScreen={true} 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          />
+    )
+    } else{
+      if(linkVideo[0] !== null){
+          return(
+              <video src={`${uRI}/get_attachement/${idCompte}/${linkVideo[0]}`} controls="controls" autoPlay={true} />
+          )
+      } else {
+          return(
+              <div>
+                <p className="text-xs font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Il n'a pas encore de vidéo de présentation</p>
+                <Link
+                      to={`/adminEntreprise/CardAddVideo/${idCompte}`}
+                      className="bg-teal-500 active:bg-lightBlue-600 uppercase px-4 py-2 text-white font-bold hover:shadow-md shadow rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                    >
+                      <button
+                      className="text-xl font-bold px-5 py-1"
+                      type="button"
+                  >
+                      +
+                  </button>
+                  </Link>
+              </div>
+            )
+      }
+    }
+  }
 
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
@@ -172,20 +214,14 @@ export default function CardProfile() {
                   <a href={account.lien} target="_blank" rel="noreferrer" >Site web</a>
               </div>
             </div>
-            <div className="mt-10 py-10 border-t border-blueGray-200 text-center" style={{margin: '0px 0px 20px 0px'}}>
+            <div className="mt-10 py-10 border-t border-blueGray-200 text-center" style={{margin: '0px 0px 100px 0px'}}>
               <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-9/12 px-4">
                   <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                     {account.description}
                   </p>
-                  <div className="w-full flex justify-center relative h-full" >
-                    {/*<video src={`https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&appId=823777418309594&height=280`} controls="controls" autoPlay={true} />*/}
-                     <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&appId=823777418309594&height=280" style={{ border:'none', overflow: 'hidden'}} 
-                          className="w-full flex justify-center relative"
-                          frameBorder="0" 
-                          title="Video facebook"
-                          allowFullScreen={true} 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" />
+                  <div className="w-full flex justify-center h-full" >
+                    <ComponentVideo />
                   </div>
                 </div>
               </div>

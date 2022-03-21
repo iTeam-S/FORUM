@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { CompteContext } from "utils/contexte/CompteContext";
 import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
+import {uRI} from "utils/urlAxios/UrlAxios";
 
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
@@ -120,7 +121,7 @@ const recherche = (e) => {
                           <tr key={account.id}>
                               <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                                   <img
-                                      src={account.logo ? account.logo : require("assets/img/logodefaut.png").default}
+                                      src={account.logo ? `${uRI}/get_attachement/${account.id}/${account.logo}`  : require("assets/img/logodefaut.png").default}
                                       className="h-12 w-12 bg-white rounded-full border"
                                       alt="..."
                                   ></img>{" "}

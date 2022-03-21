@@ -31,9 +31,9 @@ export default function CardProfile() {
     return compte.video;
   })
   //regex video facebook
-  const regexVideo = /^(https?:\/\/){0,1}(www\.){0,1}facebook\.com\/([a-z]|[A-Z]|[0-9]){5,}\/videos\/[0-9]{15}/;
+  const regexVideoFb = /^(https?:\/\/){0,1}(www\.){0,1}facebook\.com\/(.){5,}\/videos\/[0-9]{15}/;
   const ComponentVideo = () => {
-    if (regexVideo.test(linkVideo[0])){
+    if (regexVideoFb.test(linkVideo[0])){
       return (
           <iframe src = {`https://www.facebook.com/plugins/video.php?href=${linkVideo[0]}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
                   className="w-full flex justify-center relative"

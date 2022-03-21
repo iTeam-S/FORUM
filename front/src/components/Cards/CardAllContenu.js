@@ -9,6 +9,7 @@ import '../../assets/styles/cardStyle.css';
 export default function CardAllContenu({ allContenu, termSearch}) {
   const {contenus, setContenu} = useContext(CompteContext);
 
+
   //Fonction delete contenus
   async function deleteContent(id_content){
      await CompteService.DeleteOneContent(id_content);
@@ -19,7 +20,6 @@ export default function CardAllContenu({ allContenu, termSearch}) {
 
   return (
     <>
-        {/* conver obj to array */}
        { allContenu.filter((content) => {
             return content.titre.toLowerCase().includes(termSearch.toLocaleLowerCase());
           }).map((content) => (

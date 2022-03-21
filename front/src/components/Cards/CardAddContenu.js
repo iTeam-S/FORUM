@@ -114,9 +114,10 @@ export default function CardAddContenu() {
                       onChange={onChangeTypeSelect}
                     >
                          <option  hidden>Choisir le type de contenu</option>
-                         <option key="1" value="galerie"> galerie</option>
-                         <option key="2" value="emploi">offre d'emploi</option>
-                         <option key="3" value="actualite">actualité</option>
+                         <option key="1" value="galerie"> Galerie</option>
+                         <option key="2" value="emploi">Offre d'emploi</option>
+                         <option key="3" value="actualite">Actualité</option>
+                         <option key="4" value="formation">Formation</option>
                     </select>
                     <p className="text-red-500 italic">{errors.type?.message}</p>
                   </div>
@@ -159,7 +160,7 @@ export default function CardAddContenu() {
                     <input
                       type="file"
                       name="file"
-                      multiple
+                      multiple={isDisabled}
                       {...register('file')}
                       id="inpImageContenu"
                       accept="image/jpeg, image/jpg, image/png, .pdf, video/*"

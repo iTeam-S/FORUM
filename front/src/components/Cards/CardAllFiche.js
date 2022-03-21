@@ -49,7 +49,6 @@ function DomaineName({domaine_id}){
 
 export default function CardAllFiche({color}) {
   const {fiche} = useContext(CompteContext); //fiche still array
-  console.log(fiche)
   const [domaine, setDomaine] = useState(0);
   const ficheParDomaine = LoginService.getFichePerDomaine(fiche, domaine);
   const [termSearch, setTermSearch] = useState("");

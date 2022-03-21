@@ -10,8 +10,7 @@ import {uRI} from "utils/urlAxios/UrlAxios";
 export default function CardTable({ color}) {
   const {compte} = useContext(CompteContext);
   const [domaine, setDomaine] = useState("");
-  const allCompte = LoginService.convertItemToArray(compte);
-  const compteParDomaine = LoginService.getComptePerDomaine(allCompte, domaine);
+  const compteParDomaine = LoginService.getComptePerDomaine(compte, domaine);
 
   const [termSearch, setTermSearch] = useState("");
 

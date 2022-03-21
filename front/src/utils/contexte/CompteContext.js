@@ -29,7 +29,8 @@ export const CompteContextProvider = (props) =>{
     
     async function fetchCompte(){
             await CompteService.getAllCompte().then((response) => {
-                setCompte(response.data);
+                let reponseCompte = LoginService.convertItemToArray(response.data)
+                setCompte(reponseCompte);
                 fetchStat();
             });
     }
@@ -62,10 +63,13 @@ export const CompteContextProvider = (props) =>{
     const addFiche = (newFiche)=> {
         setFiche([...fiche,newFiche]);
     }
+    const addCompte = (newCompte)=> {
+        setCompte([...compte,newCompte]);
+    }
 
     return(
         <CompteContext.Provider 
-            value= {{ compte, 
+            value= {{ compte, setCompte, addCompte,
                       contenus, 
                       fiche, setFiche, addFiche,
                       stat 

@@ -1,15 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 import CompteService from "utils/service/CompteService";
+import { CompteContext } from "utils/contexte/CompteContext";
 
 import '../../assets/styles/cardStyle.css';
 
 
-export default function CardAllContenu({allContenu, termSearch}) {
+export default function CardAllContenu({ allContenu, termSearch}) {
+  const {contenus, setContenu} = useContext(CompteContext);
 
   //Fonction delete contenus
   async function deleteContent(id_content){
      await CompteService.DeleteOneContent(id_content);
+     setContenu(contenus.filter((contenu) => {
+       return contenu.id !== id_content;
+     }))
       window.location.reload();
   }
 
@@ -46,8 +51,7 @@ export default function CardAllContenu({allContenu, termSearch}) {
                       </button>
                       <button className="bg-red-500 text-white w-full active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
+                      onClick={() => {
                         deleteContent(content.id);
                       }}
                       >

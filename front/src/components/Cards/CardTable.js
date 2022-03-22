@@ -14,8 +14,8 @@ export default function CardTable({ color}) {
 
   const [termSearch, setTermSearch] = useState("");
 
-  async function deleteOneCompte(id){
-    await CompteService.DeleteOneCompte(id);
+   function deleteOneCompte(id){
+    CompteService.DeleteOneCompte(id);
     setCompte(compte.filter((cmpt) => {
       return cmpt.id !== id;
     }))
@@ -29,6 +29,7 @@ const recherche = (e) => {
   let valeur = e.target.value;
   setTermSearch(valeur);
 }
+
 
   return (
     <>

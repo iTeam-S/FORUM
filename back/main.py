@@ -157,7 +157,8 @@ def add_account():
 
                     return {
                         "error": False,
-                        "message": "Account created"
+                        "message": "Account created",
+                        "id": CURSOR.lastrowid
                     }, 200
 
                 return {
@@ -234,7 +235,8 @@ def add_content():
 
                 return {
                     "error": False,
-                    "message": "Contenu inserted"
+                    "message": "Contenu inserted",
+                    "id": CURSOR.lastrowid
                 }, 200
 
             return {
@@ -293,7 +295,8 @@ def add_fiche_metier():
 
                 return {
                     "error": False,
-                    "message": "Contenu inserted"
+                    "message": "Contenu inserted",
+                    "id": CURSOR.lastrowid
                 }, 200
 
             return {

@@ -11,15 +11,15 @@ export const CompteContextProvider = (props) =>{
     const [compte, setCompte] = useState([]);
     const [fiche, setFiche] = useState([]);
 
-    async function fetchFicheMetier(){
-        await CompteService.getAllFiche().then((response) => {
+     function fetchFicheMetier(){
+         CompteService.getAllFiche().then((response) => {
             let reponseFiche = LoginService.convertItemToArray(response.data)
             setFiche(reponseFiche);
         });
     }
 
-    async function fetchStat(){
-            await CompteService.getStatGallerie().then((response) => {
+     function fetchStat(){
+             CompteService.getStatGallerie().then((response) => {
                  setStat(response.data);
                  if(LoginService.getCurrentCompte().type === 'ADMIN'){
                     fetchFicheMetier();
@@ -27,8 +27,8 @@ export const CompteContextProvider = (props) =>{
             })
         }
     
-    async function fetchCompte(){
-            await CompteService.getAllCompte().then((response) => {
+     function fetchCompte(){
+             CompteService.getAllCompte().then((response) => {
                 let reponseCompte = LoginService.convertItemToArray(response.data)
                 setCompte(reponseCompte);
                 fetchStat();
@@ -38,8 +38,8 @@ export const CompteContextProvider = (props) =>{
 
     useEffect(() => {
         if(LoginService.getCurrentCompte() != null){
-             async function fetchContenu(){
-                 await CompteService.getAllContenu().then((response) => {
+              function fetchContenu(){
+                  CompteService.getAllContenu().then((response) => {
                     if(response.data['error'] === undefined){
                         let reponseContent = LoginService.convertItemToArray(response.data);
                         setContenu(reponseContent);
@@ -49,8 +49,8 @@ export const CompteContextProvider = (props) =>{
             }
             fetchContenu();
         } else if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ENTREPRISE'){
-            async function fetchContenu(){
-                await CompteService.getAllContenu().then((response) => {
+             function fetchContenu(){
+                 CompteService.getAllContenu().then((response) => {
                         if(response.data['error'] === undefined){
                         setContenu(response.data);
                     } 
@@ -63,15 +63,12 @@ export const CompteContextProvider = (props) =>{
    
     const addFiche = (newFiche)=> {
         setFiche([...fiche,newFiche]);
-        window.location.reload();
     }
     const addCompte = (newCompte)=> {
         setCompte([...compte,newCompte]);
-        window.location.reload();
     }
     const addContenu = (newContent)=> {
         setContenu([...contenus,newContent]);
-        window.location.reload();
     }
 
     return(

@@ -13,7 +13,7 @@ export default function CardAddFicheMetier() {
   const compte = LoginService.getCurrentCompte();
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
-  const {addFiche}=useContext(CompteContext)
+  const {fiche, setFiche, addFiche,}=useContext(CompteContext)
 
   let history = useHistory();
 
@@ -40,8 +40,15 @@ export default function CardAddFicheMetier() {
       });
 
       const  handleAddFiche = async(data) => {
-        try {
-            const newData = await CompteService.AddFicheMetier(data.titre, data.domaine_id, data.file[0]);
+        try { 
+            let newFiche = {}
+            const res  = await CompteService.AddFicheMetier(data.titre, data.domaine_id, data.file[0]);
+            let formdata = res.config.data;
+            formdata.delete('file')
+            for(let value of formdata.entries()){
+                newFiche[value[0]] = value[1];
+            }
+
             if(compte !== null && compte.type === 'ADMIN'){
                 if(data.file.length > 0){
                   history.push('/admin/AllFicheMetier');
@@ -50,7 +57,10 @@ export default function CardAddFicheMetier() {
                 setErreur(true);
                 setErrorMessage("Echec à l'ajout du nouveau fiche métier");
             }
-            addFiche(newData.data);
+            
+             newFiche['id'] = res.data.id;
+            setFiche([...fiche, newFiche]);
+            addFiche(newFiche);
         } catch (error) {
             setErreur(true)
             setErrorMessage(error.response.data.message)

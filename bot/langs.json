@@ -1,38 +1,38 @@
 {
     "salutation": {
         "en": "Hello, Welcome to the FORUM 2022 of SESAME's program",
-        "fr": "Bonjour, Bienvenue au FORUM 2022 du programme SESAME",
-        "mg": "Miarahaba Tompoko, Tongasoa eto amin'ny FORUM 2022 ny programa SESAMA"
+        "fr": "Bonjour\n\nBienvenue à la 6ème édition du Forum de l'orientation et des métiers ! 🥳\nAfin d'accéder aux différents programmes de l'événement, merci de suivre les instructions à chaque étape 🤗 \n\nEn cas d'incompréhension ou de soucis techniques, n'hésitez pas à nous contacter au numéro : +261 34 57 892 45 \n\nEn vous souhaitant un très bon forum ! 🙂Plateforme mise en place par iTeam-$\n https://iteam-s.mg/",
+        "mg": "Miarahaba oohh\n\nTongasoa eto amin'ny 'Forum de l'orientation et de métiers, 6ème édition'🥳\nManasa anao hanaraka ny toromarika rehetra, ahafahanao misitraka ireo tombotsoan'ny forum rehetra. 🤗\n\nRaha misy tsy fahatomombanana na tsy fahazoan-kevitra dia aza misalasala miantso anay amin'ny laharana: +261 34 57 892 45\n\nMirary fitsidihana sambatra ho anao! 🙂Teknolojia novokarin'i iTeam-$\n https://iteam-s.mg/"
     },
     "choisir_votre_langue": {
         "en": "choose your language before continuing",
-        "fr": "Choisir votre langue avant de continuer ",
-        "mg": "Safidio ny fiteninao alohan'ny hitohizana"
+        "fr": "Veuillez choisir la langue que vous souhaitez utiliser",
+        "mg": "Safidio ny teny mety aminao"
     },
     "langue_mis_a_jour": {
         "en": "language updated",
-        "fr": "langue mis à jour",
-        "mg": "vohahova ny fiteninao"
+        "fr": "Langue mise à jour",
+        "mg": "Teny Malagasy no ampiasaintsika"
     },
     "bienvenu": {
         "en": "What do you want to do now?",
-        "fr": "Que voulez-vous faire maintenant?",
-        "mg": "Inona ary no andeha hataonao manaraka?"
+        "fr": "Que voulez-vous faire maintenant ?",
+        "mg": "Safidio ny tianao atao amin’ireto"
     },
     "fiches_metiers": {
         "en": "see job descriptions",
-        "fr": "voir fiches métiers",
-        "mg": "Hijery fiches metiers"
+        "fr": "Voir les fiches métiers",
+        "mg": "Hamantatra karazan’asa"
     },
     "visiter_stands": {
         "en": "visit stands",
-        "fr": "visiter stand",
-        "mg": "Hijery ireo stand"
+        "fr": "Visiter les stands",
+        "mg": "Hitsidika trano eva"
     },
     "recherche_ou_voir_fiche_metier": {
         "en": "Do you want to search or see the list of job descriptions?",
-        "fr": "Vous voulez rechercher ou voir la liste des fiches metiers",
-        "mg": "Hikaroka ary ianao sa hijery avy hatrany ireo lisitry ny fiches metiers"
+        "fr": "Vous voulez rechercher ou voir toutes les fiches métiers?",
+        "mg": "Hijery fiche métier manokana sa hijery ny fiches métiers rehetra?"
     },
     "rechercher": {
         "en": "search",
@@ -41,8 +41,12 @@
     },
     "voir_les_listes": {
         "en": "see the list",
-        "fr": "voir les listes",
+        "fr": "voir la liste",
         "mg": "hijery ireo lisitra"
+    },
+    "pas_fiche_stand_id":{
+        "fr":"Désolé, Cet numero n'a pas du stand",
+        "mg":"Miala tsiny, tsy misy stand mifanaraka amin'io laharana io"
     },
     "nom_de_domaine_rechercher": {
         "en": "Then type the name of the job you want to get from the job description\n\nExample: Developer",
@@ -51,8 +55,12 @@
     },
     "domaine_de_fiche_metier": {
         "en": "So here are the sectors that have job descriptions available\n\nYou can choose what you want!",
-        "fr": "Voici donc les domaines ou les filières qui ont des fiches metiers disponibles\n\nVous pouvez choisir ce que vous voulez!!",
-        "mg": "Ireto manaraka ireto ary ny sehatr'asa na ny taranja ahitana ireo fiches metiers\n\nNoho izany, afaka misafidy izay mahaliana anao ianao!"
+        "fr": "Veuillez choisir parmi ces domaines",
+        "mg": "Safidio ary ilay ny sehatr’asa tianao fantarina"
+    },
+    "autre_domaine":{
+        "fr":"Souhaiteriez-vous découvrir un autre domaine?",
+        "mg":"Te ahafantatra sehatr’asa hafa koa?"
     },
     "sante": {
         "en": "health",
@@ -86,48 +94,53 @@
     },
     "industrie": {
         "en": "industry and BT",
-        "fr": "industrie et BT",
+        "fr": "industrie et BTP",
         "mg": "indostria sy ny asa vaventy"
     },
     "justice": {
         "en": "justice",
         "fr": "justice et force de l'ordre",
-        "mg": "fitsarahana sy fampiharana ny lalàna"
+        "mg": "fitsarana sy fampiharana ny lalàna"
     },
     "page_suivant": {
         "en": "next page",
-        "fr": "page suivant",
+        "fr": "page suivante",
         "mg": "pejy manaraka"
     },
     "pas_fiche": {
-        "en": "No job description for the moment this sector",
-        "fr": "Pas de fiche metiers pour le moment pour ce domaine",
-        "mg": "Tsy mbola misy fiches metiers aloha io sehatra io amin'izao fotoana izao"
+        "fr": " Ce domaine ne dispose pas de fiche métier pour le moment",
+        "mg": "Tsy mbola misy fiche métier aloha io sehatr'asa io amin'izao fotoana izao"
     },
     "voir": {
         "en": "see",
         "fr": "voir",
-        "mg": "jerehina"
+        "mg": "jerena"
+    },
+    "rechercher_stand":{
+        "fr": "rechercher",
+        "mg":"Hitsidika manokana"
+    },
+    "voir_les_listes_stand":{
+        "fr":"tous les stands",
+        "mg":"hitsidika manontolo"
     },
     "resultat_de_recherche": {
-        "en": "Here is the result of your research",
-        "fr": "Voici le(s) fruit(s) de votre recherche",
-        "mg": "Ireto avy ary n valiny karoka izay nataonao"
+        "fr": "Voici le(s) resultat(s) de votre recherche",
+        "mg": "Ireto avy ary ny valiny karoka izay nataonao"
     },
     "resultat_de_recherche_vide": {
-        "en": "At the moment, there is no job description corresponding to your search\n\nSo you can now even choose the two options below by searching again",
-        "fr": "Pour le moment, il n'y a pas de fiche de metier correspondant à votre recherche\n\nMais vous pouvez même maintenant choisir les deux options ci-dessous en recherchant de nouveau",
-        "mg": "Hatreto dia mbola tsy misy fiche metier mifanaraka amin ny karoka nataona\n\nKanefa afaka misafidy amin ireo fandikana roa eo ambany eo ireo ianao"
+        "fr": "Pour le moment, il n'y a pas de fiche de métier correspondant à votre recherche\n\nMais vous pouvez même maintenant choisir les deux options ci-dessous en recherchant à nouveau",
+        "mg": "Hatreto dia mbola tsy misy fiche métier mifanaraka amin ny karoka nataona\n\nKanefa afaka misafidy amin'ireo fandikana roa eo ambany eo ireo ianao"
     },
     "rechercher_ou_visiter_stands": {
         "en": "Search or see all of list for stands",
-        "fr": "rechercher ou visiter tous les listest des stands",
-        "mg": "Hikaroka sa hijery avy hatrany ireo lisitry ny stand"
+        "fr": "Vous souhaitez rechercher un stand particulier ou visiter tous les stands? Choisissez",
+        "mg": "Hitsidika trano eva manokana ve ianao sa hitsidika azy manontolo? Safidio"
     },
     "recherche_stand": {
-        "en": "Enter the name of the stand you want to search\n\nExample:BFV",
-        "fr": "Entrer le nom de stand que vous voulez rechercher\n\nExample: BFV",
-        "mg": "Apidiro ary ny anaran'ny Stand izay tiana karohina\n\nOhatra: BFV"
+        "en": "Enter the part of name for the stand you want to search\n\nExample: iteam for ITEAM-$",
+        "fr": "Inscrivez le nom du stand que vous voulez visiter",
+        "mg": "Soraty ny anaran’ilay trano eva tianao tsidihana"
     },
     "resultat_de_recherche_stand_vide": {
         "en": "At the moment, there is no stand corresponding to your search\n\nSo you can now even choose the two options below by searching again",
@@ -140,44 +153,39 @@
         "mg": "hitsidika"
     },
     "listes_stands": {
-        "en": "Here are the available stand lists",
-        "fr": "Voici donc les listes du stand disponibles",
-        "mg": "Ireto avy ary ny lisitry ny stand misy amin'izao fotoana izao"
+        "en": "Here are the available stands list",
+        "fr": "Voici donc la liste des stands disponibles",
+        "mg": "Ireto avy ary ny lisitry ny trano eva misy amin'izao fotoana izao"
     },
     "visiter_stand": {
         "en": "What do you want to see now then?",
-        "fr": "Qu'est-ce que vous voulez voir maintenat alors?",
-        "mg": "Inona ary arak'izany ny zavatra tianao hojerehina"
+        "fr": "Que souhaitez-vous découvrir ?",
+        "mg": "Inona koa no tianao fantarina ?"
     },
     "offre": {
-        "en": "job offer",
-        "fr": "offre d'emploi",
-        "mg": "tolotr'asa"
+        "fr": "nos offres",
+        "mg": "tolotra ato aminay"
     },
     "info": {
-        "en": "informations",
-        "fr": "informations",
-        "mg": "fampafatarana"
+        "fr": "nos actualités",
+        "mg": "vaovao hoentinay"
     },
     "galerie": {
-        "en": "gallery",
         "fr": "galerie",
         "mg": "galeria"
     },
     "presentation": {
-        "en": "presentation",
         "fr": "presentation",
-        "mg": "fampalalahana"
+        "mg": "fanehoana anay"
     },
     "plus_info": {
-        "en": "more info",
-        "fr": "plus d'infos",
-        "mg": "fampalalahana hafa"
+        "fr": "nous contacter",
+        "mg": "fifandraisana aminay"
     },
     "emploi": {
         "en": "Here are the job offers that with us",
-        "fr": "Voici donc les offres d'emploi disponibles auprès de nous",
-        "mg": "Ireto avy ary ny tolotr'asa misy ato aminay hatreto"
+        "fr": "Nos offres disponibles :",
+        "mg": "Ireo tolotra ato aminay:"
     },
     "telecharger": {
         "en": "download",
@@ -187,57 +195,47 @@
     "regarder": {
         "en": "play video",
         "fr": "regarder",
-        "mg": "jerehina"
+        "mg": "jerena"
     },
     "pas_emploi": {
-        "en": "At the moment, there is no job offer for this stand",
-        "fr": "Pour le moment, il n'y a pas d'offre d'emploi pour ce stand",
-        "mg": "Mnola tsy misy tolotr'asa aloha io stand io @zao fotoana izao"
+        "fr": "Ce stand ne dispose pas d'offre pour le moments",
+        "mg": "Mbola tsy misy tolotr'asa aloha io trano eva io @zao fotoana izao"
     },
     "events": {
-        "en": "Here are our available events",
-        "fr": "Voici donc les évenements disponibles auprés de nous",
-        "mg": "Ireto avy ary ny evenement misy ato aminay hatreto"
+        "fr": "Nos actualités",
+        "mg": "Ireo vaovao ato aminay"
     },
     "pas_events": {
-        "en": "At the moment, there are no events available with us",
-        "fr": "Pour le moment, il n'y a pas d'événements disponibles avec nous.",
-        "mg": "Tsy mbola misy evenement azo jerehina aloha ato aminay amin'izao fotoana izao."
+        "fr": "Ce stand ne dispose pas d'actualité pour le moment",
+        "mg": "Tsy mbola misy vaovao azo jerena aloha ato aminay amin'izao fotoana izao."
     },
     "galery": {
-        "en": "Here are our different galleries:",
-        "fr": "Voici donc nos differents galeries:",
-        "mg": "Ireto avy ary ireo sarisary miaraka aminay"
+        "fr": "Découvrez-nous en images",
+        "mg": "Indro ary sary maromaro mampahafantatra anay"
     },
     "pas_galery": {
-        "en": "For the moment, This stand does not have a galery",
-        "fr": "Pour le moment, ce stand n'a pas de galerie",
-        "mg": "Tsy misy sarisary azo aseho aloha atreto ato amin'ity stand ity"
+        "fr": "Ce stand ne dispose pas de galerie pour le moment",
+        "mg": "Tsy misy sary azo aseho aloha atreto ato amin'ity trano eva ity"
     },
     "present_video": {
-        "en": "So here is our presentation video.\n\nPlease wait for loading ⏳⏳⏳",
-        "fr": "Voici donc notre vidéo de présentation.\n\nVeuillez patienter un peu pour le chargement ⏳⏳⏳",
-        "mg": "ito ary ny video fanehoana anay\n\nManasa anao ary iandry kely amin'ny fatongavany"
+        "fr": "Visionnez notre vidéo de présentation\n\nVeuillez patienter un peu pour le chargement ⏳⏳⏳",
+        "mg": "Indro horonantsary fohy momba anay\n\nManasa anao ary iandry kely amin'ny fatongavany"
     },
     "pas_video": {
-        "en": "For the moment, This stand does not have a presentation video",
-        "fr": "Pour le moment, ce stand n'a pas de vidéo de présentation",
-        "mg": "Hatreto aloha dia tsy mbola misy video fanehoana ato aminay"
+        "fr": "Ce stand ne dispose pas de la vidéo de présentation pour le moment",
+        "mg": "Hatreto aloha dia tsy mbola misy horonantsary fanehoana izahay"
     },
     "lien": {
-        "en": "Here is our website link:",
-        "fr": "Voici le lien de notre site Web :",
-        "mg": "Ity ary ny rohy makany amin'ny tranokalanay:"
+        "fr": "Notre lien site Web :",
+        "mg": "Rohy makany amin'ny tranokalanay:"
     },
     "kavio": {
-        "en": "KAVIO test",
-        "fr": "test KAVIO",
-        "mg": "andrana KAVIO"
+        "fr": "Passer le test Kavio",
+        "mg": "Hanao test Kavio"
     },
     "bienvenu_kavio": {
-        "en": "INSTRUCTIONS:\n\n this KAVIO test is a vocational orientation test\n\nThis vocational orientation test is divided into four parts: activities, qualities, professions and global interests according to your answer choices and preferences. answer spontaneously, as honestly as possible so that we can know your interests professionals and highlight career paths that correspond to your answers. You will have answered different questions, defining your profile according to your answers, in terms of activities, qualities and professions. Your profile of professional interests dominant will emerge once the test is complete.\n\nWe wish you a good test!🤝💪✍",
-        "fr": "CONSIGNES:\n\nle test KAVIO est un test d'orientation professionnelle\n\nCe test d’orientation professionnelle est divisé en quatre parties : activités, qualités, professions et intérêts globaux selon tes choix de réponses et tes préférences. Réponds spontanément, le plus honnêtement possible pour que nous puissions connaître tes intérêts professionnels et ressortir les pistes de métiers qui correspondent à tes réponses. Tu auras repondu des differentes questions, définissant ton profil selon tes réponses, en termes d’activités, de qualités et de professions. Ton profil d’intérêts professionnels dominant ressortira une fois le test terminé.\n\nNous vous souhaitons un bon test!🤝💪✍",
-        "mg": "TOROLALANA: Ity andrana KAVIO ity dia andrana amin'ny fironana amin'ny asa mifanaraka aminao\n\nMizara efatra ity andrana fironana amin'ny asa ity: hetsika, toetra, asa ary tombontsoa amin'ny ankapobeny araka ny valinteninao sy ny safidinao. Valio ho malalaka, am-pahatsorana araka izay azo atao mba hahafantaranay ny tombontsoanao matihanina sy hamantatra ny lalan'ny asa mifanaraka amin'ny valinteninao. Hamaly fanontaniana samihafa ianao, mamaritra ny mombamomba anao araka ny valin-teninao, amin'ny resaka hetsika, toetra ary asa. Hipoitra ny mombamomba anao momba ny tombontsoa matihanina manjaka rehefa vita ny fitsapana.\n\nMirary andrana tsara ho anao ary izahay!🤝💪✍"
+        "fr": "Avant de procéder au test , veuillez bien lire les consignes\n\nCONSIGNES:\n\nle test KAVIO est un test d'orientation professionnelle\n\nCe test d’orientation professionnelle est divisé en quatre parties : activités, qualités, professions et intérêts globaux selon tes choix de réponses et tes préférences. Réponds spontanément, le plus honnêtement possible pour que nous puissions connaître tes intérêts professionnels et ressortir les pistes de métiers qui correspondent à tes réponses. Tu auras repondu des differentes questions, définissant ton profil selon tes réponses, en termes d’activités, de qualités et de professions. Ton profil d’intérêts professionnels dominant ressortira une fois le test terminé.\n\nNous vous souhaitons un bon test!🤝💪✍",
+        "mg": "Alohany anao ity test ity ary ianao de hasainay hamaky tsara ny torolalana izay voalaza etsy ambany\n\nTOROLALANA: Ity test KAVIO ity dia andrana amin'ny fironana amin'ny asa mifanaraka aminao\n\nMizara efatra ity andrana fironana amin'ny asa ity: hetsika, toetra, asa ary tombontsoa amin'ny ankapobeny araka ny valinteninao sy ny safidinao. Valio ho malalaka, am-pahatsorana araka izay azo atao mba hahafantaranay ny tombontsoanao matihanina sy hamantatra ny lalan'ny asa mifanaraka amin'ny valinteninao. Hamaly fanontaniana samihafa ianao, mamaritra ny mombamomba anao araka ny valin-teninao, amin'ny resaka hetsika, toetra ary asa. Hipoitra ny mombamomba anao momba ny tombontsoa matihanina manjaka rehefa vita ny fitsapana.\n\nMirary andrana tsara ho anao ary izahay!🤝💪✍"
     },
     "consignes_part_1": {
         "en": "PART 1: ACTIVITIES:\n\n Four series of activities are proposed to you. Indicate your interest in each ACTIVITY according to the following notation:\n\n\t\t👎-I don't like this activity\n\t\t👍-I like this activity\n\nNB: You will choose the answer 👍 (I like this activity) a maximum of three times for each series of six activities.\n\nWe recommend that you start watching all the activities of each series mentioned in each new series and already think about what you put 👍 and 👎",
@@ -246,7 +244,7 @@
     },
     "consignes_part_2": {
         "en": "PART 2: QUALITÉS:\n\n Four series of qualities are proposed to you. Indicate your interest in each QUALITY according to the following notation:\n\n\t\t😉-I don't have that quality\n\t\t😍-I have this quality\n\nNB: You will choose the answer 😍 (I have this quality) a maximum of three times for each series of six qualities.\n\nWe recommend that you start watching all the qualities of each series mentioned in each new series and already think about what you put  😉 and 😍",
-        "fr": "PARTIE 2 : LES ACTIVITÉS:\n\nQuatre séries des qualités te sont proposées. Indique ton intérêt pour chaque QUALITÉ selon la notation suivante :\n\n\t\t😉-Je ne possède pas cette qualité\n\t\t😍-je possède cette qualité\n\nNB: Tu choisiras au maximum trois fois la réponse 😍 (je possède cette qualité) pour chaque série de six qualités.\n\nOn vous recommande alors de commencer tout regarder les qualités de chaque serie évoqué dans chaque nouvelle série et reflechir déjà ce qui vous mettez 😉 et 😍",
+        "fr": "PARTIE 2 : LES QUALITÉS:\n\nQuatre séries des qualités te sont proposées. Indique ton intérêt pour chaque QUALITÉ selon la notation suivante :\n\n\t\t😉-Je ne possède pas cette qualité\n\t\t😍-je possède cette qualité\n\nNB: Tu choisiras au maximum trois fois la réponse 😍 (je possède cette qualité) pour chaque série de six qualités.\n\nOn vous recommande alors de commencer tout regarder les qualités de chaque serie évoqué dans chaque nouvelle série et reflechir déjà ce qui vous mettez 😉 et 😍",
         "mg": "FIZARANA 2: IREO HETSIKA:\n\nAtrikasa efatra momban'ny toetra no atolotra anao. Asehoy ny fahaliananao amin'ny TOETRA tsirairay araka ity fanamarihana manaraka ity:\n\n\t\t😉-Tsy ananako ity toetra ity\n\t\t😍-Ananako ity toetra ity\n\nNB: Hifidy telo fara-fahabestany ny valiny 😍 (Ananako ity toetra ity) ianao isaky ny andiana toetra enina.\n\nManoro hevitra anao ary izahay arak'izany mba hanomboka hijery ny toetra rehetra isaky ny atrikasa voalaza ao amin'ny atrikasa vaovao tsirairay ary hieritreritra sahady ny zavatra hataonao 😉 sy 😍"
     },
     "consignes_part_3": {
@@ -255,14 +253,13 @@
         "mg": "FIZARANA 3: IREO ASA:\n\nAtrikasa efatra momban'ny asa no atolotra anao. Asehoy ny fahaliananao amin'ny ASA tsirairay araka ity fanamarihana manaraka ity:\n\n\t\t😔-Tsy mety amiko ity asa ity\n\t\t🤩-mety amiko ity asa ity\n\nNB: Hifidy telo fara-fahabestany ny valiny 🤩 (mety amiko ity asa ity) ianao isaky ny andiana asa enina.\n\nManoro hevitra anao ary izahay arak'izany mba hanomboka hijery ny asa rehetra isaky ny atrikasa voalaza ao amin'ny atrikasa vaovao tsirairay ary hieritreritra sahady ny zavatra hataonao 😔 sy 🤩"
     },
     "idee_commencer_kavio": {
-        "en": "So what is your idea?",
-        "fr": "Quelle est alors votre idée?",
-        "mg": "Ahoana ary ny hevitrao?"
+        "fr": "La passation du test prendra environ 10 minutes. Tout de suite après , vous allez avoir les résultats. Que décidez-vous ?",
+        "mg": "10 minitra no aharetan’ny « test » ary amin'ny fiteny FRANTSAY izany. Azonao eo no ho eo ny valiny. Inona no tianao atao ?"
     },
     "faire_test_kavio": {
         "en": "do now",
         "fr": "faire maintenant",
-        "mg": "hanao izao"
+        "mg": "anao izao"
     },
     "abandomner_test_kavio": {
         "en": "do later",
@@ -271,7 +268,7 @@
     },
     "remercier_abandon": {
         "en": "Thank you then for your curiosity 😉😉😉.\n\nSo this test is still available for you later when you are ready to do it 😍😍😍!!",
-        "fr": "Merci alors pour votre curiosité 😉😉😉.\n\nAlors ce test est toujours disponible pour vous à plus tard lorsque vous sérez prêt à le faire 😍😍😍!!",
+        "fr": "Merci alors pour votre curiosité 😉😉😉.\n\nCe test est toujours disponible pour vous lorsque vous sérez prêt(e) à le faire 😍😍😍!!",
         "mg": "Misaotra anao noho ny fahaliananao 😉😉😉.\n\nDia mbola misy ity andrana ity ho hitanao any aoriana rehefa vonona ny hanao izany ianao 😍😍😍!!"
     },
     "serie": {
@@ -751,7 +748,7 @@
     },
     "A_4": {
         "en": "💠ARTISTIC: You find your interest in fields related to art or free activities where, from of physical, verbal or human elements, you create a creation, you express yourself. You don't like no constraints, we say that you are an independent person. You are a person sensitive to nature, to others and to your senses (smell, sight, touch, taste,hearing). You are emotional, idealistic, intuitive, introverted, independent, original. In your professional activities, you express your ideas, aspirations and feelings through speech, writing, art, music or any form of free activity. Your professional qualities are: creativity, imagination, originality and gifts artistic.",
-        "fr": "💠ARTISTIAUE: Tu trouves ton intérêt dans les domaines en lien avec l’art ou les activités libres où, à partir d’éléments physiques, verbaux ou humains, tu réalises une création, tu t’exprimes. Tu n’aimes pas les contraintes, on dit que tu es quelqu’un d’indépendant. Tu es une personne sensible à la nature, aux autres et à tes sens (odorat, vue, toucher, goût, ouïe). Tu es émotif, idéaliste, intuitif, introverti, indépendant, original. Dans tes activités professionnelles, tu exprimes tes idées, tes aspirations et tes sentiments par le discours, l’écriture, l’art, la musique ou toute forme d’activité libre. Tes qualités professionnelles sont : la créativité, l’imagination, l’originalité et les dons artistiques.",
+        "fr": "💠ARTISTIQUE: Tu trouves ton intérêt dans les domaines en lien avec l’art ou les activités libres où, à partir d’éléments physiques, verbaux ou humains, tu réalises une création, tu t’exprimes. Tu n’aimes pas les contraintes, on dit que tu es quelqu’un d’indépendant. Tu es une personne sensible à la nature, aux autres et à tes sens (odorat, vue, toucher, goût, ouïe). Tu es émotif, idéaliste, intuitif, introverti, indépendant, original. Dans tes activités professionnelles, tu exprimes tes idées, tes aspirations et tes sentiments par le discours, l’écriture, l’art, la musique ou toute forme d’activité libre. Tes qualités professionnelles sont : la créativité, l’imagination, l’originalité et les dons artistiques.",
         "mg": "💠ARTISTIKA: Hitanao ny fahaliananao amin'ny sehatra mifandraika amin'ny zavakanto avy amin'ny singa ara-batana, na am-bava na amin'ny maha-olombelona, Maneho ny tenanao ihany koa. Tsy tianao ny faneriterena. Azo lazaina izany fa olona mahaleo tena ianao. Olona saro-pady amin'ny natiora, amin'ny hafa ary amin'ny fahatsapanao ianao (fofona, fahitana, fikasihana, tsiro, fihainoana). Ianao dia olon'ny fo, idealista, intuitive, introvert. Amin'ny asanao dia tia maneho ny hevitrao sy ny hetahetam-ponao amin'ny alalan'ny kabary, fanoratana, zavakanto, mozika na zavatra hafa. Ny toetranao matihanina dia: fahaiza-mamorona, fahaizana maminavina ary manana talenta ara-javakanto ihany koa."
     },
     "I_4": {
@@ -826,7 +823,7 @@
     },
     "retoure": {
         "en": "RETURN",
-        "fr": "RETOURE",
+        "fr": "RETOUR",
         "mg": "HIVERINA"
     },
     "retoure_a_la_domaine": {
@@ -863,5 +860,9 @@
         "en": "OK 😊😊😊,\nyou could always do it whenever you want",
         "fr": "OK😊😊😊, vous pouvez le faire quand vous voulez",
         "mg": "OK😊😊😊\nAfaka mbola miverina manao ity andrana ity foana ianao amin'ny fotoana rehetra tianao"
+    },
+    "fin_kavio":{
+        "fr":"A présent, nous vous invitons à découvrir davantage le monde socio-économique à Madagascar",
+        "mg":"Dingana manaraka : manasa anao izahay mba handalina bebe kokoa momba ny sehatr’asa misy eto Madagasikara."
     }
 }

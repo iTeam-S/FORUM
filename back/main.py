@@ -157,7 +157,8 @@ def add_account():
 
                     return {
                         "error": False,
-                        "message": "Account created"
+                        "message": "Account created",
+                        "id": CURSOR.lastrowid
                     }, 200
 
                 return {

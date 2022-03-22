@@ -79,8 +79,6 @@ class CompteService{
             headers: {
                     'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
             }
-        }).then(response => {
-            return response;
         })
     }
 

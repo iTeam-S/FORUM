@@ -10,8 +10,8 @@ import { LoginService } from "utils/service/LoginService";
 import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function CardAddEntreprise() {
-  const {addCompte} = useContext(CompteContext);
-  const compte = LoginService.getCurrentCompte();
+  const {setCompte, addCompte} = useContext(CompteContext);
+  const compt = LoginService.getCurrentCompte();
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
  
@@ -48,14 +48,19 @@ export default function CardAddEntreprise() {
 
   const  handleAddAccount = async(data) => {
         try {
-            const newCompte = await CompteService.AddAccount(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse);
-            if(compte !== null && compte.type === 'ADMIN'){
+            let newCompte = {}
+            const res = await CompteService.AddAccount(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse);
+            if(compt !== null && compt.type === 'ADMIN'){
                 history.push('/admin/TablesEntreprises');
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la registration");
             }
-            addCompte(newCompte.data);
+
+            newCompte = JSON.parse(res.config.data)
+            newCompte['id'] = res.data.id;
+            addCompte(newCompte);
+
         } catch (error) {
             setErreur(true)
             setErrorMessage(error.response.data.message)
@@ -63,6 +68,7 @@ export default function CardAddEntreprise() {
     }
 
 
+   
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">

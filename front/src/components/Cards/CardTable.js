@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext,useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -14,8 +14,9 @@ export default function CardTable({ color}) {
 
   const [termSearch, setTermSearch] = useState("");
 
-  async function deleteOneCompte(id){
-    await CompteService.DeleteOneCompte(id);
+   function deleteOneCompte(id){
+    CompteService.DeleteOneCompte(id);
+    console.log("delete compte ==>")
     setCompte(compte.filter((cmpt) => {
       return cmpt.id !== id;
     }))
@@ -29,6 +30,12 @@ const recherche = (e) => {
   let valeur = e.target.value;
   setTermSearch(valeur);
 }
+
+useEffect(() => {
+  console.log("tafiditra use effect ==>")
+  console.log(compte)
+}, [compte])
+
 
   return (
     <>

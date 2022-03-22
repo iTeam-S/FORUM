@@ -20,7 +20,7 @@ export default function HeaderStats() {
     return account.visiteurs
   })
 
-  totalVisiteur = visiteur.reduce((a, b) => a + b, 4);
+  totalVisiteur = visiteur.reduce((a, b) => a + b, 0);
 
 
   return (

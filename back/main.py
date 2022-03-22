@@ -235,7 +235,8 @@ def add_content():
 
                 return {
                     "error": False,
-                    "message": "Contenu inserted"
+                    "message": "Contenu inserted",
+                    "id": CURSOR.lastrowid
                 }, 200
 
             return {
@@ -294,7 +295,8 @@ def add_fiche_metier():
 
                 return {
                     "error": False,
-                    "message": "Contenu inserted"
+                    "message": "Contenu inserted",
+                    "id": CURSOR.lastrowid
                 }, 200
 
             return {

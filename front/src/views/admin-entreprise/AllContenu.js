@@ -46,7 +46,8 @@ export default function AllContenu() {
                   <option  hidden>Trier par domaine</option>
                   <option key="1" value="galerie">Galerie</option>
                   <option key="2" value="emploi">Offre d'emploi</option>
-                  <option key="3" value="information">Informations</option>
+                  <option key="3" value="formation">Formation</option>
+                  <option key="4" value="actu">Actualité</option>
              </select>
         </div>
         <div className="flex flex-wrap">

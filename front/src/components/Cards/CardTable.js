@@ -8,16 +8,17 @@ import { LoginService } from "utils/service/LoginService";
 import {uRI} from "utils/urlAxios/UrlAxios";
 
 export default function CardTable({ color}) {
-  const {compte} = useContext(CompteContext);
+  const {compte, setCompte} = useContext(CompteContext);
   const [domaine, setDomaine] = useState("");
-  const allCompte = LoginService.convertItemToArray(compte);
-  const compteParDomaine = LoginService.getComptePerDomaine(allCompte, domaine);
+  const compteParDomaine = LoginService.getComptePerDomaine(compte, domaine);
 
   const [termSearch, setTermSearch] = useState("");
 
   async function deleteOneCompte(id){
     await CompteService.DeleteOneCompte(id);
-      window.location.reload();
+    setCompte(compte.filter((cmpt) => {
+      return cmpt.id !== id;
+    }))
   }
   const choixDomaine = (e) => {
     let domCheck = e.target.value;

@@ -29,7 +29,8 @@ export const CompteContextProvider = (props) =>{
     
     async function fetchCompte(){
             await CompteService.getAllCompte().then((response) => {
-                setCompte(response.data);
+                let reponseCompte = LoginService.convertItemToArray(response.data)
+                setCompte(reponseCompte);
                 fetchStat();
             });
     }
@@ -40,7 +41,8 @@ export const CompteContextProvider = (props) =>{
              async function fetchContenu(){
                  await CompteService.getAllContenu().then((response) => {
                     if(response.data['error'] === undefined){
-                        setContenu(response.data);
+                        let reponseContent = LoginService.convertItemToArray(response.data);
+                        setContenu(reponseContent);
                     } 
                     fetchCompte();
                 })
@@ -61,12 +63,21 @@ export const CompteContextProvider = (props) =>{
    
     const addFiche = (newFiche)=> {
         setFiche([...fiche,newFiche]);
+        window.location.reload();
+    }
+    const addCompte = (newCompte)=> {
+        setCompte([...compte,newCompte]);
+        window.location.reload();
+    }
+    const addContenu = (newContent)=> {
+        setContenu([...contenus,newContent]);
+        window.location.reload();
     }
 
     return(
         <CompteContext.Provider 
-            value= {{ compte, 
-                      contenus, 
+            value= {{ compte, setCompte, addCompte,
+                      contenus, setContenu, addContenu,
                       fiche, setFiche, addFiche,
                       stat 
         }}>

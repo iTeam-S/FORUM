@@ -3,20 +3,24 @@ import React, {useContext} from "react";
 // components
 
 import CardStats from "components/Cards/CardStats.js";
-import { LoginService } from "utils/service/LoginService";
 import { CompteContext } from "utils/contexte/CompteContext";
 
 
 export default function HeaderStats() {
-  let totalCompte, totalContenu = 0;
+  let totalCompte, totalContenu, totalVisiteur = 0;
   const {contenus} = useContext(CompteContext);
   const {compte} = useContext(CompteContext);
   const type = JSON.parse(localStorage.getItem('compte')).type;
 
-  const compteArray = LoginService.convertItemToArray(compte);
-  const contenuArray = LoginService.convertItemToArray(contenus);
-  totalCompte = compteArray.length;
-  totalContenu = contenuArray.length;
+  totalCompte = compte.length;
+  totalContenu = contenus.length;
+
+  //total visiteur
+  let visiteur = compte.map((account) => {
+    return account.visiteurs
+  })
+
+  totalVisiteur = visiteur.reduce((a, b) => a + b, 4);
 
 
   return (
@@ -39,7 +43,7 @@ export default function HeaderStats() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Visiteurs"
-                  statTitle="100"
+                  statTitle={totalVisiteur.toString()}
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"
                 />

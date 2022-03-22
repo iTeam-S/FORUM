@@ -45,7 +45,6 @@ export default function CardAddFicheMetier() {
             if(compte !== null && compte.type === 'ADMIN'){
                 if(data.file.length > 0){
                   history.push('/admin/AllFicheMetier');
-                  window.location.reload();
                 }
             }else{
                 setErreur(true);

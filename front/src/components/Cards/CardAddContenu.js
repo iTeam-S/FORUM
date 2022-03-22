@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -7,11 +7,13 @@ import {useHistory} from "react-router";
 // components
 import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
+import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function CardAddContenu() {
   const compte = LoginService.getCurrentCompte();
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+  const {addContenu}=useContext(CompteContext)
   let [isDisabled, setIsDisabled] = useState(true);
 
   const onChangeTypeSelect = (e) => {
@@ -35,17 +37,16 @@ export default function CardAddContenu() {
   
   const  handleAddContenu = async(data) => {
         try {
-            if(compte !== null && (compte.type === 'ADMIN' || compte.type === 'ENTREPRISE')){
+            let newContent = await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
+            if(compte !== null){
                 if(data.file.length > 0){
-                  console.log(data.file)
-                  await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
-                  /*history.push('/adminEntreprise/AllContenu');
-                  window.location.reload();*/
+                  history.push('/adminEntreprise/AllContenu');
                 }
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à l'ajout du nouveau contenu");
             }
+            addContenu(newContent.data);
         } catch (error) {
             setErreur(true)
             setErrorMessage(error.response.data.message)
@@ -113,9 +114,10 @@ export default function CardAddContenu() {
                       onChange={onChangeTypeSelect}
                     >
                          <option  hidden>Choisir le type de contenu</option>
-                         <option key="1" value="galerie"> galerie</option>
-                         <option key="2" value="emploi">offre d'emploi</option>
-                         <option key="3" value="actualite">actualité</option>
+                         <option key="1" value="galerie"> Galerie</option>
+                         <option key="2" value="emploi">Offre d'emploi</option>
+                         <option key="3" value="actualite">Actualité</option>
+                         <option key="4" value="formation">Formation</option>
                     </select>
                     <p className="text-red-500 italic">{errors.type?.message}</p>
                   </div>
@@ -158,7 +160,7 @@ export default function CardAddContenu() {
                     <input
                       type="file"
                       name="file"
-                      multiple
+                      multiple={isDisabled}
                       {...register('file')}
                       id="inpImageContenu"
                       accept="image/jpeg, image/jpg, image/png, .pdf, video/*"

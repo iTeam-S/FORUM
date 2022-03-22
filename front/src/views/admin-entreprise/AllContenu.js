@@ -7,8 +7,7 @@ import { CompteContext } from "utils/contexte/CompteContext";
 export default function AllContenu() {
   const {contenus} = useContext(CompteContext);
   const [type, setType] = useState("");
-  const allContenus = LoginService.convertItemToArray(contenus);
-  const contenuParDomaine = LoginService.getContenuPerDomaine(allContenus, type);
+  const contenuParDomaine = LoginService.getContenuPerDomaine(contenus, type);
 
   const [termSearch, setTermSearch] = useState("");
 
@@ -51,7 +50,7 @@ export default function AllContenu() {
              </select>
         </div>
         <div className="flex flex-wrap">
-            <CardAllContenu allContenu={contenuParDomaine} termSearch={termSearch}/>
+            <CardAllContenu contenu={contenus} allContenu={contenuParDomaine} termSearch={termSearch}/>
         </div>
       </div>
     </>

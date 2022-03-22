@@ -44,6 +44,10 @@
         "fr": "voir la liste",
         "mg": "hijery ireo lisitra"
     },
+    "pas_fiche_stand_id":{
+        "fr":"Désolé, Cet numero n'a pas du stand",
+        "mg":"Miala tsiny, tsy misy stand mifanaraka amin'io laharana io"
+    },
     "nom_de_domaine_rechercher": {
         "en": "Then type the name of the job you want to get from the job description\n\nExample: Developer",
         "fr": "Tapez alors le nom du metier que vous souhaitez obtenir sa fiche\n\nExemple : Developer",
@@ -90,7 +94,7 @@
     },
     "industrie": {
         "en": "industry and BT",
-        "fr": "industrie et BT",
+        "fr": "industrie et BTP",
         "mg": "indostria sy ny asa vaventy"
     },
     "justice": {
@@ -180,8 +184,8 @@
     },
     "emploi": {
         "en": "Here are the job offers that with us",
-        "fr": "Nos offres d’emploi disponibles :",
-        "mg": "Ireo tolotrasa ato aminay:"
+        "fr": "Nos offres disponibles :",
+        "mg": "Ireo tolotra ato aminay:"
     },
     "telecharger": {
         "en": "download",
@@ -194,7 +198,7 @@
         "mg": "jerena"
     },
     "pas_emploi": {
-        "fr": "Ce stand ne dispose pas d'offre d'emploi pour le moments",
+        "fr": "Ce stand ne dispose pas d'offre pour le moments",
         "mg": "Mbola tsy misy tolotr'asa aloha io trano eva io @zao fotoana izao"
     },
     "events": {
@@ -240,7 +244,7 @@
     },
     "consignes_part_2": {
         "en": "PART 2: QUALITÉS:\n\n Four series of qualities are proposed to you. Indicate your interest in each QUALITY according to the following notation:\n\n\t\t😉-I don't have that quality\n\t\t😍-I have this quality\n\nNB: You will choose the answer 😍 (I have this quality) a maximum of three times for each series of six qualities.\n\nWe recommend that you start watching all the qualities of each series mentioned in each new series and already think about what you put  😉 and 😍",
-        "fr": "PARTIE 2 : LES ACTIVITÉS:\n\nQuatre séries des qualités te sont proposées. Indique ton intérêt pour chaque QUALITÉ selon la notation suivante :\n\n\t\t😉-Je ne possède pas cette qualité\n\t\t😍-je possède cette qualité\n\nNB: Tu choisiras au maximum trois fois la réponse 😍 (je possède cette qualité) pour chaque série de six qualités.\n\nOn vous recommande alors de commencer tout regarder les qualités de chaque serie évoqué dans chaque nouvelle série et reflechir déjà ce qui vous mettez 😉 et 😍",
+        "fr": "PARTIE 2 : LES QUALITÉS:\n\nQuatre séries des qualités te sont proposées. Indique ton intérêt pour chaque QUALITÉ selon la notation suivante :\n\n\t\t😉-Je ne possède pas cette qualité\n\t\t😍-je possède cette qualité\n\nNB: Tu choisiras au maximum trois fois la réponse 😍 (je possède cette qualité) pour chaque série de six qualités.\n\nOn vous recommande alors de commencer tout regarder les qualités de chaque serie évoqué dans chaque nouvelle série et reflechir déjà ce qui vous mettez 😉 et 😍",
         "mg": "FIZARANA 2: IREO HETSIKA:\n\nAtrikasa efatra momban'ny toetra no atolotra anao. Asehoy ny fahaliananao amin'ny TOETRA tsirairay araka ity fanamarihana manaraka ity:\n\n\t\t😉-Tsy ananako ity toetra ity\n\t\t😍-Ananako ity toetra ity\n\nNB: Hifidy telo fara-fahabestany ny valiny 😍 (Ananako ity toetra ity) ianao isaky ny andiana toetra enina.\n\nManoro hevitra anao ary izahay arak'izany mba hanomboka hijery ny toetra rehetra isaky ny atrikasa voalaza ao amin'ny atrikasa vaovao tsirairay ary hieritreritra sahady ny zavatra hataonao 😉 sy 😍"
     },
     "consignes_part_3": {

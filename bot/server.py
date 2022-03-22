@@ -35,17 +35,6 @@ def receive_message():
     return "receive", 200
 
 
-@webserver.route("/<filename>")
-def get_file(filename):
-    try:
-        return send_from_directory(
-            './../back/data/52/', #mitifitra id_sesame ty fa tsy fiche_metier
-            path=filename,
-            as_attachment=True
-        )
-    except FileNotFoundError:
-        abort(404)
-
 @webserver.route("/<user_id>/<filename>")
 def get_file_for_content(user_id, filename):
     try:

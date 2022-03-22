@@ -105,7 +105,7 @@ class Requete:
             chaque domaine
         '''
         req = """
-            SELECT f.id,f.titre,f.fichier
+            SELECT f.id,f.titre,f.fichier,f.compte_id
             FROM Fiche_metier f
             JOIN Domaine d ON f.domaine_id = d.id
             WHERE nom = %s
@@ -128,7 +128,7 @@ class Requete:
     @verif_db
     def rechercher_fiche_metier(self, query):
         req = """
-                SELECT id,titre,fichier
+                SELECT id,titre,fichier,compte_id
                 FROM Fiche_metier
                 WHERE LOWER(titre) LIKE %s
                 OR SOUNDEX(titre)=SOUNDEX(%s)
@@ -233,6 +233,18 @@ class Requete:
         req = "SELECT description FROM Contenu WHERE id= %s"
         self.cursor.execute(req, (id_contenu,))
         data = self.cursor.fetchone()
+        self.db.commit()
+        return data
+
+    @verif_db
+    def stand_par_id(self, id):
+        req = """
+            SELECT id,logo,nom,description
+            FROM Compte
+            WHERE id = %s
+        """
+        self.cursor.execute(req, (id,))
+        data = self.cursor.fetchall()
         self.db.commit()
         return data
 

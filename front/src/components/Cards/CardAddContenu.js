@@ -13,7 +13,7 @@ export default function CardAddContenu() {
   const compte = LoginService.getCurrentCompte();
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
-  const {addContenu}=useContext(CompteContext)
+  const {contenus, setContenu, addContenu}=useContext(CompteContext)
   let [isDisabled, setIsDisabled] = useState(true);
 
   const onChangeTypeSelect = (e) => {
@@ -37,7 +37,14 @@ export default function CardAddContenu() {
   
   const  handleAddContenu = async(data) => {
         try {
-            let newContent = await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
+            let newContenu = {}
+            let res = await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
+            let formdata = res.config.data;
+            formdata.delete('file');
+            for(let value of formdata.entries()){
+                newContenu[value[0]] = value[1];
+            }
+
             if(compte !== null){
                 if(data.file.length > 0){
                   history.push('/adminEntreprise/AllContenu');
@@ -46,7 +53,11 @@ export default function CardAddContenu() {
                 setErreur(true);
                 setErrorMessage("Echec à l'ajout du nouveau contenu");
             }
-            addContenu(newContent.data);
+
+            newContenu['id'] = res.data.id;
+            setContenu([...contenus, newContenu]);
+            addContenu(newContenu);
+            
         } catch (error) {
             setErreur(true)
             setErrorMessage(error.response.data.message)

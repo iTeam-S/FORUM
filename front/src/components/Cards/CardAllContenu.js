@@ -9,7 +9,6 @@ import '../../assets/styles/cardStyle.css';
 export default function CardAllContenu({ allContenu, termSearch}) {
   const {contenus, setContenu} = useContext(CompteContext);
 
-
   //Fonction delete contenus
   async function deleteContent(id_content){
      await CompteService.DeleteOneContent(id_content);

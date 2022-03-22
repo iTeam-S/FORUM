@@ -10,7 +10,7 @@ import { LoginService } from "utils/service/LoginService";
 import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function CardAddEntreprise() {
-  const {setCompte, addCompte} = useContext(CompteContext);
+  const {compte, setCompte, addCompte} = useContext(CompteContext);
   const compt = LoginService.getCurrentCompte();
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
@@ -59,6 +59,7 @@ export default function CardAddEntreprise() {
 
             newCompte = JSON.parse(res.config.data)
             newCompte['id'] = res.data.id;
+            setCompte([...compte, newCompte]);
             addCompte(newCompte);
 
         } catch (error) {
@@ -66,6 +67,8 @@ export default function CardAddEntreprise() {
             setErrorMessage(error.response.data.message)
         }
     }
+  
+
 
 
    

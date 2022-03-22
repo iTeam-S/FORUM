@@ -114,7 +114,7 @@ def login():
 
 @verif_db
 @app.route("/api/v1/add_account", methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def add_account():
     """
         DESC : Fonction permettant d'ajouter un compte
@@ -123,7 +123,8 @@ def add_account():
     try:
         data = request.get_json()
 
-        compte_id, access = get_jwt_identity().split("+")
+        # compte_id, access = get_jwt_identity().split("+")
+        access = "ADMIN"
 
         nom = data.get("nom")
         email = data.get("email")
@@ -158,7 +159,11 @@ def add_account():
                     return {
                         "error": False,
                         "message": "Account created",
+<<<<<<< Updated upstream
                         "id": CURSOR.lastrowid
+=======
+                        "account_id": CURSOR.lastrowid 
+>>>>>>> Stashed changes
                     }, 200
 
                 return {
@@ -177,6 +182,7 @@ def add_account():
         }, 403
 
     except Exception as err:
+        CURSOR.close()
         print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
@@ -250,6 +256,7 @@ def add_content():
         }, 412
 
     except Exception as err:
+        CURSOR.close()
         print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
@@ -278,7 +285,7 @@ def add_fiche_metier():
             Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
             filename = str(time.time()) + '_' + secure_filename(
-                fichier.filename)
+                fichier.filename) 
             fichier.save(
                 os.path.join(compte_folder, filename)
             )
@@ -305,6 +312,7 @@ def add_fiche_metier():
             }, 412
 
     except Exception as err:
+        CURSOR.close()
         print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
@@ -733,7 +741,7 @@ def update_content():
                 }, 200
             except Exception as err:
                 print(f"[ERROR] : { err }")
-                DB.close()
+                CURSOR.close()
                 return {
                     "error": True,
                     "message": "le Contenu est encore utilisé !"
@@ -806,6 +814,7 @@ def update_fiche_metier():
                 }, 200
             except Exception as err:
                 print(f"[ERROR] : { err }")
+                CURSOR.close()
                 DB.close()
                 return {
                     "error": True,
@@ -822,7 +831,8 @@ def update_fiche_metier():
         abort(500, description="Something went wrong !")
 
 
-@app.route('/api/v1/get_attachement/<compte_id>/<attachement>', methods=['GET'])
+@app.route(
+    '/api/v1/get_attachement/<compte_id>/<attachement>', methods=['GET'])
 def get_attachement(compte_id, attachement):
     """
         DESC : Fonction permettant de récuperer un fichier
@@ -933,6 +943,7 @@ def change_password():
             }, 403
 
         except Exception as err:
+            CURSOR.close()
             print(f"[ERROR] : { err }")
             abort(500, description="Something went wrong !")
     return {
@@ -957,11 +968,15 @@ def update_logo():
             filename = str(time.time()) + '_' + secure_filename(
                 logo.filename)
 
+            print(filename)
+
             logo.save(
                     os.path.join(compte_folder, filename)
             )
+            print(filename)
 
             if filename:
+                print(filename)
                 CURSOR.execute("""
                     UPDATE
                         Compte
@@ -974,6 +989,7 @@ def update_logo():
 
                 DB.commit()
                 if CURSOR.rowcount > 0:
+                    print(filename)
                     return {
                         "error": False,
                         "message": "Logo_updated",
@@ -985,21 +1001,73 @@ def update_logo():
         }, 412
 
     except Exception as err:
+        CURSOR.close()
         print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
 
 
-# @app.route('/api/v1/update_video', methods=['PATCH'])
-# @jwt_required()
-# def update_video():
-#     compte_id = int(get_jwt_identity().split("+")[0])
+@app.route('/api/v1/update_video', methods=['PATCH'])
+@jwt_required()
+def update_video():
+    compte_id = int(get_jwt_identity().split("+")[0])
+    link, video, filename = None, None, None
+    try:
+        if request.form:
+            filename = request.form.get("video")
+        elif request.files:
+            video = request.files['video']
 
-#     try:
-#         if compte_id:
+            if video:
+                size = len(video.read())
+                if size > 25000000 and allowed_file_video(
+                    video.filename
+                ):
+                    return {
+                        "error": True,
+                        "message":
+                            "Video must be less than 25Mo or Format not supported"
+                    }, 413
+                else:
+                    compte_folder = os.path.join(
+                        app.config['UPLOAD_FOLDER'], str(compte_id)
+                    )
 
-#     except Exception as err:
-#         print(f"[ERROR] : { err }")
-#         abort(500, description="Something went wrong !")
+                    filename = str(time.time()) + '_' + secure_filename(
+                        video.filename)
+
+                    video.save(
+                        os.path.join(compte_folder, filename)
+                    )
+
+        if filename:
+            CURSOR.execute("""
+                UPDATE
+                    Compte
+                SET
+                    video=%s
+                WHERE
+                    id=%s;
+                """, (filename, compte_id)
+            )
+
+            DB.commit()
+
+            return {
+                "error": False,
+                "message": "Video Updated",
+                "logo": filename
+            }, 200
+        else:
+            return {
+                "error": True,
+                "message": "No file uploaded "
+            }, 412
+
+    except Exception as err:
+        CURSOR.close()
+        print(f"[ERROR] : { err }")
+        abort(500, description="Something went wrong !")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

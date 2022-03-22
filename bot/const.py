@@ -7,108 +7,108 @@ from utils import translate
 #-----------------------------------Quick_activités-----------------------------------------#
 
 
-def get_serie(partie, serie, lang):
+def get_serie(partie, serie):
     variables = {
         #---------------------PARTIE 1----------------------#
         "serie_1_1": f"""
-    -{translate("photograhier",lang).upper()}
-    -{translate("trouver",lang).upper()}
-    -{translate("batir",lang).upper()}
-    -{translate("aider",lang).upper()}
-    -{translate("planifier",lang).upper()}
-    -{translate("persuader",lang).upper()}""",
+    -Photographier
+    -Trouver
+    -Bâtir
+    -Aider
+    -Planifier
+    -Persuader""",
         "serie_1_2": f"""
-    -{translate("creer",lang).upper()}
-    -{translate("expliquer",lang).upper()}
-    -{translate("fabriquer",lang).upper()}
-    -{translate("renseigner",lang).upper()}
-    -{translate("financer",lang).upper()}
-    -{translate("marchander",lang).upper()}""",
+    -Créer
+    -Expliquer
+    -Fabriquer
+    -Renseigner
+    -Financer
+    -Marchander""",
         "serie_1_3": f"""
-    -{translate("illustrer",lang).upper()}
-    -{translate("chercher",lang).upper()}
-    -{translate("ameliorer",lang).upper()}
-    -{translate("conseiller",lang).upper()}
-    -{translate("calculer",lang).upper()}
-    -{translate("acquerir",lang).upper()}""",
+    -Illustrer
+    -Chercher
+    -Améliorer
+    -Conseiller
+    -Calculer
+    -Acquérir""",
         "serie_1_4": f"""
-    -{translate("imaginer",lang).upper()}
-    -{translate("inventer",lang).upper()}
-    -{translate("construire",lang).upper()}
-    -{translate("eduquer",lang).upper()}
-    -{translate("gerer",lang).upper()}
-    -{translate("vendre",lang).upper()}""",
+    -Imaginer
+    -Inventer
+    -Construire
+    -Eduquer
+    -Gérer
+    -Vendre""",
 
         #---------------------PARTIE 2-------------------------#
         "serie_2_1": f"""
-    -{translate("pratique",lang).upper()}
-    -{translate("methodique",lang).upper()}
-    -{translate("intelectuel",lang).upper()}
-    -{translate("dynamic",lang).upper()}
-    -{translate("imaginatif",lang).upper()}
-    -{translate("attentionne",lang).upper()}""",
+    -Pratique
+    -Méthodique
+    -Intellectuel (le)
+    -Dynamique
+    -Imaginatif (ve)
+    -Attentionné (e)""",
         "serie_2_2": f"""
-    -{translate("solide",lang).upper()}
-    -{translate("organiser",lang).upper()}
-    -{translate("reflechi",lang).upper()}
-    -{translate("sur",lang).upper()}
-    -{translate("reveur",lang).upper()}
-    -{translate("comprehensif",lang).upper()}""",
+    -Solide
+    -Organisé (e)
+    -Réfléchi (e)
+    -Sûr (e)de soi
+    -Rêveur (se)
+    -Compréhensif (ve)""",
         "serie_2_3": f"""
-    -{translate("manuel",lang).upper()}
-    -{translate("serieux",lang).upper()}
-    -{translate("objectif",lang).upper()}
-    -{translate("convaincant",lang).upper()}
-    -{translate("creatif",lang).upper()}
-    -{translate("serviable",lang).upper()}""",
+    -Manuel (le)
+    -Sérieux (se)
+    -Objectif (ve)
+    -Convaincant (e)
+    -Créatif (ve)
+    -Serviable""",
         "serie_2_4": f"""
-    -{translate("bricoleur",lang).upper()}
-    -{translate("honnete",lang).upper()}
-    -{translate("observeur",lang).upper()}
-    -{translate("combatif",lang).upper()}
-    -{translate("emotif",lang).upper()}
-    -{translate("sociable",lang).upper()}""",
+    -Bricoleur (se)
+    -Honnête
+    -Observateur (trice)
+    -Combatif(ve)
+    -Émotif (ve)
+    -Sociable""",
 
         #---------------PARTIE 3------------------------------#
         "serie_3_1": f"""
-    -{translate("medcin",lang).upper()}
-    -{translate("marketing",lang).upper()}
-    -{translate("compta",lang).upper()}
-    -{translate("cultivateur",lang).upper()}
-    -{translate("devweb",lang).upper()}
-    -{translate("commedien",lang).upper()}""",
+    -Médecin
+    -Responsable marketing
+    -Expert-comptable
+    -Cultivateur
+    -Développeur web
+    -Comédien""",
         "serie_3_2": f"""
-    -{translate("dentiste",lang).upper()}
-    -{translate("dircommercial",lang).upper()}
-    -{translate("secretaire",lang).upper()}
-    -{translate("btp",lang).upper()}
-    -{translate("journalist",lang).upper()}
-    -{translate("musicien",lang).upper()}""",
+    -Dentiste
+    -Directeur commercial
+    -Secrétaire
+    -Ingénieur BTP
+    -Journaliste
+    -Musicien""",
         "serie_3_3": f"""
-    -{translate("sagefemme",lang).upper()}
-    -{translate("drh",lang).upper()}
-    -{translate("avocat",lang).upper()}
-    -{translate("agro",lang).upper()}
-    -{translate("ingenieur_info",lang).upper()}
-    -{translate("photographe",lang).upper()}""",
+    -Sagefemme
+    -Directeur des ressources humaines
+    -Avocat
+    -Ingénieur agronome
+    -Ingénieur informatique
+    -Photographe""",
         "serie_3_4": f"""
-    -{translate("educateur",lang).upper()}
-    -{translate("guide",lang).upper()}
-    -{translate("police",lang).upper()}
-    -{translate("maintenance",lang).upper()}
-    -{translate("com",lang).upper()}
-    -{translate("dessinateur",lang).upper()}"""
+    -Éducateur
+    -Guide touristique
+    -Inspecteur de police
+    -Responsable de maintenance
+    -Responsable de communication
+    -Graphiste dessinateur"""
     }
 
     return variables.get(f"serie_{partie}_{serie}")
 
 
-def get_quick_kavio(identifiant, lang):
+def get_quick_kavio(identifiant):
     variables = {
         #--------------------------------PARTIE 1---------------------------#
         # serie 1 de la partie 1
         "A_1_1_1": {
-            "text": translate("photograhier", lang).upper(),
+            "text": "Photographier",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -123,7 +123,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_1_1": {
-            "text": translate("trouver", lang).upper(),
+            "text": "Trouver",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -138,7 +138,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_1_1": {
-            "text": translate("batir", lang).upper(),
+            "text":"Bâtir",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -153,7 +153,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_1_1": {
-            "text": translate("aider", lang).upper(),
+            "text": "Aider",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -168,7 +168,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_1_1": {
-            "text": translate("planifier", lang).upper(),
+            "text": "Planifier",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -183,7 +183,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_1_1": {
-            "text": translate("persuader", lang).upper(),
+            "text":"Persuader",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -199,7 +199,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 2 de la partie 1
         "A_1_1_2": {
-            "text": translate("creer", lang).upper(),
+            "text": "Créer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -214,7 +214,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_1_2": {
-            "text": translate("expliquer", lang).upper(),
+            "text": "Expliquer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -229,7 +229,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_1_2": {
-            "text": translate("fabriquer", lang).upper(),
+            "text": "Fabriquer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -244,7 +244,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_1_2": {
-            "text": translate("renseigner", lang).upper(),
+            "text": "Renseigner",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -259,7 +259,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_1_2": {
-            "text": translate("financer", lang).upper(),
+            "text": "Financer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -274,7 +274,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_1_2": {
-            "text": translate("marchander", lang).upper(),
+            "text": "Marchander",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -290,7 +290,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 3 de la partie 1
         "A_1_1_3": {
-            "text": translate("illustrer", lang).upper(),
+            "text": "Illustrer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -305,7 +305,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_1_3": {
-            "text": translate("chercher", lang).upper(),
+            "text": "Chercher",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -320,7 +320,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_1_3": {
-            "text": translate("ameliorer", lang).upper(),
+            "text": "Améliorer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -335,7 +335,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_1_3": {
-            "text": translate("conseiller", lang).upper(),
+            "text": "Conseiller",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -350,7 +350,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_1_3": {
-            "text": translate("calculer", lang).upper(),
+            "text": "Calculer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -365,7 +365,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_1_3": {
-            "text": translate("acquerir", lang).upper(),
+            "text": "Acquérir",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -381,7 +381,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 4 de la partie 1
         "A_1_1_4": {
-            "text": translate("imaginer", lang).upper(),
+            "text": "Imaginer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -396,7 +396,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_1_4": {
-            "text": translate("inventer", lang).upper(),
+            "text": "Inventer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -411,7 +411,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_1_4": {
-            "text": translate("construire", lang).upper(),
+            "text":"Construire",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -426,7 +426,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_1_4": {
-            "text": translate("eduquer", lang).upper(),
+            "text": "Eduquer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -441,7 +441,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_1_4": {
-            "text": translate("gerer", lang).upper(),
+            "text": "Gérer",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -456,7 +456,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_1_4": {
-            "text": translate("vendre", lang).upper(),
+            "text": "Vendre",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -474,7 +474,7 @@ def get_quick_kavio(identifiant, lang):
         #--------------------PARTIE 2(QUALITÉS)-------------------------------------#
         # serie 1 de la partie 2
         "A_1_2_1": {
-            "text": translate("pratique", lang).upper(),
+            "text": "Pratique",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -489,7 +489,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_2_1": {
-            "text": translate("methodique", lang).upper(),
+            "text": "Méthodique",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -504,7 +504,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_2_1": {
-            "text": translate("intelectuel", lang).upper(),
+            "text": "Intellectuel (le)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -519,7 +519,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_2_1": {
-            "text": translate("dynamic", lang).upper(),
+            "text": "Dynamique",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -534,7 +534,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_2_1": {
-            "text": translate("imaginatif", lang).upper(),
+            "text": "Imaginatif (ve)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -549,7 +549,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_2_1": {
-            "text": translate("attentionne", lang).upper(),
+            "text": "Attentionné (e)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -565,7 +565,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 2 de la partie 2
         "A_1_2_2": {
-            "text": translate("solide", lang).upper(),
+            "text": "Solide",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -580,7 +580,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_2_2": {
-            "text": translate("organiser", lang).upper(),
+            "text": "Organisé (e)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -595,7 +595,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_2_2": {
-            "text": translate("reflechi", lang).upper(),
+            "text": "Réfléchi (e)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -610,7 +610,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_2_2": {
-            "text": translate("sur", lang).upper(),
+            "text": "Sûr (e)de soi",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -625,7 +625,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_2_2": {
-            "text": translate("reveur", lang).upper(),
+            "text": "Rêveur (se)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -640,7 +640,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_2_2": {
-            "text": translate("comprehensif", lang).upper(),
+            "text": "Compréhensif (ve)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -656,7 +656,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 3 de la partie 2
         "A_1_2_3": {
-            "text": translate("manuel", lang).upper(),
+            "text": "Manuel (le)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -671,7 +671,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_2_3": {
-            "text": translate("serieux", lang).upper(),
+            "text": "Sérieux (se)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -686,7 +686,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_2_3": {
-            "text": translate("objectif", lang).upper(),
+            "text": "Objectif (ve)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -701,7 +701,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_2_3": {
-            "text": translate("convaincant", lang).upper(),
+            "text": "Convaincant (e)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -716,7 +716,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_2_3": {
-            "text": translate("creatif", lang).upper(),
+            "text": "Créatif (ve)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -731,7 +731,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_2_3": {
-            "text": translate("serviable", lang).upper(),
+            "text": "Serviable",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -747,7 +747,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 4 de la partie 2
         "A_1_2_4": {
-            "text": translate("bricoleur", lang).upper(),
+            "text": "Bricoleur (se)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -762,7 +762,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_2_4": {
-            "text": translate("honnete", lang).upper(),
+            "text": "Honnête",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -777,7 +777,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_2_4": {
-            "text": translate("observeur", lang).upper(),
+            "text": "Observateur (trice)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -792,7 +792,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_2_4": {
-            "text": translate("combatif", lang).upper(),
+            "text": "Combatif(ve)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -807,7 +807,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_2_4": {
-            "text": translate("emotif", lang).upper(),
+            "text": "Émotif (ve)",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -822,7 +822,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_2_4": {
-            "text": translate("sociable", lang).upper(),
+            "text": "Sociable",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -840,7 +840,7 @@ def get_quick_kavio(identifiant, lang):
         #--------------------PARTIE 3(PROFESSIONS)-------------------------------------#
         # serie 1 de la partie 3
         "A_1_3_1": {
-            "text": translate("medcin", lang).upper(),
+            "text": "Médecin",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -855,7 +855,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_3_1": {
-            "text": translate("marketing", lang).upper(),
+            "text": "Responsable marketing",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -870,7 +870,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_3_1": {
-            "text": translate("compta", lang).upper(),
+            "text": "Expert-comptable",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -885,7 +885,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_3_1": {
-            "text": translate("cultivateur", lang).upper(),
+            "text": "Cultivateur",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -900,7 +900,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_3_1": {
-            "text": translate("devweb", lang).upper(),
+            "text": "Développeur web",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -915,7 +915,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_3_1": {
-            "text": translate("commedien", lang).upper(),
+            "text": "Comédien",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -931,7 +931,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 2 de la partie 3
         "A_1_3_2": {
-            "text": translate("dentiste", lang).upper(),
+            "text": "Dentiste",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -946,7 +946,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_3_2": {
-            "text": translate("dircommercial", lang).upper(),
+            "text": "Directeur commercial",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -961,7 +961,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_3_2": {
-            "text": translate("secretaire", lang).upper(),
+            "text": "Secrétaire",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -976,7 +976,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_3_2": {
-            "text": translate("btp", lang).upper(),
+            "text": "Ingénieur BTP",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -991,7 +991,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_3_2": {
-            "text": translate("journalist", lang).upper(),
+            "text": "Journaliste",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1006,7 +1006,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_3_2": {
-            "text": translate("musicien", lang).upper(),
+            "text": "Musicien",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1022,7 +1022,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 3 de la partie 3
         "A_1_3_3": {
-            "text": translate("sagefemme", lang).upper(),
+            "text": "Sagefemme",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1037,7 +1037,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_3_3": {
-            "text": translate("drh", lang).upper(),
+            "text": "Directeur des ressources humaines",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1052,7 +1052,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_3_3": {
-            "text": translate("avocat", lang).upper(),
+            "text": "Avocat",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1067,7 +1067,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_3_3": {
-            "text": translate("agro", lang).upper(),
+            "text": "Ingénieur agronome",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1082,7 +1082,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_3_3": {
-            "text": translate("ingenieur_info", lang).upper(),
+            "text": "Ingénieur informatique",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1097,7 +1097,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_3_3": {
-            "text": translate("photographe", lang).upper(),
+            "text": "Photographe",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1113,7 +1113,7 @@ def get_quick_kavio(identifiant, lang):
         },
         # serie 4 de la partie 4
         "A_1_3_4": {
-            "text": translate("educateur", lang).upper(),
+            "text": "Éducateur",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1128,7 +1128,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "I_2_3_4": {
-            "text": translate("guide", lang).upper(),
+            "text": "Guide touristique",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1143,7 +1143,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "R_3_3_4": {
-            "text": translate("police", lang).upper(),
+            "text": "Inspecteur de police",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1158,7 +1158,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "S_4_3_4": {
-            "text": translate("maintenance", lang).upper(),
+            "text": "Responsable de maintenance",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1173,7 +1173,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "C_5_3_4": {
-            "text": translate("com", lang).upper(),
+            "text": "Responsable de communication",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1188,7 +1188,7 @@ def get_quick_kavio(identifiant, lang):
             ]
         },
         "E_6_3_4": {
-            "text": translate("dessinateur", lang).upper(),
+            "text": "Graphiste dessinateur",
             "quick_rep": [
                 {
                     "content_type": "text",
@@ -1206,19 +1206,18 @@ def get_quick_kavio(identifiant, lang):
 
     return variables.get(identifiant)
 
-
 def persistent_menu(types, lang):
     if types == "PRINCIPALE":
         return [{"locale": "default",
                  "composer_input_disabled": False,
                  "call_to_actions": [{"type": "postback",
-                                      "title": "📑" + translate("fiches_metiers",
-                                                               lang).upper(),
-                                      "payload": "__FICHE_METIER"},
-                                     {"type": "postback",
                                       "title": "🏠" + translate("visiter_stands",
                                                                lang).upper(),
                                       "payload": "__VISITE_STAND"},
+                                     {"type": "postback",
+                                     "title": "📑" + translate("fiches_metiers",
+                                                              lang).upper(),
+                                      "payload": "__FICHE_METIER"},
                                      {"type": "postback",
                                       "title": "🔶" + translate("kavio",
                                                                lang).upper(),
@@ -1313,7 +1312,7 @@ def voir_liste_des_fiches_metiers(domaine="", lang="fr"):
 
 
 def informations_stands(info):
-    return f"DESCRITIONS: \n{info[4]}\n\nNOS CONTACTS:\nTel: {info[0]}\nEmail: {info[1]} \
+    return f"NOS CONTACTS:\nTel: {info[0]}\nEmail: {info[1]} \
         \n\nADRESSE: {info[3]}"
 
 

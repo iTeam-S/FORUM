@@ -105,5 +105,5 @@ dist
 
 #others ignore packages
 bot/__pycache__
-bot/venv
+env
 back/data

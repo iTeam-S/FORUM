@@ -24,12 +24,12 @@ class Options:
         for i in range(len(data)):
             liste_des_fiches_metiers.append({
                 "title": f"{i+1} - {data[i][1].upper()}",
-                "image_url": URL_SERVER + data[i][2],
+                "image_url": f"{URL_SERVER}{data[i][-1]}/{data[i][2]}",
                 "buttons": [
                     {
                         "type": "postback",
                         "title": translate("voir", lang),
-                        "payload": f"__VOIR {data[i][0]} {URL_SERVER + data[i][2]} FICHE_METIER"
+                        "payload": f"__VOIR {data[i][0]} {URL_SERVER}{data[i][-1]}/{data[i][2]} FICHE_METIER"
                     }
                 ]
             }
@@ -87,8 +87,9 @@ class Options:
                 self.bot.send_template(
                     dest_id,
                     res[deb_indice:deb_indice + 10],
-                    next=[const.retoure("FICHES_METIERS", lang)]
+                    # next=[const.retoure("FICHES_METIERS", lang)]
                 )
+                self.bot.send_quick_reply(dest_id, lang, "autre_domaine")
 
     def fiche_metier_par_domaine(
             self,
@@ -127,7 +128,8 @@ class Options:
         for i in range(len(data)):
             liste_des_stands.append({
                 "title": f"{data[i][2].upper()}",
-                "image_url": f"{URL_SERVER}{data[i][0]}/{data[i][1]}",
+                "image_url": f"{URL_SERVER}{data[i][0]}/{data[i][1]}" if data[i][1]
+                else "https://forum.iteam-s.mg/static/media/logodefaut.6ac1d227.png",
                 "buttons": [
                     {
                         "type": "postback",
@@ -299,7 +301,7 @@ class Options:
         diff_reponse = const.resultat_metier(
             self.resultat_de_test_kavio(
                 self.req.interet_global(user_id)), lang)
-        
+
         for i in range(len(diff_reponse)):
             self.bot.send_message(
                 user_id,

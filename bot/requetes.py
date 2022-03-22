@@ -105,7 +105,7 @@ class Requete:
             chaque domaine
         '''
         req = """
-            SELECT f.id,f.titre,f.fichier
+            SELECT f.id,f.titre,f.fichier,f.compte_id
             FROM Fiche_metier f
             JOIN Domaine d ON f.domaine_id = d.id
             WHERE nom = %s
@@ -128,7 +128,7 @@ class Requete:
     @verif_db
     def rechercher_fiche_metier(self, query):
         req = """
-                SELECT id,titre,fichier
+                SELECT id,titre,fichier,compte_id
                 FROM Fiche_metier
                 WHERE LOWER(titre) LIKE %s
                 OR SOUNDEX(titre)=SOUNDEX(%s)
@@ -143,7 +143,6 @@ class Requete:
         req = """
             SELECT id,logo,nom,description
             FROM Compte
-            WHERE type = "ENTREPRISE"
             ORDER BY classe ASC
         """
         self.cursor.execute(req)
@@ -158,7 +157,6 @@ class Requete:
                 FROM Compte
                 WHERE (LOWER(nom) LIKE %s
                 OR SOUNDEX(nom)=SOUNDEX(%s))
-                AND type = "ENTREPRISE"
                 LIMIT 10
         """
         self.cursor.execute(req, (f"%{query.lower()}%", query))
@@ -196,7 +194,7 @@ class Requete:
         req = """
                 SELECT video
                 FROM Compte
-                WHERE Id = %s
+                WHERE id = %s
         """
         self.cursor.execute(req, (id_stand,))
         data = self.cursor.fetchone()[0]
@@ -222,7 +220,7 @@ class Requete:
         req = """
             SELECT id, titre, fichier
             FROM Contenu
-            WHERE type = "emploi"
+            WHERE type = "emploi" OR type="formation"
             AND compte_id = %s
         """
         self.cursor.execute(req, (id_stand,))
@@ -239,11 +237,23 @@ class Requete:
         return data
 
     @verif_db
+    def stand_par_id(self, id):
+        req = """
+            SELECT id,logo,nom,description
+            FROM Compte
+            WHERE id = %s
+        """
+        self.cursor.execute(req, (id,))
+        data = self.cursor.fetchall()
+        self.db.commit()
+        return data
+
+    @verif_db
     def evenement_chaque_stand(self, id_stand):
         req = """
             SELECT id, titre,fichier
             FROM Contenu
-            WHERE type = "evenement"
+            WHERE type = "actu"
             AND compte_id = %s
         """
         self.cursor.execute(req, (id_stand,))
@@ -331,3 +341,11 @@ class Requete:
         """
         self.cursor.execute(req, (user_id,))
         self.db.commit()
+
+    @verif_db
+    def description_de_chaque_stand(self, id):
+        req = "SELECT description FROM Compte WHERE id = %s"
+        self.cursor.execute(req, (id,))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        return data

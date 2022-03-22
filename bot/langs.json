@@ -2,7 +2,7 @@
     "salutation": {
         "en": "Hello, Welcome to the FORUM 2022 of SESAME's program",
         "fr": "Bonjour\n\nBienvenue à la 6ème édition du Forum de l'orientation et des métiers ! 🥳\nAfin d'accéder aux différents programmes de l'événement, merci de suivre les instructions à chaque étape 🤗 \n\nEn cas d'incompréhension ou de soucis techniques, n'hésitez pas à nous contacter au numéro : +261 34 57 892 45 \n\nEn vous souhaitant un très bon forum ! 🙂Plateforme mise en place par iTeam-$\n https://iteam-s.mg/",
-        "mg": "Miarahabe oohh\n\nTongasoa eto amin'ny 'Forum de l'orientation et de métiers, 6ème édition'🥳\nManasa anao hanaraka ny toromarika rehetra, ahafahanao misitraka ireo tombotsoan'ny forum rehetra. 🤗\n\nRaha misy tsy fahatomombanana na tsy fahazoan-kevitra dia aza misalasala miantso anay amin'ny laharana: +261 34 57 892 45\n\nMirary fitsidihana sambatra ho anao! 🙂Teknolojia novokarin'i iTeam-$\n https://iteam-s.mg/"
+        "mg": "Miarahaba oohh\n\nTongasoa eto amin'ny 'Forum de l'orientation et de métiers, 6ème édition'🥳\nManasa anao hanaraka ny toromarika rehetra, ahafahanao misitraka ireo tombotsoan'ny forum rehetra. 🤗\n\nRaha misy tsy fahatomombanana na tsy fahazoan-kevitra dia aza misalasala miantso anay amin'ny laharana: +261 34 57 892 45\n\nMirary fitsidihana sambatra ho anao! 🙂Teknolojia novokarin'i iTeam-$\n https://iteam-s.mg/"
     },
     "choisir_votre_langue": {
         "en": "choose your language before continuing",
@@ -159,27 +159,22 @@
         "mg": "Inona koa no tianao fantarina ?"
     },
     "offre": {
-        "en": "job offer",
-        "fr": "offre d'emploi",
-        "mg": "tolotr'asa"
+        "fr": "nos offres",
+        "mg": "tolotra ato aminay"
     },
     "info": {
-        "en": "informations",
         "fr": "nos actualités",
         "mg": "vaovao hoentinay"
     },
     "galerie": {
-        "en": "gallery",
         "fr": "galerie",
         "mg": "galeria"
     },
     "presentation": {
-        "en": "presentation",
         "fr": "presentation",
         "mg": "fanehoana anay"
     },
     "plus_info": {
-        "en": "more info",
         "fr": "nous contacter",
         "mg": "fifandraisana aminay"
     },
@@ -255,7 +250,7 @@
     },
     "idee_commencer_kavio": {
         "fr": "La passation du test prendra environ 10 minutes. Tout de suite après , vous allez avoir les résultats. Que décidez-vous ?",
-        "mg": "10 minitra no aharetan’ny « test ». Azonao eo no ho eo ny valiny. Inona no tianao atao ?"
+        "mg": "10 minitra no aharetan’ny « test » ary amin'ny fiteny FRANTSAY izany. Azonao eo no ho eo ny valiny. Inona no tianao atao ?"
     },
     "faire_test_kavio": {
         "en": "do now",

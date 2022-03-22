@@ -220,7 +220,7 @@ class Requete:
         req = """
             SELECT id, titre, fichier
             FROM Contenu
-            WHERE type = "emploi"
+            WHERE type = "emploi" OR type="formation"
             AND compte_id = %s
         """
         self.cursor.execute(req, (id_stand,))
@@ -241,7 +241,7 @@ class Requete:
         req = """
             SELECT id, titre,fichier
             FROM Contenu
-            WHERE type = "evenement"
+            WHERE type = "actu"
             AND compte_id = %s
         """
         self.cursor.execute(req, (id_stand,))

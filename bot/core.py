@@ -462,7 +462,7 @@ class Traitement(Options):
 
         elif commande == "__TEST_KAVIO":
             verification = int(self.req.verif_test_kavio(user_id))
-            if verification and verification == 72:
+            if verification and verification >= 72:
                 self.bot.send_message(
                     user_id,
                     translate("fini_test_kavio", user_lang)
@@ -515,15 +515,15 @@ class Traitement(Options):
                     "bienvenu_kavio", user_lang))
             self.bot.send_message(
                 user_id, translate(
-                    "consignes_part_1", user_lang))
+                    "consignes_part_1", "fr"))
             self.bot.send_message(
                 user_id,
-                f"{translate('serie',user_lang).upper()} 1\n{const.get_serie('1','1',user_lang)}"
+                f"{translate('serie','fr').upper()} 1\n{const.get_serie('1','1')}"
             )
             self.bot.send_quick_kavio(
                 user_id,
                 types=0,
-                kavio=const.get_quick_kavio("A_1_1_1", user_lang)
+                kavio=const.get_quick_kavio("A_1_1_1")
             )
             return True
 
@@ -536,15 +536,15 @@ class Traitement(Options):
             # )
             self.bot.send_message(
                 user_id, translate(
-                    "consignes_part_1", user_lang))
+                    "consignes_part_1", "fr"))
             self.bot.send_message(
                 user_id,
-                f"{translate('serie',user_lang).upper()} 1\n{const.get_serie('1','1',user_lang)}"
+                f"{translate('serie','fr').upper()} 1\n{const.get_serie('1','1')}"
             )
             self.bot.send_quick_kavio(
                 user_id,
                 types=0,
-                kavio=const.get_quick_kavio("A_1_1_1", user_lang)
+                kavio=const.get_quick_kavio("A_1_1_1")
             )
             return True
 
@@ -573,9 +573,7 @@ class Traitement(Options):
                         user_id,
                         types=0,
                         kavio=const.get_quick_kavio(
-                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",
-                            user_lang
-                        )
+                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}")
                     )
                     return True
 
@@ -584,9 +582,7 @@ class Traitement(Options):
                         user_id,
                         types=1,
                         kavio=const.get_quick_kavio(
-                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",
-                            user_lang
-                        )
+                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",)
                     )
                     return True
 
@@ -595,33 +591,33 @@ class Traitement(Options):
                 if serie < 4:
                     self.bot.send_message(
                         user_id,
-                        f"{translate('serie',user_lang).upper()} {serie+1}\n{const.get_serie(_cmd[3],serie+1,user_lang)}"
+                        f"{translate('serie','fr').upper()} {serie+1}\n{const.get_serie(_cmd[3],serie+1)}"
                     )
                     self.bot.send_quick_kavio(
                         user_id, types=0, kavio=const.get_quick_kavio(
-                            f"A_1_{_cmd[3]}_{serie+1}", user_lang))
+                            f"A_1_{_cmd[3]}_{serie+1}"))
                     return True
 
                 else:
                     partie = int(_cmd[3])
                     if partie < 3:
                         self.bot.send_message(user_id, translate(
-                            f"consignes_part_{partie+1}", user_lang))
+                            f"consignes_part_{partie+1}", "fr"))
                         self.bot.send_message(
                             user_id,
-                            f"{translate('serie',user_lang).upper()} 1\n{const.get_serie(f'{partie+1}','1',user_lang)}"
+                            f"{translate('serie','fr').upper()} 1\n{const.get_serie(f'{partie+1}','1')}"
                         )
                         self.bot.send_quick_kavio(
                             user_id, types=0, kavio=const.get_quick_kavio(
-                                f"A_1_{partie+1}_1", user_lang))
+                                f"A_1_{partie+1}_1"))
                         return True
                     else:
-                        self.resultat_generale(user_id, user_lang)
+                        self.resultat_generale(user_id, "fr")
                         self.bot.send_quick_reply(user_id, user_lang, "fin_kavio")
                         return True
 
         elif commande == "__VOIR_RESULTAT":
-            self.resultat_generale(user_id, user_lang)
+            self.resultat_generale(user_id, "fr")
             self.bot.send_quick_reply(user_id, user_lang, "fin_kavio")
             return True
 
@@ -893,7 +889,7 @@ class Traitement(Options):
                                   )
             if description : 
                 self.bot.send_message(user_id,
-                                    "DESCRIPTION:\n\n" + description)
+                                    "DESCRIPTION:\n" + description)
             else:
                 pass
 

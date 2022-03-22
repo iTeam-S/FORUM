@@ -75,13 +75,13 @@ class Messenger:
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "📑" + translate("fiches_metiers", lang).upper(),
-                    "payload": "__FICHE_METIER"
+                    "title": "🏠" + translate("visiter_stands", lang).upper(),
+                    "payload": "__VISITE_STAND"
                 },
                 {
                     "content_type": "text",
-                    "title": "🏠" + translate("visiter_stands", lang).upper(),
-                    "payload": "__VISITE_STAND"
+                    "title": "📑" + translate("fiches_metiers", lang).upper(),
+                    "payload": "__FICHE_METIER"
                 },
                 {
                     "content_type": "text",
@@ -100,13 +100,23 @@ class Messenger:
                 },
                 {
                     "content_type": "text",
-                    "title": 'EN 🇬🇧',
-                    "payload": "__SET_LANG en",
+                    "title": 'MG 🇲🇬',
+                    "payload": "__SET_LANG mg",
+                }
+            ]
+        
+        elif types == "autre_domaine":
+            text = translate('autre_domaine', lang)
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title": "😍" + translate("oui", lang).upper(),
+                    "payload": "__OUI_AUTRE_DOMAINE",
                 },
                 {
                     "content_type": "text",
-                    "title": 'MG 🇲🇬',
-                    "payload": "__SET_LANG mg",
+                    "title": '😉' + translate("non", lang).upper(),
+                    "payload": "__NON_AUTRE_DOMAINE",
                 }
             ]
 
@@ -178,12 +188,12 @@ class Messenger:
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "🔍" + translate("rechercher", lang).upper(),
+                    "title": "🔍" + translate("rechercher_stand", lang).upper(),
                     "payload": "__RECHERCHE_STAND"
                 },
                 {
                     "content_type": "text",
-                    "title": "📜" + translate("voir_les_listes", lang).upper(),
+                    "title": "📜" + translate("voir_les_listes_stand", lang).upper(),
                     "payload": "__VOIR_LISTE_DU_STAND"
                 }
             ]
@@ -230,12 +240,17 @@ class Messenger:
             ]
 
         elif types == "retoure_a_la_domaine":
-            text = translate("retoure_a_la_domaine", lang)
+            text = translate("autre_domaine", lang)
             quick_rep = [
                 {
                     "content_type": "text",
-                    "title": "⏪" + translate("retoure", lang).upper(),
+                    "title": "😍" + translate("oui", lang).upper(),
                     "payload": "__RETOURE_FICHEMETIER"
+                },
+                {
+                    "content_type": "text",
+                    "title": '😉' + translate("non", lang).upper(),
+                    "payload": "__NON_AUTRE_DOMAINE",
                 }
             ]
 
@@ -264,6 +279,21 @@ class Messenger:
                     "content_type": "text",
                     "title": "😉" + translate("non", lang).upper(),
                     "payload": "__NON_REFAIRE"
+                }
+            ]
+        
+        elif types == "fin_kavio":
+            text = translate("fin_kavio", lang)
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title": "🏠" + translate("visiter_stands", lang).upper(),
+                    "payload": "__VISITE_STAND"
+                },
+                {
+                    "content_type": "text",
+                    "title": "📑" + translate("fiches_metiers", lang).upper(),
+                    "payload": "__FICHE_METIER"
                 }
             ]
 

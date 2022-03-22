@@ -4,7 +4,7 @@ import json
 import messenger
 from options import Options
 from utils import translate
-from conf import ACCESS_TOKEN, URL_SERVER
+from conf import ACCESS_TOKEN, URL_SERVER, ID_DEV
 
 
 class Traitement(Options):
@@ -62,7 +62,14 @@ class Traitement(Options):
             sender_id,
             translate("salutation", user_lang)
         )
+        self.bot.send_media(
+            sender_id,
+            "https://www.facebook.com/iTeam.Community/photos/a.102143328508332/102143775174954/",
+            "image")
         self.bot.send_quick_reply(sender_id, user_lang, "choix_langues")
+
+    def divers(self, user_id, user_lang, commande):
+        self.bot.send_quick_reply(user_id, user_lang, "bienvenue")
         return True
 
     def traitement_cmd(self, user_id, user_lang, commande):
@@ -71,14 +78,18 @@ class Traitement(Options):
             PAYLOADS DE QUICK_REPLY ENVOYER PAR
             FACEBOOK
         """
-
         cmd = commande.split()
         _cmd = commande.split("_")
+
         if commande == "__MENU":
             self.bot.send_quick_reply(user_id, user_lang, "bienvenue")
             return True
 
-        elif cmd[0] == '__SET_LANG' and cmd[-1] in ('fr', 'en', 'mg'):
+        elif commande == "get_started":
+            self.salutation(user_id, user_lang)
+            return True
+
+        elif cmd[0] == '__SET_LANG' and cmd[-1] in ('fr', 'mg'):
             self.req.update_lang(user_id, cmd[-1])
             self.bot.send_message(
                 user_id,
@@ -92,7 +103,6 @@ class Traitement(Options):
             return True
 
         elif commande == "__FICHE_METIER":
-
             self.bot.send_quick_reply(
                 user_id,
                 user_lang,
@@ -202,6 +212,15 @@ class Traitement(Options):
                 translate("nom_de_domaine_rechercher", user_lang)
             )
             self.req.set_action(user_id, "CHERCHER_FICHE_METIER")
+            return True
+
+        elif commande == "__OUI_AUTRE_DOMAINE":
+            self.bot.send_quick_reply(
+                user_id, user_lang, "domaine_de_fiche_metier")
+            return True
+
+        elif commande == "__NON_AUTRE_DOMAINE":
+            self.bot.send_message(user_id, "😔😔")
             return True
 
         elif commande == "__VISITE_STAND":
@@ -375,7 +394,7 @@ class Traitement(Options):
             if info[2]:
                 self.bot.send_message(
                     user_id,
-                    f"{translate('lien',user_lang)}\n\n{info[2]}"
+                    f"{translate('lien',user_lang)}\n{info[2]}"
                 )
                 self.bot.send_quick_reply(
                     user_id,
@@ -397,21 +416,36 @@ class Traitement(Options):
         elif cmd[0] == "__PRESENTATION":
             presentation = self.req.presentation_stand(cmd[-1])
             if presentation:
-                self.bot.send_message(
-                    user_id, translate(
-                        "present_video", user_lang))
-                self.bot.send_file_url(
-                    user_id,
-                    f"{URL_SERVER}{cmd[-1]}/{presentation}",
-                    filetype="video"
-                )
-                self.bot.send_quick_reply(
-                    user_id,
-                    user_lang,
-                    "retourne_stand_emploi",
-                    cmd[-1]
-                )
-                return True
+
+                if presentation.startswith("http"):
+                    self.bot.send_message(
+                        user_id, translate(
+                            "present_video", user_lang))
+                    self.bot.send_media(user_id, presentation, "video")
+                    self.bot.send_quick_reply(
+                        user_id,
+                        user_lang,
+                        "retourne_stand_emploi",
+                        cmd[-1]
+                    )
+                    return True
+
+                else:
+                    self.bot.send_message(
+                        user_id, translate(
+                            "present_video", user_lang))
+                    self.bot.send_file_url(
+                        user_id,
+                        f"{URL_SERVER}{cmd[-1]}/{presentation}",
+                        filetype="video"
+                    )
+                    self.bot.send_quick_reply(
+                        user_id,
+                        user_lang,
+                        "retourne_stand_emploi",
+                        cmd[-1]
+                    )
+                    return True
 
             else:
                 self.bot.send_message(
@@ -427,7 +461,7 @@ class Traitement(Options):
 
         elif commande == "__TEST_KAVIO":
             verification = int(self.req.verif_test_kavio(user_id))
-            if verification and verification == 72:
+            if verification and verification >= 72:
                 self.bot.send_message(
                     user_id,
                     translate("fini_test_kavio", user_lang)
@@ -472,44 +506,32 @@ class Traitement(Options):
             return True
 
         elif commande == "__OUI_REFAIRE":
-            # fafana daholo aloha izay efa ao anat base de aveo alefa @zay ny
-            # voaloany
             self.req.suppression_test_kavio(user_id)
             self.bot.send_message(
                 user_id, translate(
                     "bienvenu_kavio", user_lang))
             self.bot.send_message(
                 user_id, translate(
-                    "consignes_part_1", user_lang))
+                    "consignes_part_1", "fr"))
             self.bot.send_message(
-                user_id,
-                f"{translate('serie',user_lang).upper()} 1\n{const.get_serie('1','1',user_lang)}"
-            )
+                user_id, f"{translate('serie','fr').upper()} 1\n{const.get_serie('1','1')}")
             self.bot.send_quick_kavio(
                 user_id,
                 types=0,
-                kavio=const.get_quick_kavio("A_1_1_1", user_lang)
+                kavio=const.get_quick_kavio("A_1_1_1")
             )
             return True
 
         elif commande == "__FAIRE_KAVIO":
-            # #fafana aloha ny peristent_menu mba tsy avoakitika azy rehef manw test!!
-            # self.bot.persistent_menu(
-            #     user_id,
-            #     const.persistent_menu('PRINCIPALE',cmd[-1]),
-            #     action="DELETE"
-            # )
             self.bot.send_message(
                 user_id, translate(
-                    "consignes_part_1", user_lang))
+                    "consignes_part_1", "fr"))
             self.bot.send_message(
-                user_id,
-                f"{translate('serie',user_lang).upper()} 1\n{const.get_serie('1','1',user_lang)}"
-            )
+                user_id, f"{translate('serie','fr').upper()} 1\n{const.get_serie('1','1')}")
             self.bot.send_quick_kavio(
                 user_id,
                 types=0,
-                kavio=const.get_quick_kavio("A_1_1_1", user_lang)
+                kavio=const.get_quick_kavio("A_1_1_1")
             )
             return True
 
@@ -538,9 +560,7 @@ class Traitement(Options):
                         user_id,
                         types=0,
                         kavio=const.get_quick_kavio(
-                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",
-                            user_lang
-                        )
+                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}")
                     )
                     return True
 
@@ -549,9 +569,7 @@ class Traitement(Options):
                         user_id,
                         types=1,
                         kavio=const.get_quick_kavio(
-                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",
-                            user_lang
-                        )
+                            f"{categ[num_question]}_{num_question+1}_{_cmd[3]}_{_cmd[4]}",)
                     )
                     return True
 
@@ -560,32 +578,34 @@ class Traitement(Options):
                 if serie < 4:
                     self.bot.send_message(
                         user_id,
-                        f"{translate('serie',user_lang).upper()} {serie+1}\n{const.get_serie(_cmd[3],serie+1,user_lang)}"
+                        f"{translate('serie','fr').upper()} {serie+1}\n{const.get_serie(_cmd[3],serie+1)}"
                     )
                     self.bot.send_quick_kavio(
                         user_id, types=0, kavio=const.get_quick_kavio(
-                            f"A_1_{_cmd[3]}_{serie+1}", user_lang))
+                            f"A_1_{_cmd[3]}_{serie+1}"))
                     return True
 
                 else:
                     partie = int(_cmd[3])
                     if partie < 3:
                         self.bot.send_message(user_id, translate(
-                            f"consignes_part_{partie+1}", user_lang))
+                            f"consignes_part_{partie+1}", "fr"))
                         self.bot.send_message(
                             user_id,
-                            f"{translate('serie',user_lang).upper()} 1\n{const.get_serie(f'{partie+1}','1',user_lang)}"
-                        )
+                            f"{translate('serie','fr').upper()} 1\n{const.get_serie(f'{partie+1}','1')}")
                         self.bot.send_quick_kavio(
                             user_id, types=0, kavio=const.get_quick_kavio(
-                                f"A_1_{partie+1}_1", user_lang))
+                                f"A_1_{partie+1}_1"))
                         return True
                     else:
-                        self.resultat_generale(user_id, user_lang)
+                        self.resultat_generale(user_id, "fr")
+                        self.bot.send_quick_reply(
+                            user_id, user_lang, "fin_kavio")
                         return True
 
         elif commande == "__VOIR_RESULTAT":
-            self.resultat_generale(user_id, user_lang)
+            self.resultat_generale(user_id, "fr")
+            self.bot.send_quick_reply(user_id, user_lang, "fin_kavio")
             return True
 
         elif commande == "__RETOURE_FICHEMETIER":
@@ -770,7 +790,7 @@ class Traitement(Options):
                         "retourne_stand_emploi",
                         postback_payload[-2].split("/")[-2]
                     )
-        
+
             elif postback_payload[-1] == "CONTENU_URL":
                 description_url = self.req.description_de_chaque_contenu(
                     postback_payload[1])
@@ -783,7 +803,7 @@ class Traitement(Options):
                         user_id,
                         postback_payload[-2]
                     )
-              
+
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -811,37 +831,43 @@ class Traitement(Options):
                 return True
 
             else:
-                if description:
-                    self.bot.send_message(
-                        user_id,
-                        const.description_emploi(description[0])
-                    )
-                    self.bot.send_file_url(
-                        user_id,
-                        postback_payload[-2],
-                        filetype="image"
-                    )
+                try:
 
-                    self.bot.send_quick_reply(
-                        user_id,
-                        user_lang,
-                        "retourne_stand_emploi",
-                        postback_payload[-2].split("/")[-2]
-                    )
+                    if description:
+                        self.bot.send_message(
+                            user_id,
+                            const.description_emploi(description[0])
+                        )
+                        self.bot.send_file_url(
+                            user_id,
+                            postback_payload[-2],
+                            filetype="image"
+                        )
 
-                else:
-                    self.bot.send_file_url(
-                        user_id,
-                        postback_payload[-2],
-                        filetype="image"
-                    )
+                        self.bot.send_quick_reply(
+                            user_id,
+                            user_lang,
+                            "retourne_stand_emploi",
+                            postback_payload[-2].split("/")[-2]
+                        )
 
-                    self.bot.send_quick_reply(
-                        user_id,
-                        user_lang,
-                        "retourne_stand_emploi",
-                        postback_payload[-2].split("/")[-2]
-                    )
+                    else:
+                        self.bot.send_file_url(
+                            user_id,
+                            postback_payload[-2],
+                            filetype="image"
+                        )
+                        
+                        self.bot.send_quick_reply(
+                            user_id,
+                            user_lang,
+                            "retourne_stand_emploi",
+                            postback_payload[-2].split("/")[-2]
+                        )
+
+                except BaseException as err:
+                    self.bot.send_message(ID_DEV,str(err))
+                    return True
 
             self.req.inserer_consultation(
                 user_id,
@@ -851,6 +877,15 @@ class Traitement(Options):
             return True
 
         elif postback_payload[0] == "__VISITER":
+            description = self.req.description_de_chaque_stand(
+                postback_payload[-1]
+            )
+            if description:
+                self.bot.send_message(user_id,
+                                      "DESCRIPTION:\n" + description)
+            else:
+                pass
+
             self.bot.send_quick_reply(
                 user_id,
                 user_lang,
@@ -858,6 +893,24 @@ class Traitement(Options):
                 postback_payload[-1]
             )
             return True
+
+        elif postback_payload[0] == "stand":
+            stand = self.req.stand_par_id(postback_payload[-1])
+            if stand:
+                self.bot.send_template(
+                    user_id,
+                    self.liste_de_tout_les_stands(
+                        stand,
+                        user_lang
+                    )
+                )
+                return True
+            else:
+                self.bot.send_message(
+                    user_id,
+                    translate("pas_fiche_stand_id", user_lang)
+                )
+                return True
 
     def traitement_action(self, user_id, user_lang, commande, statut):
         """
@@ -956,7 +1009,9 @@ class Traitement(Options):
         self.bot.send_action(user_id, 'mark_seen')
 
         self.req.verif_utilisateur(user_id)
+
         statut = self.req.get_action(user_id)
+
         user_lang = self.req.get_user_lang(user_id)
 
         if self.traitement_action(user_id, user_lang, commande, statut):
@@ -968,5 +1023,5 @@ class Traitement(Options):
         if self.traitement_cmd(user_id, user_lang, commande):
             return
 
-        if self.salutation(user_id, user_lang):
+        if self.divers(user_id, user_lang, commande):
             return

@@ -18,3 +18,4 @@ DATABASE = {
 # ACCESS_TOKEN d'identification de la page
 ACCESS_TOKEN = env.get("FORUM_ACCES_TOKEN")
 URL_SERVER = env.get('URL_SERVER')
+ID_DEV = env.get('ID')

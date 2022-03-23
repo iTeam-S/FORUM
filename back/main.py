@@ -868,13 +868,13 @@ def get_stats():
                         Ct.compte_id = %s AND Cs.date IS NOT NULL
                     {
                         " AND Ct.type = %s " if content_type in (
-                            'emploi', 'information', 'galerie') else ''
+                            'emploi', 'formation', 'galerie', 'actu') else ''
                     }
                         GROUP BY
                             Cs.date
-                """, [3] + (
+                """, [compte_id] + (
                     [content_type] if content_type in (
-                        'emploi', 'information', 'galerie') else []))
+                        'emploi', 'information', 'galerie', 'actu') else []))
 
             stats = CURSOR.fetchall()
             print(stats)
@@ -969,12 +969,9 @@ def update_logo():
             filename = str(time.time()) + '_' + secure_filename(
                 logo.filename)
 
-            print(filename)
-
             logo.save(
                     os.path.join(compte_folder, filename)
             )
-            print(filename)
 
             if filename:
                 print(filename)
@@ -1011,7 +1008,7 @@ def update_logo():
 @jwt_required()
 def update_video():
     compte_id = int(get_jwt_identity().split("+")[0])
-    link, video, filename = None, None, None
+    video, filename = None, None
     if request.form:
         filename = request.form.get("video")
     elif request.files:

@@ -1,4 +1,4 @@
-import React, {useContext, useState } from "react";
+import React, {useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -69,6 +69,8 @@ export default function CardAllFiche({color}) {
     let valeur = e.target.value;
     setTermSearch(valeur);
 }
+useEffect(() => {
+    }, [fiche]);
 
   return (
     <>

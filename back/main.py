@@ -33,6 +33,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # ----------------TOKEN CONFIG-----------------
 app.config["JWT_SECRET_KEY"] = "LUCIFER-MORNINGSTAR"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000
 jwt = JWTManager(app)
 # ---------------------------------------------
 
@@ -63,6 +64,10 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return e, 500
+
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    return 'File Too Large', 413
 # *************************** ___________ *****************************
 
 
@@ -159,11 +164,7 @@ def add_account():
                     return {
                         "error": False,
                         "message": "Account created",
-<<<<<<< Updated upstream
-                        "id": CURSOR.lastrowid
-=======
                         "account_id": CURSOR.lastrowid 
->>>>>>> Stashed changes
                     }, 200
 
                 return {
@@ -1011,34 +1012,30 @@ def update_logo():
 def update_video():
     compte_id = int(get_jwt_identity().split("+")[0])
     link, video, filename = None, None, None
+    if request.form:
+        filename = request.form.get("video")
+    elif request.files:
+        video = request.files['video']
+        if video:
+
+            if not allowed_file_video(video.filename):
+                return {
+                    "error": True,
+                    "message":
+                        "Video must be less than 25Mo or Format not supported"
+                }, 413
+            else:
+                compte_folder = os.path.join(
+                    app.config['UPLOAD_FOLDER'], str(compte_id)
+                )
+
+                filename = str(time.time()) + '_' + secure_filename(
+                    video.filename)
+
+                video.save(
+                    os.path.join(compte_folder, filename)
+                )
     try:
-        if request.form:
-            filename = request.form.get("video")
-        elif request.files:
-            video = request.files['video']
-
-            if video:
-                size = len(video.read())
-                if size > 25000000 and allowed_file_video(
-                    video.filename
-                ):
-                    return {
-                        "error": True,
-                        "message":
-                            "Video must be less than 25Mo or Format not supported"
-                    }, 413
-                else:
-                    compte_folder = os.path.join(
-                        app.config['UPLOAD_FOLDER'], str(compte_id)
-                    )
-
-                    filename = str(time.time()) + '_' + secure_filename(
-                        video.filename)
-
-                    video.save(
-                        os.path.join(compte_folder, filename)
-                    )
-
         if filename:
             CURSOR.execute("""
                 UPDATE

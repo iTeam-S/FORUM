@@ -49,9 +49,10 @@ export default function CardEditProfile() {
   const  handleEditAccount = async(data) => {
         try {
             if(compte !== null){
-                await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.description, data.adresse, data.lien)
-                history.push('/adminEntreprise/ProfilEntreprise');
-                window.location.reload();
+                let res = await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.description, data.adresse, data.lien)
+                /*history.push('/adminEntreprise/ProfilEntreprise');
+                window.location.reload();*/
+                console.log(JSON.parse(res.config.data))
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la Modification");

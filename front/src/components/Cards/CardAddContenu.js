@@ -1,4 +1,4 @@
-import React, {useState, useContext } from "react";
+import React, {useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -57,12 +57,14 @@ export default function CardAddContenu() {
             newContenu['id'] = res.data.id;
             setContenu([...contenus, newContenu]);
             addContenu(newContenu);
-            
         } catch (error) {
             setErreur(true)
             setErrorMessage(error.response.data.message)
         }
     }
+
+    useEffect(() => {
+    }, [contenus]);
     
     const {
         register,
@@ -127,7 +129,7 @@ export default function CardAddContenu() {
                          <option  hidden>Choisir le type de contenu</option>
                          <option key="1" value="galerie"> Galerie</option>
                          <option key="2" value="emploi">Offre d'emploi</option>
-                         <option key="3" value="actualite">Actualité</option>
+                         <option key="3" value="actu">Actualité</option>
                          <option key="4" value="formation">Formation</option>
                     </select>
                     <p className="text-red-500 italic">{errors.type?.message}</p>

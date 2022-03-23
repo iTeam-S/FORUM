@@ -200,6 +200,26 @@ class CompteService{
         })
     }
 
+    UpdateVideo(lien, fileVideo){
+        var content = new FormData();
+        let video = null;
+        if(lien !== "" ){
+            video = lien;
+        } else {
+            if(fileVideo.size < 25000000){
+                video = fileVideo
+            }
+        }
+
+        content.append("video", video);
+
+        return RouteAxios.patch('/update_video', content,{
+            headers: {
+                'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`
+            }
+        })
+    }
+
 }
 
 export default new CompteService();

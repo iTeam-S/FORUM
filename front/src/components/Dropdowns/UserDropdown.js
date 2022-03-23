@@ -18,6 +18,7 @@ const UserDropdown = () => {
 
   const Deconnexion = () => {
     LoginService.logout();
+    window.location.reload(true);
   }
 
   // dropdown props

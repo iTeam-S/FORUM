@@ -22,6 +22,8 @@ export default function CardProfile() {
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
 
+  
+
   //get one item from comptecurrent
   const idCompte = compteCurrent.map((compte) => {
     return compte.id;
@@ -34,18 +36,46 @@ export default function CardProfile() {
   const ComponentVideo = () => {
     if (regexVideoFb.test(linkVideo[0])){
       return (
-          <iframe src = {`https://www.facebook.com/plugins/video.php?href=${linkVideo[0]}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
+          <div>
+            <iframe src = {`https://www.facebook.com/plugins/video.php?href=${linkVideo[0]}/&width=500&show_text=false&appId=823777418309594&height=280`} style={{ border:'none', overflow: 'hidden'}} 
                   className="w-full flex justify-center relative"
                   frameBorder="0" 
                   title="Video facebook"
                   allowFullScreen={true} 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           />
+          <Link
+                  to={`/adminEntreprise/CardAddVideo/${idCompte}`}
+                  className="bg-teal-500 active:bg-lightBlue-600 uppercase px-4 py-2 text-white font-bold hover:shadow-md shadow rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+          >
+            <button
+                  className="text-sm font-bold px-4 py-"
+                  type="button"
+                  style={{margin: '20px 0px'}}
+            >
+                  Remplacer
+            </button>
+          </Link>
+          </div>
     )
     } else{
       if(linkVideo[0] !== null){
           return(
-              <video src={`${uRI}/get_attachement/${idCompte}/${linkVideo[0]}`} controls="controls" autoPlay={true} />
+              <div>
+                  <video src={`${uRI}/get_attachement/${idCompte}/${linkVideo[0]}#t=90000,100000`} controls="controls" autoPlay={true} />
+                  <Link
+                  to={`/adminEntreprise/CardAddVideo/${idCompte}`}
+                  className="bg-teal-500 active:bg-lightBlue-600 uppercase px-4 py-2 text-white font-bold hover:shadow-md shadow rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                    >
+                      <button
+                            className="text-sm font-bold px-4 py-"
+                            type="button"
+                            style={{margin: '20px 0px'}}
+                      >
+                            Remplacer
+                      </button>
+                  </Link>
+              </div>
           )
       } else {
           return(
@@ -121,7 +151,7 @@ export default function CardProfile() {
           <div className="px-6">
             <div className="flex flex-wrap justify-center">
               <div className="w-full px-4 flex justify-center">
-                <div className="relative">
+                <div className="relative photo">
                   <a
                     className="text-blueGray-500 block"
                     href="#pablo"
@@ -220,7 +250,7 @@ export default function CardProfile() {
                   <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                     {account.description}
                   </p>
-                  <div className="w-full flex justify-center h-full" >
+                  <div className="w-full flex video" >
                     <ComponentVideo />
                   </div>
                 </div>

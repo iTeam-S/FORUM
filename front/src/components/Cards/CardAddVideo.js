@@ -6,13 +6,11 @@ import {useHistory} from "react-router";
 
 // components
 import CompteService from "utils/service/CompteService";
-import { LoginService } from "utils/service/LoginService";
 import { CompteContext } from "utils/contexte/CompteContext";
 
 
 export default function CardAddVideo() {
   const {compte} = useContext(CompteContext);
-  const compteCurrent = LoginService.getOneCompteContexte(compte);
 
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
@@ -41,10 +39,10 @@ export default function CardAddVideo() {
   let history = useHistory();
 
   const validationPassword = Yup.object().shape({
-      lien: Yup.string()
-        .nullable(true)
-        .notRequired(),
-      video: Yup.mixed()
+      fileVideo: Yup.mixed()
+        .notRequired()
+        .nullable(),
+      lien: Yup.mixed()
         .nullable()
         .notRequired(),
    });
@@ -52,17 +50,21 @@ export default function CardAddVideo() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
   } = useForm({
     resolver: yupResolver(validationPassword)
   });
 
   const  handleAddVideo = async(data) => {
         try {
+            let fichier = data.fileVideo[0];
             if(compte !== null){
-               /* await CompteService.AddVideo(data.lien, data.video)
-                history.push('/adminEntreprise/ProfilEntreprise');
-                window.location.reload();*/
+                if(data.lien !== "" || fichier.size < 25000000){
+                  await CompteService.UpdateVideo(data.lien, data.fileVideo[0])
+                  history.push('/adminEntreprise/ProfilEntreprise');
+                  window.location.reload();
+                } else{
+                  alert("La taille du vidéo doit être inférieur à 25 Mo!")
+                }
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à l'ajout de la vidéo");
@@ -125,10 +127,9 @@ export default function CardAddVideo() {
                         name="fileVideo"
                         accept="video/mp4"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        {...register('video')}
+                        {...register('fileVideo')}
                         onChange={(e) => HiddenLien(e)}
                       />
-                      <p className="text-red-500 italic">{errors.lienf?.message}</p>
                     </div>
                   </div>
                 </div>

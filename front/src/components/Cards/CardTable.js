@@ -10,6 +10,7 @@ import {uRI} from "utils/urlAxios/UrlAxios";
 export default function CardTable({ color}) {
   const {compte, setCompte} = useContext(CompteContext);
   const [domaine, setDomaine] = useState("");
+  const idCompteCurrent = LoginService.getCurrentCompte().id;
   const compteParDomaine = LoginService.getComptePerDomaine(compte, domaine);
 
   const [termSearch, setTermSearch] = useState("");
@@ -29,8 +30,6 @@ const recherche = (e) => {
   let valeur = e.target.value;
   setTermSearch(valeur);
 }
-
-
   return (
     <>
       <div
@@ -150,13 +149,15 @@ const recherche = (e) => {
                                           Voir profil
                                         </button>
                                   </Link>
-                                  <button
-                                      className="bg-lightBlue-800  text-white active:bg-teal-500 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                      type="button"
-                                      onClick={() => deleteOneCompte(account.id)}
-                                  >
-                                    Delete
-                                  </button>
+                                  {account.id !== idCompteCurrent && (
+                                    <button
+                                        className="bg-lightBlue-800  text-white active:bg-teal-500 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={() => deleteOneCompte(account.id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  )}
                                 </td>
                           </tr>
                      ))

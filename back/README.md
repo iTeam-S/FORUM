@@ -233,9 +233,8 @@ content-type: application/json
     "email": <email>,
     "tel": <tel>,
     "domaine": <domaine>,
-    "password": <password>,
+    "description": <description>,
     "adresse": <adresse>,
-    "type": <type>,
     "lien": <lien>
   }
 ```
@@ -322,5 +321,16 @@ NB : Can specify content_type (mandatory)
   Content-Type: false
   {
       "logo": <file_logo>
+  }
+```
+
+## Update enterprise video
+```
+  PATCH http://<host>:5000/api/v1/update_video
+  Authorization: Bearer <Token>
+  enctype: 'multipart/form-data'
+  Content-Type: false
+  {
+      "video": <file_video> or <facebook_linl>
   }
 ```

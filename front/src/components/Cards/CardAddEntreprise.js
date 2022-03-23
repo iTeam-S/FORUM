@@ -59,6 +59,9 @@ export default function CardAddEntreprise() {
 
             newCompte = JSON.parse(res.config.data)
             newCompte['id'] = res.data.id;
+            newCompte['visiteurs'] = 0;
+            newCompte['video'] = null;
+            newCompte['logo'] = null;
             setCompte([...compte, newCompte]);
             addCompte(newCompte);
 
@@ -67,7 +70,6 @@ export default function CardAddEntreprise() {
             setErrorMessage(error.response.data.message)
         }
     }
-  
 
 
 

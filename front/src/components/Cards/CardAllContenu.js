@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import { Link } from "react-router-dom";
 import CompteService from "utils/service/CompteService";
 import { CompteContext } from "utils/contexte/CompteContext";
@@ -16,6 +16,8 @@ export default function CardAllContenu({ allContenu, termSearch}) {
        return contenu.id !== id_content;
      }))
   }
+   useEffect(() => {
+    }, [contenus]);
 
   return (
     <>

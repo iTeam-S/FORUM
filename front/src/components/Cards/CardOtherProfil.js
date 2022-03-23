@@ -7,6 +7,9 @@ import { CompteContext } from "utils/contexte/CompteContext";
 import { LoginService } from "utils/service/LoginService";
 import {uRI} from "utils/urlAxios/UrlAxios";
 
+//style
+import '../../assets/styles/cardStyle.css';
+
 
 export default function CardOtherProfil() {
   const {id} = useParams();
@@ -20,6 +23,7 @@ export default function CardOtherProfil() {
   const linkVideo = compteCurrent.map((compte) => {
     return compte.video;
   })
+
   //regex video facebook
   const regexVideoFb = /^(https?:\/\/){0,1}(www\.){0,1}facebook\.com\/(.){5,}\/videos\/[0-9]{15}/;
   const ComponentVideo = () => {
@@ -40,7 +44,7 @@ export default function CardOtherProfil() {
           )
       } else {
           return(
-              <p className="text-xs font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Il n'a pas encore de vidéo de présentation</p>
+              <p className="text-xs font-semibold leading-normal text-blueGray-700 mb-2">Il n'a pas encore de vidéo de présentation</p>
             )
       }
     }
@@ -51,11 +55,11 @@ export default function CardOtherProfil() {
   return (
     <>
       { compteCurrent.map((account) => (
-           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
+           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16" key={account.id}>
               <div className="px-6">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 flex justify-center">
-                    <div className="relative">
+                    <div className="relative photo">
                       <img
                         alt="..."
                         src={account.logo ? `${uRI}/get_attachement/${id}/${account.logo}` : require("assets/img/logodefaut.png").default}
@@ -99,7 +103,7 @@ export default function CardOtherProfil() {
                       <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                         {account.description}
                       </p>
-                      <div className="w-full flex">
+                      <div className="w-full flex video">
                          <ComponentVideo />
                       </div>
                     </div>

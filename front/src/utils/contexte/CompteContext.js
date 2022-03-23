@@ -48,15 +48,6 @@ export const CompteContextProvider = (props) =>{
                 })
             }
             fetchContenu();
-        } else if(LoginService.getCurrentCompte() != null && LoginService.getCurrentCompte().type === 'ENTREPRISE'){
-             function fetchContenu(){
-                 CompteService.getAllContenu().then((response) => {
-                        if(response.data['error'] === undefined){
-                        setContenu(response.data);
-                    } 
-                })
-            }
-            fetchContenu();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

@@ -17,6 +17,7 @@ function login(email, password){
 
 function logout(){
     return localStorage.removeItem('compte');
+    
 }
 
 function getCurrentCompte(){

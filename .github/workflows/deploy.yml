@@ -21,7 +21,9 @@ jobs:
           script: |
             cd /opt/FORUM/
             # Mise a jour du code
+            git stash
             git pull
+            git stash apply
             cd front/
             # Install dependencies
             npm install

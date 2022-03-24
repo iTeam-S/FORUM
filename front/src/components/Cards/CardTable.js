@@ -26,6 +26,9 @@ export default function CardTable({ color}) {
       return cmpt.id !== id;
     }))
     setShowAlert(true)
+  }
+  
+  if(showAlert){
     setTimeout(() => {
       setShowAlert(false)
     }, 5000);

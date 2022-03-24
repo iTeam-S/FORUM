@@ -8,7 +8,6 @@ import HeaderStats from "components/Headers/HeaderStats.js";
 import FooterAdmin from "components/Footers/FooterAdmin.js";
 
 export default function EntrepriseRoute({children, ...rest}){
-    const compte = LoginService.getCurrentCompte();
     return(
         <>   
             <Sidebar />
@@ -18,7 +17,7 @@ export default function EntrepriseRoute({children, ...rest}){
             <HeaderStats />
             <div className="px-4 md:px-10 mx-auto w-full -m-24">
                 <Route {...rest} render = {() => {
-                    return compte !== null && LoginService.getCurrentCompte().token !== null
+                    return LoginService.getCurrentCompte().token !== null
                     ? children
                     : <Redirect to='/error' />
             }} />

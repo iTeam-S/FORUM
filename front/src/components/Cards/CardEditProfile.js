@@ -50,8 +50,8 @@ export default function CardEditProfile() {
         try {
             if(compte !== null){
                 let res = await CompteService.UpdateCompte(data.nom,data.email,data.tel,data.domaine,data.description, data.adresse, data.lien)
-                /*history.push('/adminEntreprise/ProfilEntreprise');
-                window.location.reload();*/
+                history.push('/adminEntreprise/ProfilEntreprise');
+                window.location.reload();
                 console.log(JSON.parse(res.config.data))
             }else{
                 setErreur(true);

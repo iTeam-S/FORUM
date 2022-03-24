@@ -877,7 +877,6 @@ def get_stats():
                         'emploi', 'information', 'galerie', 'actu') else []))
 
             stats = CURSOR.fetchall()
-            print(stats)
 
             if stats:
                 return {

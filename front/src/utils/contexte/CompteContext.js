@@ -20,7 +20,8 @@ export const CompteContextProvider = (props) =>{
 
      function fetchStat(){
              CompteService.getStatGallerie().then((response) => {
-                 setStat(response.data);
+                 let reponseStat = LoginService.convertItemToArray(response.data);
+                 setStat(reponseStat);
                  if(LoginService.getCurrentCompte().type === 'ADMIN'){
                     fetchFicheMetier();
                 }
@@ -67,7 +68,7 @@ export const CompteContextProvider = (props) =>{
             value= {{ compte, setCompte, addCompte,
                       contenus, setContenu, addContenu,
                       fiche, setFiche, addFiche,
-                      stat 
+                      stat , setStat
         }}>
             {props.children}
         </CompteContext.Provider>

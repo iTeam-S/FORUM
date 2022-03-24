@@ -21,12 +21,15 @@ jobs:
           script: |
             cd /opt/FORUM/
             # Mise a jour du code
+            git stash
             git pull
+            git stash apply
             cd front/
             # Install dependencies
             npm install
             # Build Front 
             npm run build
-            # Relancement du code back
+            # Relancement du process front
             pm2 restart forum
+            # Relancement du process back
             systemctl restart forum-back

@@ -35,7 +35,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # ----------------TOKEN CONFIG-----------------
 app.config["JWT_SECRET_KEY"] = "LUCIFER-MORNINGSTAR"
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=240)
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000
 jwt = JWTManager(app)
 # ---------------------------------------------
@@ -106,6 +106,7 @@ def login():
                         str(str(account.get("id")) + "+" + account.get("type"))
                     )
                     return account, 200
+            DB.commit()
             return {
                 "error": True,
                 "message": "Email/password incorrect"

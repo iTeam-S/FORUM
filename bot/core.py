@@ -725,7 +725,7 @@ class Traitement(Options):
         elif postback_payload[0] == "__VOIR_EVENEMENT":
             description = self.req.description_de_chaque_contenu(
                 postback_payload[1])
-
+            print(postback_payload[-2])
             if postback_payload[-2].endswith(".pdf"):
                 if description:
                     self.bot.send_message(
@@ -798,12 +798,13 @@ class Traitement(Options):
                     self.bot.send_message(
                         user_id,
                         const.description_emploi(description_url[0])
-                    )
-                    self.bot.send_message(
+                    ) 
+                    # Eto dia lasa video zany, sendi_media
+                    self.bot.send_media(
                         user_id,
-                        postback_payload[-2]
+                        postback_payload[-2],
+                        "video"
                     )
-
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,

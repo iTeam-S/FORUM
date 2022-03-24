@@ -1,2 +1,2 @@
 # FORUM
-Application Bot messenger avec un 
+Plateforme pour le forum de l'orientation et des métiers 2022

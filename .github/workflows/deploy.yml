@@ -29,3 +29,4 @@ jobs:
             npm run build
             # Relancement du code back
             pm2 restart forum
+            systemctl restart forum-back

@@ -212,33 +212,25 @@ def add_content():
                 fichier = request.files['file']
 
                 if fichier:
-                    size = len(fichier.read())
-                    if size > 25000000 and allowed_file_video(
-                        fichier.filename
-                    ):
-                        filename = link
-                        return
-                    else:
-                        compte_folder = os.path.join(
-                            app.config['UPLOAD_FOLDER'], str(compte_id)
-                        )
-                        Path(compte_folder).mkdir(parents=True, exist_ok=True)
+                    compte_folder = os.path.join(
+                        app.config['UPLOAD_FOLDER'], str(compte_id)
+                    )
+                    Path(compte_folder).mkdir(parents=True, exist_ok=True)
 
-                        filename = str(time.time()) + '_' + secure_filename(
-                            fichier.filename)
+                    filename = str(time.time()) + '_' + secure_filename(
+                        fichier.filename)
 
-                        fichier.save(
-                            os.path.join(compte_folder, filename)
-                        )
-                    fichier.close()
-            print(titre, type, description)
+                    fichier.save(
+                        os.path.join(compte_folder, filename)
+                    )
+
             if titre and type and compte_id:
                 CURSOR.execute("""
                     INSERT INTO
                         Contenu(titre, description, type, fichier, compte_id)
                         VALUES (%s, %s, %s, %s, %s)
                     """, (
-                        titre, description, type, filename or None, compte_id
+                        titre, description, type, filename or link, compte_id
                     )
                 )
                 DB.commit()

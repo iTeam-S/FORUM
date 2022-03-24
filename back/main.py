@@ -420,6 +420,7 @@ def list_contents():
                     Ct.id;
             """, (compte_id,))
             contents = CURSOR.fetchall()
+            DB.commit()
             if contents:
                 return {
                     contents.index(content):

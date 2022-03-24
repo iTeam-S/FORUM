@@ -230,7 +230,7 @@ class Options:
         elif fichier.endswith(".mp4"):
             return "https://icon-library.com/images/play-video-icon-png-transparent/play-video-icon-png-transparent-14.jpg", "regarder"
         elif fichier.startswith("http"):
-            return "https://www.kindpng.com/picc/m/256-2564683_transparent-link-website-transparent-website-link-logo-hd.png", "voir"
+            return "https://icon-library.com/images/play-video-icon-png-transparent/play-video-icon-png-transparent-14.jpg", "regarder"
         else:
             return "https://www.kindpng.com/picc/m/244-2446073_icons8-flat-gallery-icon-logo-gallery-png-transparent.png", "voir"
 

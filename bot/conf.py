@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Token de verification serveur par Facebook
-VERIFY_TOKEN = 'ametapplication'
+VERIFY_TOKEN = 'forumsesame'
 
 # Authentification BDD
 DATABASE = {

@@ -30,6 +30,6 @@ jobs:
             # Build Front 
             npm run build
             # Relancement du process front
-            pm2 restart forum
+            pm2 restart FORUM
             # Relancement du process back
             systemctl restart forum-back

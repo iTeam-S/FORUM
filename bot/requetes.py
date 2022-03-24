@@ -143,6 +143,7 @@ class Requete:
         req = """
             SELECT id,logo,nom,description
             FROM Compte
+            WHERE type="ENTREPRISE"
             ORDER BY classe ASC
         """
         self.cursor.execute(req)
@@ -220,7 +221,7 @@ class Requete:
         req = """
             SELECT id, titre, fichier
             FROM Contenu
-            WHERE type = "emploi" OR type="formation"
+            WHERE (type = "emploi" OR type="formation")
             AND compte_id = %s
         """
         self.cursor.execute(req, (id_stand,))

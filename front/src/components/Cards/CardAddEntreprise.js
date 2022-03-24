@@ -28,7 +28,8 @@ export default function CardAddEntreprise() {
         domaine: Yup.string()
           .required('le choix est obligatoire'),
         lien: Yup.string()
-          .required('Ce champ est obligatoire'),
+          .nullable()
+          .notRequired(),
         type: Yup.string()
           .required('le choix est obligatoire'),
         password: Yup.string()
@@ -250,7 +251,6 @@ export default function CardAddEntreprise() {
                       placeholder="Lien vers votre site.."
                       {...register('lien')}
                     />
-                    <p className="text-red-500 italic">{errors.lien?.message}</p>
                   </div>
                 </div>
               </div>

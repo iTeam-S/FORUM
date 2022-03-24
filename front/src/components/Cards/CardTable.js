@@ -7,6 +7,9 @@ import CompteService from "utils/service/CompteService";
 import { LoginService } from "utils/service/LoginService";
 import {uRI} from "utils/urlAxios/UrlAxios";
 
+//style css
+import '../../assets/styles/cardStyle.css';
+
 export default function CardTable({ color}) {
   const {compte, setCompte} = useContext(CompteContext);
   const [domaine, setDomaine] = useState("");
@@ -15,8 +18,14 @@ export default function CardTable({ color}) {
 
   const [termSearch, setTermSearch] = useState("");
 
+  const [showAlert, setShowAlert] = useState(false);
+
    function deleteOneCompte(id){
     CompteService.DeleteOneCompte(id);
+    setShowAlert(true)
+    setTimeout(() => {
+      setShowAlert(false)
+    }, 5000);
     setCompte(compte.filter((cmpt) => {
       return cmpt.id !== id;
     }))
@@ -38,6 +47,28 @@ const recherche = (e) => {
           (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")
         }
       >
+        {/**Popup alert */}
+        {showAlert ? (
+           <div
+              className="text-white px-6 py-4 border-0 rounded relative mb-4 bg-red-500 popup"
+            >
+                <span className="text-xl inline-block mr-5 align-middle mr-2">
+                  <i className="fas fa-bell" />
+                </span>
+                <span className="inline-block align-middle mr-8 ">
+                  <b className="capitalize "> </b> Le compte a été supprimé
+                </span>
+                <button
+                  className="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-4 outline-none focus:outline-none"
+                  onClick={() => setShowAlert(false)}
+                >
+                  <span>×</span>
+              </button>
+            </div> 
+      ) : null}
+
+
+
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full sm:text-center px-4 max-w-full flex-grow flex-1">

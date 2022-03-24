@@ -22,13 +22,13 @@ export default function CardTable({ color}) {
 
    function deleteOneCompte(id){
     CompteService.DeleteOneCompte(id);
+    setCompte(compte.filter((cmpt) => {
+      return cmpt.id !== id;
+    }))
     setShowAlert(true)
     setTimeout(() => {
       setShowAlert(false)
     }, 5000);
-    setCompte(compte.filter((cmpt) => {
-      return cmpt.id !== id;
-    }))
   }
   const choixDomaine = (e) => {
     let domCheck = e.target.value;

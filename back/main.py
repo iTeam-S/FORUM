@@ -365,6 +365,7 @@ def list_accounts():
                     Cp.id;
             """)
             accounts = CURSOR.fetchall()
+            DB.commit()
 
             if accounts:
                 return {
@@ -463,7 +464,7 @@ def list_fiche_metier():
                     Fiche_metier;
             """)
             fiche_metiers = CURSOR.fetchall()
-
+            DB.commit()
             if fiche_metiers:
                 return {
                     fiche_metiers.index(fiche_metier):

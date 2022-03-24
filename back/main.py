@@ -1,4 +1,5 @@
 from pathlib import Path
+from PIL import Image
 import mysql.connector
 from werkzeug.utils import secure_filename
 # ---------------------------------------
@@ -20,6 +21,8 @@ from conf import database
 
 app = Flask(__name__)
 CORS(app)
+
+TRANSPARENCY = 12
 
 # ------------UPLOAD FOLDER CONF---------------
 path = os.getcwd()
@@ -276,41 +279,51 @@ def add_fiche_metier():
         filename = None
         titre = request.form.get("titre")
         domaine_id = request.form.get("domaine_id")
-
-        if request.files:
-            fichier = request.files['file']
-
-            compte_folder = os.path.join(
-                app.config['UPLOAD_FOLDER'], str(compte_id)
-            )
-            Path(compte_folder).mkdir(parents=True, exist_ok=True)
-
-            filename = str(time.time()) + '_' + secure_filename(
-                fichier.filename) 
-            fichier.save(
-                os.path.join(compte_folder, filename)
-            )
-
         if access == "ADMIN":
-            if titre and domaine_id:
-                CURSOR.execute("""
-                    INSERT INTO
-                        Fiche_metier(titre, fichier, domaine_id, compte_id)
-                        VALUES (%s, %s, %s, %s)
-                    """, (titre, filename, domaine_id, compte_id)
+            if request.files:
+                fichier = request.files['file']
+
+                compte_folder = os.path.join(
+                    app.config['UPLOAD_FOLDER'], str(compte_id)
                 )
-                DB.commit()
+                Path(compte_folder).mkdir(parents=True, exist_ok=True)
+
+                filename = str(time.time()) + '_' + secure_filename(
+                    fichier.filename)
+                fichier.save(
+                    os.path.join(compte_folder, filename)
+                )
+
+                image = Image.open(os.path.join(compte_folder, filename))
+                watermark = Image.open('./filigramme.png')
+                if watermark.mode != 'RGBA':
+                    print("HER")
+                    alpha = Image.new('L', watermark.size, 255)
+                    watermark.putalpha(alpha)
+                paste_mask = watermark.split()[3].point(
+                    lambda i: i * TRANSPARENCY / 100)
+                image.paste(watermark, (70, 600), mask=paste_mask)
+                image.save(os.path.join(compte_folder, filename))
+
+                if titre and domaine_id:
+                    CURSOR.execute("""
+                        INSERT INTO
+                            Fiche_metier(titre, fichier, domaine_id, compte_id)
+                            VALUES (%s, %s, %s, %s)
+                        """, (titre, filename, domaine_id, compte_id)
+                    )
+                    DB.commit()
+
+                    return {
+                        "error": False,
+                        "message": "Contenu inserted",
+                        "id": CURSOR.lastrowid
+                    }, 200
 
                 return {
-                    "error": False,
-                    "message": "Contenu inserted",
-                    "id": CURSOR.lastrowid
-                }, 200
-
-            return {
-                "error": True,
-                "message": "Donnees obligatoires manquants"
-            }, 412
+                    "error": True,
+                    "message": "Donnees obligatoires manquants"
+                }, 412
 
     except Exception as err:
         CURSOR.close()
@@ -868,13 +881,13 @@ def get_stats():
                         Ct.compte_id = %s AND Cs.date IS NOT NULL
                     {
                         " AND Ct.type = %s " if content_type in (
-                            'emploi', 'information', 'galerie') else ''
+                            'emploi', 'formation', 'galerie', 'actu') else ''
                     }
                         GROUP BY
                             Cs.date
-                """, [3] + (
+                """, [compte_id] + (
                     [content_type] if content_type in (
-                        'emploi', 'information', 'galerie') else []))
+                        'emploi', 'information', 'galerie', 'actu') else []))
 
             stats = CURSOR.fetchall()
             print(stats)
@@ -969,12 +982,9 @@ def update_logo():
             filename = str(time.time()) + '_' + secure_filename(
                 logo.filename)
 
-            print(filename)
-
             logo.save(
                     os.path.join(compte_folder, filename)
             )
-            print(filename)
 
             if filename:
                 print(filename)
@@ -1011,7 +1021,7 @@ def update_logo():
 @jwt_required()
 def update_video():
     compte_id = int(get_jwt_identity().split("+")[0])
-    link, video, filename = None, None, None
+    video, filename = None, None
     if request.form:
         filename = request.form.get("video")
     elif request.files:

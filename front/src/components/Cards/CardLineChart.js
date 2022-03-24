@@ -1,37 +1,80 @@
-// import Chart, {useContext} from "chart.js";
-// import React, { useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Chart from "chart.js";
-import React, { useEffect} from 'react';
 
-// import CompteService from 'utils/service/CompteService';
-// import { CompteContext } from "utils/contexte/CompteContext";
-// import { LoginService } from 'utils/service/LoginService';
+import { CompteContext } from "utils/contexte/CompteContext";
 
 export default function CardLineChart() {
+  const {stat} = useContext(CompteContext);
+  let nbreVisiteur = [0];
+  let jour = [""];
+
 
   useEffect(() => {
+    //MANIPULATION DATE
 
-    function nombre(){
+    let dateBrute = stat.map((date) => {
+      return date.date;
+    })
+    for(let i=0; i<dateBrute.length; i++){
+      let dateParse = new Date(dateBrute[i]);
+      let NumberJourFromDateParse = dateParse.getDay()
+      let nomDay = ""
+      switch (NumberJourFromDateParse){
+        case 1:
+          nomDay = "Lundi"
+          break;
+        case 2:
+          nomDay = "Mardi"
+          break;
+        case 3:
+          nomDay = "Mercredi"
+          break;
+        case 4:
+          nomDay = "Jeudi"
+          break;
+        case 5:
+          nomDay = "Vendredi"
+          break;
+        case 6:
+          nomDay = "Samedi"
+          break;
+        case 7:
+          nomDay = "Dimanche"
+          break;
+        default:
+          nomDay = ""
+      }
+      jour.push(nomDay)
+    }
+
+    //FIN DATE 
+
+
+    //NOMBRE DE VISITE ONLY
+    
+    //get vue only in array stat
+    let vue = stat.map((nbre) => {
+      return nbre.Vues;
+    })
+    //integre vue one by one in nbreVisteur(donné a affiché)
+    for(let i = 0; i < vue.length; i++){
+      nbreVisiteur.push(vue[i]);
+    }
+    //FIN NOMBRE DE VISITE 
+
+
+    function graph(){
       
           var config = {
           type: "line",
           data: {
-            labels: [
-              "Samedi",
-              "Dimanche",
-              "Lundi",
-              "Mardi",
-              "Mercredi",
-              "Jeudi",
-              "Vendredi",
-              "Samedi",
-            ],
+            labels: jour,
             datasets: [
               {
                 label: "Nombre visiteur",
                 backgroundColor: "#02d47c",
                 borderColor: "#02d47c",
-                data: [0, 12],
+                data: nbreVisiteur,
                 fill: false,
               },
             ],
@@ -112,7 +155,7 @@ export default function CardLineChart() {
     }
     async function LineChart (){
       try{
-        nombre()
+        graph()
         
       } catch(erreur){
         console.log(erreur);
@@ -120,7 +163,8 @@ export default function CardLineChart() {
       
     }
     LineChart();
-  }, [])
+    // eslint-disable-next-line 
+  }, [stat])
 
     
   return (

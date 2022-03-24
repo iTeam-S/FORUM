@@ -38,6 +38,7 @@ const AfficheForm = () => {
       )
     } else{
       localStorage.removeItem('compte');
+      window.location.reload(true);
       return(
         <Login />
       )

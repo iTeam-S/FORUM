@@ -79,8 +79,8 @@
     },
     "agronomie": {
         "en": "agronomy",
-        "fr": "agronomie",
-        "mg": "fambolena"
+        "fr": "agronomie et environnement",
+        "mg": "fambolena sy ny tontolo iainana"
     },
     "science_humaine": {
         "en": "human science and communication",
@@ -89,7 +89,7 @@
     },
     "tourisme": {
         "en": "tourism",
-        "fr": "tourisme",
+        "fr": "tourisme, Hotellerie et Voyage",
         "mg": "fizahantany"
     },
     "industrie": {

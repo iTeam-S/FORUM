@@ -363,3 +363,22 @@ NB : Can specify content_type (mandatory)
       "video": <file_video> or <facebook_linl>
   }
 ```
+
+## Update account state (activate/deactivate)
+```
+PATCH http://localhost:7878/api/v1/active_account
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+    "state": <0 or 1>,
+    "compte_id": <compte_id>
+}
+```
+==> RETOUR 
+```
+  {
+      "error": False,
+      "message": "ACCOUNT State updated"
+  }
+```

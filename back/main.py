@@ -134,7 +134,7 @@ def add_account():
     """
     try:
         data = request.get_json()
-        compte_id, access = get_jwt_identity().split("+")
+        access = get_jwt_identity().split("+")[1]
 
         nom = data.get("nom")
         email = data.get("email")
@@ -1096,6 +1096,41 @@ def update_video():
         CURSOR.close()
         print(f"[ERROR] : { err }")
         abort(500, description="Something went wrong !")
+
+
+@app.route('/api/v1/active_account', methods=['PATCH'])
+@jwt_required()
+def active_account():
+    access = get_jwt_identity().split("+")[1]
+    data = request.get_json()
+
+    if data:
+        state = data.get("state")
+        compte_id = data.get("compte_id")
+        if access == "ADMIN" and state and compte_id:
+            CURSOR.execute("""
+                UPDATE
+                    Compte
+                SET
+                    actif=%s
+                WHERE
+                    id=%s;
+                """, (str(state), compte_id)
+            )
+
+            DB.commit()
+            return {
+                "error": False,
+                "message": "ACCOUNT State updated"
+            }, 200
+        return {
+            "error": True,
+            "message": "No enough data to update state"
+        }, 400
+    return {
+        "error": True,
+        "message": "No data posted"
+    }, 400
 
 
 if __name__ == "__main__":

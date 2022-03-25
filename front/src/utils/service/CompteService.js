@@ -3,7 +3,7 @@ import {LoginService} from "utils/service/LoginService";
 
 class CompteService{
                 /*ADD SERVICE*/
-    AddAccount(nom, email, tel, domaine, lien, type, password, adresse){
+    AddAccount(nom, email, tel, domaine, lien, type, password, adresse, classe){
         return RouteAxios.post('/add_account', {
             nom, 
             email, 
@@ -12,7 +12,8 @@ class CompteService{
             lien, 
             type, 
             password, 
-            adresse
+            adresse,
+            classe
         }, {
             headers: {
                 'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,

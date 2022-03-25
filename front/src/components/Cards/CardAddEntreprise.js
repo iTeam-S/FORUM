@@ -37,7 +37,9 @@ export default function CardAddEntreprise() {
           .min(6, 'Password must be at least 6 characters')
           .max(40, 'Password must not exceed 40 characters'),
         adresse:Yup.string()
-        .required("Ce champ est obligatoire")
+          .required("Ce champ est obligatoire"),
+        classe: Yup.string()
+          .required("Le choix est obligatoire"),
       });
       const {
         register,
@@ -50,7 +52,7 @@ export default function CardAddEntreprise() {
   const  handleAddAccount = async(data) => {
         try {
             let newCompte = {}
-            const res = await CompteService.AddAccount(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse);
+            const res = await CompteService.AddAccount(data.nom,data.email,data.tel,data.domaine,data.lien,data.type,data.password,data.adresse, data.classe);
             if(compt !== null && compt.type === 'ADMIN'){
                 history.push('/admin/TablesEntreprises');
             }else{
@@ -159,6 +161,28 @@ export default function CardAddEntreprise() {
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Classe 
+                    </label>
+                    <select
+                      name="type"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      {...register('classe')}
+                    >
+                         <option  hidden>Choisir la classe</option>
+                         <option key="1" value="1"> 1</option>
+                         <option key="2" value="2">2</option>
+                         <option key="3" value="3"> 3</option>
+                         <option key="4" value="4">4</option>
+                    </select>
+                    <p className="text-red-500 italic">{errors.classe?.message}</p>
+                  </div>
+                </div>
+                <div className="w-full lg:w-12o/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"

@@ -123,7 +123,7 @@ def login():
 
 @verif_db
 @app.route("/api/v1/add_account", methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def add_account():
     """
         DESC : Fonction permettant d'ajouter un compte
@@ -131,9 +131,7 @@ def add_account():
     """
     try:
         data = request.get_json()
-
-        # compte_id, access = get_jwt_identity().split("+")
-        access = "ADMIN"
+        compte_id, access = get_jwt_identity().split("+")
 
         nom = data.get("nom")
         email = data.get("email")
@@ -161,7 +159,7 @@ def add_account():
                         """,
                         (
                             nom, tel, email, type, lien,
-                            domaine, password, adresse, classe
+                            domaine, password, adresse, str(classe)
                         )
                     )
                     DB.commit()
@@ -171,17 +169,14 @@ def add_account():
                         "message": "Account created",
                         "account_id": CURSOR.lastrowid
                     }, 200
-
                 return {
                         "error": False,
                         "message": "Email already exists."
                 }, 409
-
             return {
                 "error": True,
                 "message": "Données obligatoires manquants"
             }, 412
-
         return {
             "error": True,
             "message": "Pas d'access"
@@ -1100,4 +1095,4 @@ def update_video():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=7878)

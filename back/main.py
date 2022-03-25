@@ -425,25 +425,29 @@ def list_contents():
         compte_id = get_jwt_identity().split("+")[0]
 
         if compte_id:
-            CURSOR.execute("""
-                SELECT
-                    Ct.id,
-                    Ct.titre,
-                    Ct.description,
-                    Ct.type,
-                    Ct.fichier,
-                    COUNT(DISTINCT Cs.id) Vues
-                FROM
-                    `Contenu` Ct
-                LEFT JOIN
-                    `Consultation` Cs
-                ON
-                    Ct.id = Cs.dimension
-                WHERE
-                    Ct.compte_id=%s AND Cs.type=%s
-                GROUP BY
-                    Ct.id;
-            """, (compte_id, 'CONTENU'))
+            CURSOR.execute(
+                """
+                    SELECT
+                        Ct.id,
+                        Ct.titre,
+                        Ct.description,
+                        Ct.type,
+                        Ct.fichier,
+                        COUNT(DISTINCT Cs.id) Vues
+                    FROM
+                        `Contenu` Ct
+                    LEFT JOIN
+                        `Consultation` Cs
+                    ON
+                        Ct.id = Cs.dimension
+                    AND
+                        Cs.type=%s
+                    WHERE
+                        Ct.compte_id=%s
+                    GROUP BY
+                        Ct.id;
+                """, ('CONTENU', compte_id)
+            )
             contents = CURSOR.fetchall()
             DB.commit()
             if contents:
@@ -494,13 +498,15 @@ def list_fiche_metier():
                         Fiche_metier Fm
                     LEFT JOIN
                         Consultation Cs
-                    ON 
+                    ON
                         Fm.id = Cs.dimension
+                    AND
+                        Cs.type = %s
                     WHERE
-                        Fm.compte_id=%s AND Cs.type=%s
+                        Fm.compte_id = %s
                     GROUP BY
                         Fm.id;
-                """, (compte_id, "FICHE_METIER")
+                """, ("FICHE_METIER", compte_id)
             )
             fiche_metiers = CURSOR.fetchall()
             DB.commit()

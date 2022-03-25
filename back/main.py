@@ -478,6 +478,7 @@ def list_fiche_metier():
         listes des fiches metiers
     """
     try:
+        compte_id = get_jwt_identity().split("+")[0]
         access = get_jwt_identity().split("+")[1]
 
         if access == "ADMIN":

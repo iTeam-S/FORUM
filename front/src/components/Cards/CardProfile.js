@@ -22,6 +22,7 @@ export default function CardProfile() {
   const [erreur, setErreur] = useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
 
+  console.log(compte)  
   
 
   //get one item from comptecurrent
@@ -239,10 +240,17 @@ export default function CardProfile() {
                 <i className="fas fa-address-card mr-2 text-lg text-blueGray-400"></i>
                   {account.tel}
               </div>
-              <div className="mb-2 text-blueGray-600">
-                <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                  <a href={account.lien} target="_blank" rel="noreferrer" >Site web</a>
-              </div>
+              { account.lien !== "" ? (
+                    <div className="mb-2 text-blueGray-600">
+                      <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
+                        <a href={account.lien} target="_blank" rel="noreferrer" >Site web</a>
+                    </div>
+                ) : (
+                    <div className="mb-2 text-blueGray-600">
+                        <p style={{margin:'0px 0px 30px 0px'}} >Lien site web pas encore disponible.</p>
+                    </div>
+                )
+              }
             </div>
             <div className="mt-10 py-10 border-t border-blueGray-200 text-center" style={{margin: '0px 0px 100px 0px'}}>
               <div className="flex flex-wrap justify-center">

@@ -18,7 +18,7 @@ export default function CardEditProfile() {
   const [errorMesssage,setErrorMessage]=useState("");
   
   let history = useHistory();
-o
+
   const validationSchema = Yup.object().shape({
         nom: Yup.string()
           .required('Ce champ est obligatoire'),

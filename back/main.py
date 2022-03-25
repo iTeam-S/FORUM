@@ -488,7 +488,7 @@ def list_fiche_metier():
                         Fm.titre,
                         Fm.fichier,
                         Fm.domaine_id,
-                        COUNT(DISTINCT Cs.id) vues
+                        COUNT(DISTINCT Cs.id) Vues
                     FROM
                         Fiche_metier Fm
                     LEFT JOIN

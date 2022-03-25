@@ -106,6 +106,7 @@ def login():
                         str(str(account.get("id")) + "+" + account.get("type"))
                     )
                     return account, 200
+            DB.commit()
             return {
                 "error": True,
                 "message": "Email/password incorrect"
@@ -394,7 +395,7 @@ def list_accounts():
                     Cp.id;
             """)
             accounts = CURSOR.fetchall()
-
+            DB.commit()
             if accounts:
                 return {
                     accounts.index(account):
@@ -449,6 +450,7 @@ def list_contents():
                     Ct.id;
             """, (compte_id,))
             contents = CURSOR.fetchall()
+            DB.commit()
             if contents:
                 return {
                     contents.index(content):
@@ -491,7 +493,7 @@ def list_fiche_metier():
                     Fiche_metier;
             """)
             fiche_metiers = CURSOR.fetchall()
-
+            DB.commit()
             if fiche_metiers:
                 return {
                     fiche_metiers.index(fiche_metier):
@@ -911,7 +913,7 @@ def get_stats():
                         'emploi', 'information', 'galerie', 'actu') else []))
 
             stats = CURSOR.fetchall()
-            print(stats)
+            DB.commit()
 
             if stats:
                 return {

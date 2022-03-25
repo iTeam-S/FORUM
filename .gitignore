@@ -107,3 +107,4 @@ dist
 bot/__pycache__
 env
 back/data
+*UrlAxios*

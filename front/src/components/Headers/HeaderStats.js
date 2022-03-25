@@ -40,9 +40,9 @@ export default function HeaderStats() {
                       statIconColor="bg-red-500"
                     />
                   </div>}
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+              <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
                 <CardStats
-                  statSubtitle="Visiteurs"
+                  statSubtitle="Visiteurs stands"
                   statTitle={totalVisiteur.toString()}
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"

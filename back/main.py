@@ -374,6 +374,7 @@ def list_accounts():
                    Cp.description,
                    Cp.domaine,
                    Cp.video,
+                   Cp.actif,
                    Cp.adresse,
                    COUNT(DISTINCT Cs.id) visiteurs
                 FROM
@@ -502,11 +503,9 @@ def list_fiche_metier():
                         Fm.id = Cs.dimension
                     AND
                         Cs.type = %s
-                    WHERE
-                        Fm.compte_id = %s
                     GROUP BY
                         Fm.id;
-                """, ("FICHE_METIER", compte_id)
+                """, ("FICHE_METIER",)
             )
             fiche_metiers = CURSOR.fetchall()
             DB.commit()

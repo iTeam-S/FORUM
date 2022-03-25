@@ -50,8 +50,8 @@
     },
     "nom_de_domaine_rechercher": {
         "en": "Then type the name of the job you want to get from the job description\n\nExample: Developer",
-        "fr": "Tapez alors le nom du metier que vous souhaitez obtenir sa fiche\n\nExemple : Developer",
-        "mg": "Sorato eto ary ny anaran'ny asa tianao hahazoana ny mombamomba azy\n\nOhatra: Developer"
+        "fr": "Tapez alors le nom du metier que vous souhaitez obtenir sa fiche",
+        "mg": "Sorato eto ary ny anaran'ny asa tianao hahazoana ny mombamomba azy"
     },
     "domaine_de_fiche_metier": {
         "en": "So here are the sectors that have job descriptions available\n\nYou can choose what you want!",
@@ -79,8 +79,8 @@
     },
     "agronomie": {
         "en": "agronomy",
-        "fr": "agronomie",
-        "mg": "fambolena"
+        "fr": "agronomie et environnement",
+        "mg": "fambolena sy ny tontolo iainana"
     },
     "science_humaine": {
         "en": "human science and communication",
@@ -89,7 +89,7 @@
     },
     "tourisme": {
         "en": "tourism",
-        "fr": "tourisme",
+        "fr": "tourisme, Hotellerie et Voyage",
         "mg": "fizahantany"
     },
     "industrie": {
@@ -228,6 +228,10 @@
     "lien": {
         "fr": "Notre lien site Web :",
         "mg": "Rohy makany amin'ny tranokalanay:"
+    },
+    "lien_actu":{
+        "fr":"Voici donc le lien de cet actualité",
+        "mg":"Ito arak'izany ny rohy hijerenao io actualité io"
     },
     "kavio": {
         "fr": "Passer le test Kavio",

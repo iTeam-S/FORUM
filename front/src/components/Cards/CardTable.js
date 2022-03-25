@@ -17,8 +17,14 @@ export default function CardTable({ color}) {
   const compteParDomaine = LoginService.getComptePerDomaine(compte, domaine);
 
   const [termSearch, setTermSearch] = useState("");
-
   const [showAlert, setShowAlert] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
+  function activate(nombre){
+    if(nombre === "1"){
+      setIsActive("0")
+    }
+  }
 
    function deleteOneCompte(id){
     CompteService.DeleteOneCompte(id);
@@ -69,7 +75,7 @@ const recherche = (e) => {
               </button>
             </div> 
       ) : null}
-
+          {/**FIN POPUP */}
 
 
         <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -177,7 +183,7 @@ const recherche = (e) => {
                                 <td className="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-left">
                                   <Link to={`/admin/profilDe/${account.id}`}>
                                         <button
-                                            className="bg-emerald-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                            className="bg-lightBlue-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                                             type="button"
                                         >
                                           Voir profil
@@ -191,6 +197,25 @@ const recherche = (e) => {
                                     >
                                       Delete
                                     </button>
+                                  )}
+                                  {account.id !== idCompteCurrent && (
+                                      account.actif === "1" ? (
+                                          <button
+                                                className="bg-teal-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                                type="button"
+                                                onClick={() => activate(account.actif)}
+                                          >
+                                            Activé
+                                          </button>
+                                      ) : (
+                                        <button
+                                            className="bg-red-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={() => activate(account.actif)}
+                                        >
+                                            Desactivé
+                                        </button>
+                                      )
                                   )}
                                 </td>
                           </tr>

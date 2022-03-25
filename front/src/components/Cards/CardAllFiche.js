@@ -52,6 +52,8 @@ export default function CardAllFiche({color}) {
   const ficheParDomaine = LoginService.getFichePerDomaine(fiche, domaine);
   const [termSearch, setTermSearch] = useState("");
 
+  console.log(fiche)
+
   const choixDomaine = (e) => {
     let domCheck = parseInt(e.target.value);
      return setDomaine(domCheck);
@@ -195,7 +197,7 @@ useEffect(() => {
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <div className="flex justify-center">
-                          <span className="mr-2">100</span>
+                          <span className="mr-2">{fiche.Vues}</span>
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">

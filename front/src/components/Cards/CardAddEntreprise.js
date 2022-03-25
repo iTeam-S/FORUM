@@ -175,10 +175,11 @@ export default function CardAddEntreprise() {
                       {...register('classe')}
                     >
                          <option  hidden>Choisir la classe</option>
-                         <option key="1" value="1"> 1</option>
-                         <option key="2" value="2">2</option>
-                         <option key="3" value="3"> 3</option>
-                         <option key="4" value="4">4</option>
+                         <option key="1" value="1">1- Sponsor officiel & Sponsor</option>
+                         <option key="2" value="2">2- Partenaire officiel</option>
+                         <option key="3" value="3">3- Partenaire média</option>
+                         <option key="4" value="4">4- Partenaire digital</option>
+                         <option key="5" value="5">5- Stand simple</option>
                     </select>
                     <p className="text-red-500 italic">{errors.classe?.message}</p>
                   </div>

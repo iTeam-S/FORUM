@@ -229,6 +229,10 @@
         "fr": "Notre lien site Web :",
         "mg": "Rohy makany amin'ny tranokalanay:"
     },
+    "lien_actu":{
+        "fr":"Voici donc le lien de cet actualité",
+        "mg":"Ito arak'izany ny rohy hijerenao io actualité io"
+    },
     "kavio": {
         "fr": "Passer le test Kavio",
         "mg": "Hanao test Kavio"

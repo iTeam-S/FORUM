@@ -69,7 +69,7 @@ const recherche = (e) => {
               </button>
             </div> 
       ) : null}
-
+          {/**FIN POPUP */}
 
 
         <div className="rounded-t mb-0 px-4 py-3 border-0">

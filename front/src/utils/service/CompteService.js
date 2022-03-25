@@ -22,21 +22,23 @@ class CompteService{
         }
         )
     }
-    AddContenu(titre, description, type, file, lien){
+    AddContenu(titre, description, type, files, lien){
         var content = new FormData();
         let media = null;
-        if(lien !== ""){
+        if(lien){
             media = lien
+            content.append("media", media);
         } else{
-            if(file.size < 25000000){
-                media = file
+            if(files.length <= 10){
+                for(let file of files){
+                    content.append("media", file);
+                }
             }
         }
 
         content.append("titre", titre);
         content.append("description", description);
-        content.append("type", type);
-        content.append("media", media);
+        content.append("type", type);   
 
         return RouteAxios.post('/add_content', content,{
             headers: {

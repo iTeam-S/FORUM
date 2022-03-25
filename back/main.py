@@ -18,6 +18,9 @@ import os
 # ---------------------------------------
 from conf import database
 # ---------------------------------------
+import codecs
+codecs.register(lambda name: codecs.lookup('utf8') if name == 'utf8mb4' else None)
+
 
 app = Flask(__name__)
 CORS(app)
@@ -199,37 +202,24 @@ def add_content():
         compte_id = get_jwt_identity().split("+")[0]
 
         if request.form:
-            filename = None
+            filenames, filename = [], None
             titre = request.form.get("titre")
             description = request.form.get("description")
             type = request.form.get("type")
-            link = request.form.get("link")
+            media = request.form.get("media")
 
-            if request.files:
+            if request.files.getlist("media"):
                 compte_folder = os.path.join(
                     app.config['UPLOAD_FOLDER'], str(compte_id)
                 )
                 Path(compte_folder).mkdir(parents=True, exist_ok=True)
-                filenames = []
-                if request.files.getlist("multi_file"):
-                    files = request.files.getlist("multi_file")
-                    for file in files:
-                        filename = str(
-                            time.time()) + '_' + secure_filename(file.filename)
-                        file.save(
-                            os.path.join(compte_folder, filename))
-                        filenames.append(filename)
-
-                elif request.files.get("file"):
-                    fichier = request.files['file']
-
-                    if fichier:
-                        filename = str(time.time()) + '_' + secure_filename(
-                            fichier.filename)
-
-                        fichier.save(
-                            os.path.join(compte_folder, filename)
-                        )
+                files = request.files.getlist("media")
+                for file in files:
+                    filename = str(
+                        time.time()) + '_' + secure_filename(file.filename)
+                    file.save(
+                        os.path.join(compte_folder, filename))
+                    filenames.append(filename)
 
             if titre and type and compte_id:
                 req = """
@@ -239,22 +229,19 @@ def add_content():
                 """
 
                 if filenames:
-                    CURSOR.executemany(req, (
-                         [
-                             (
-                                titre,
-                                description,
-                                type,
-                                filename,
-                                link,
-                                compte_id) for filename in filenames])
+                    CURSOR.executemany(req, [(
+                        titre,
+                        description,
+                        type,
+                        filename,
+                        compte_id) for filename in filenames]
                     )
                 else:
                     CURSOR.execute(req, (
                             titre,
                             description,
                             type,
-                            filename or link,
+                            media,
                             compte_id
                         )
                     )
@@ -262,8 +249,7 @@ def add_content():
                 DB.commit()
                 return {
                     "error": False,
-                    "message": "Contenu inserted",
-                    "id": CURSOR.lastrowid
+                    "message": "Contenu inserted"
                 }, 200
 
             return {

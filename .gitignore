@@ -107,4 +107,4 @@ dist
 bot/__pycache__
 env
 back/data
-*UrlAxios*
+src/utils/urlAxios/UrlAxios.js

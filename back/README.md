@@ -66,7 +66,7 @@ content-type: application/json
     "titre": <stand_name>,
     "description": <stand_domaine>,
     "type": <site_link>,
-    "link": <account_type>,
+    "link": <link>,
     "file": <file> (if one file),
     "multi_file": <multi_file> (if many file)
   }

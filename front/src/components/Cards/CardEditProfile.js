@@ -18,7 +18,7 @@ export default function CardEditProfile() {
   const [errorMesssage,setErrorMessage]=useState("");
   
   let history = useHistory();
-
+o
   const validationSchema = Yup.object().shape({
         nom: Yup.string()
           .required('Ce champ est obligatoire'),
@@ -33,9 +33,10 @@ export default function CardEditProfile() {
           .required('Ce champ est obligatoire')
           .max(600, "Limité à 97 mots"),
         adresse:Yup.string()
-        .required("Ce champ est obligatoire"),
+          .required("Ce champ est obligatoire"),
         lien: Yup.string()
-          .required('Ce champ est obligatoire'), 
+          .nullable()
+          .notRequired(), 
   });
 
   const {

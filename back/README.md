@@ -41,8 +41,10 @@ content-type: application/json
     "domaine": <stand_domaine>,
     "lien": <site_link>,
     "type": <account_type>,
+    "classe": <classe>,
     "password": <account_password>,
-    "adresse": "<addresse_of_company>"
+    "adresse": "<addresse_of_company>",
+    "classe": "<classe>"
   }
 ```
 => RETOUR:
@@ -50,6 +52,7 @@ content-type: application/json
   {
     "error": false,
     "message": "Account created"
+    "account_id": <account_id>
   }
 ```
 ## Add content request

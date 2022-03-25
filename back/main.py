@@ -142,6 +142,7 @@ def add_account():
         adresse = data.get("adresse")
         type = data.get("type")
         lien = data.get("lien")
+        classe = data.get("classe") or 4
 
         if access == "ADMIN":
             if nom and email and type and password:
@@ -155,11 +156,11 @@ def add_account():
                                 nom, tel, email, type, lien,
                                 domaine, password, adresse
                             )
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                         """,
                         (
                             nom, tel, email, type, lien,
-                            domaine, password, adresse
+                            domaine, password, adresse, classe
                         )
                     )
                     DB.commit()
@@ -265,7 +266,8 @@ def add_content():
                 DB.commit()
                 return {
                     "error": False,
-                    "message": "Contenu inserted"
+                    "message": "Contenu inserted",
+                    "id": CURSOR.lastrowid
                 }, 200
 
             return {

@@ -374,6 +374,7 @@ def list_accounts():
                    Cp.description,
                    Cp.domaine,
                    Cp.video,
+                   Cp.actif,
                    Cp.adresse,
                    COUNT(DISTINCT Cs.id) visiteurs
                 FROM

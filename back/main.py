@@ -35,7 +35,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # ----------------TOKEN CONFIG-----------------
 app.config["JWT_SECRET_KEY"] = "LUCIFER-MORNINGSTAR"
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=240)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000
 jwt = JWTManager(app)
 # ---------------------------------------------
@@ -106,7 +106,6 @@ def login():
                         str(str(account.get("id")) + "+" + account.get("type"))
                     )
                     return account, 200
-            DB.commit()
             return {
                 "error": True,
                 "message": "Email/password incorrect"
@@ -145,7 +144,7 @@ def add_account():
         lien = data.get("lien")
 
         if access == "ADMIN":
-            if nom and email and type and lien and password:
+            if nom and email and type and password:
                 CURSOR.execute("SELECT * FROM Compte WHERE email=%s", (email,))
                 if CURSOR.rowcount < 1:
                     password = str(generate_password_hash(password).decode())
@@ -168,7 +167,7 @@ def add_account():
                     return {
                         "error": False,
                         "message": "Account created",
-                        "account_id": CURSOR.lastrowid 
+                        "account_id": CURSOR.lastrowid
                     }, 200
 
                 return {
@@ -210,36 +209,63 @@ def add_content():
             link = request.form.get("link")
 
             if request.files:
-                fichier = request.files['file']
+                compte_folder = os.path.join(
+                    app.config['UPLOAD_FOLDER'], str(compte_id)
+                )
+                Path(compte_folder).mkdir(parents=True, exist_ok=True)
+                filenames = []
+                if request.files.getlist("multi_file"):
+                    files = request.files.getlist("multi_file")
+                    for file in files:
+                        filename = str(
+                            time.time()) + '_' + secure_filename(file.filename)
+                        file.save(
+                            os.path.join(compte_folder, filename))
+                        filenames.append(filename)
 
-                if fichier:
-                    compte_folder = os.path.join(
-                        app.config['UPLOAD_FOLDER'], str(compte_id)
-                    )
-                    Path(compte_folder).mkdir(parents=True, exist_ok=True)
+                elif request.files.get("file"):
+                    fichier = request.files['file']
 
-                    filename = str(time.time()) + '_' + secure_filename(
-                        fichier.filename)
+                    if fichier:
+                        filename = str(time.time()) + '_' + secure_filename(
+                            fichier.filename)
 
-                    fichier.save(
-                        os.path.join(compte_folder, filename)
-                    )
+                        fichier.save(
+                            os.path.join(compte_folder, filename)
+                        )
 
             if titre and type and compte_id:
-                CURSOR.execute("""
+                req = """
                     INSERT INTO
                         Contenu(titre, description, type, fichier, compte_id)
-                        VALUES (%s, %s, %s, %s, %s)
-                    """, (
-                        titre, description, type, filename or link, compte_id
-                    )
-                )
-                DB.commit()
+                    VALUES (%s, %s, %s, %s, %s)
+                """
 
+                if filenames:
+                    CURSOR.executemany(req, (
+                         [
+                             (
+                                titre,
+                                description,
+                                type,
+                                filename,
+                                link,
+                                compte_id) for filename in filenames])
+                    )
+                else:
+                    CURSOR.execute(req, (
+                            titre,
+                            description,
+                            type,
+                            filename or link,
+                            compte_id
+                        )
+                    )
+
+                DB.commit()
                 return {
                     "error": False,
-                    "message": "Contenu inserted",
-                    "id": CURSOR.lastrowid
+                    "message": "Contenu inserted"
                 }, 200
 
             return {
@@ -366,7 +392,6 @@ def list_accounts():
                     Cp.id;
             """)
             accounts = CURSOR.fetchall()
-            DB.commit()
 
             if accounts:
                 return {
@@ -422,7 +447,6 @@ def list_contents():
                     Ct.id;
             """, (compte_id,))
             contents = CURSOR.fetchall()
-            DB.commit()
             if contents:
                 return {
                     contents.index(content):
@@ -465,7 +489,7 @@ def list_fiche_metier():
                     Fiche_metier;
             """)
             fiche_metiers = CURSOR.fetchall()
-            DB.commit()
+
             if fiche_metiers:
                 return {
                     fiche_metiers.index(fiche_metier):
@@ -885,6 +909,7 @@ def get_stats():
                         'emploi', 'information', 'galerie', 'actu') else []))
 
             stats = CURSOR.fetchall()
+            print(stats)
 
             if stats:
                 return {

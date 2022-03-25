@@ -52,6 +52,30 @@ content-type: application/json
     "message": "Account created"
   }
 ```
+## Add content request
+```
+  POST http://<host>:5000/api/v1/add_content
+  Enctype: 'multipart/form-data'
+  Content-Type: false
+  Authorization: Bearer <Token>
+
+  {
+    "titre": <stand_name>,
+    "description": <stand_domaine>,
+    "type": <site_link>,
+    "link": <account_type>,
+    "file": <file> (if one file),
+    "multi_file": <multi_file> (if many file)
+  }
+```
+=> RETOUR:
+```
+  {
+    "error": False,
+    "message": "Contenu inserted",
+    "id": <content_inserted_id>
+  }
+```
 
 ## Insert ficher metier (Need ADMIN access)
 ```

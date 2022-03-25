@@ -143,7 +143,7 @@ class Requete:
         req = """
             SELECT id,logo,nom,description
             FROM Compte
-            WHERE type="ENTREPRISE"
+            WHERE type="ENTREPRISE" AND actif="1"
             ORDER BY classe ASC
         """
         self.cursor.execute(req)

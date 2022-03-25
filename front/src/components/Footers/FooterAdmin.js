@@ -14,7 +14,7 @@ export default function FooterAdmin() {
                   href="https://iteam-s.mg/"
                   className="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
                 >
-                  iTeam-$
+                  iTeam-$ [Dama]
                 </a>
               </div>
             </div>

@@ -20,7 +20,7 @@ export default function FooterSmall(props) {
                   href="https://iteam-s.mg/"
                   className="text-white hover:text-blueGray-300 text-sm font-semibold py-1"
                 >
-                  iTeam-$
+                  iTeam-$ [Dama]
                 </a>
               </div>
             </div>

@@ -12,7 +12,7 @@ export default function Footer() {
                   href="https://iteam-s.mg/"
                   className="text-blueGray-500 hover:text-blueGray-800"
                 >
-                  iTeam-$
+                  iTeam-$ [Dama]
                 </a>
                 .
               </div>

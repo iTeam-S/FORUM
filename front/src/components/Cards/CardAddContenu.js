@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect } from "react";
+import React, {useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -16,6 +16,27 @@ export default function CardAddContenu() {
   const {contenus, setContenu, addContenu}=useContext(CompteContext)
   let [isDisabled, setIsDisabled] = useState(true);
 
+  const [hiddenLien, setHiddenLien] = useState(false);
+  const [hiddenFile, setHiddenFile] = useState(false);
+
+  //fonction pour controller le choix de l'user
+  function HiddenFile(e){
+    let valeur = e.target.value;
+    if(valeur.length > 0){
+      setHiddenFile(true);
+    } else {
+      setHiddenFile(false)
+    }
+  }
+  function HiddenLien(e){
+    let valeur = e.target.value;
+    if(valeur.length > 0){
+      setHiddenLien(true);
+    } else{
+      setHiddenLien(false);
+    }
+  }
+
   const onChangeTypeSelect = (e) => {
       let choice = e.target.value;
       choice !== "galerie" ? setIsDisabled(false) : setIsDisabled(true);
@@ -31,14 +52,18 @@ export default function CardAddContenu() {
         type: Yup.string()
           .required('Ce champ est obligatoire'),
         file: Yup.mixed()
-          .required("N'oubliez pas le fichier")
+          .nullable()
+          .notRequired(),
+        lien: Yup.string()
+          .nullable()
+          .notRequired()
       });
 
   
   const  handleAddContenu = async(data) => {
         try {
             let newContenu = {}
-            let res = await CompteService.AddContenu(data.titre,data.description,data.type, data.file[0]);
+            let res = await CompteService.AddContenu(data.titre,data.description,data.type, data.file, data.lien);
             let formdata = res.config.data;
             formdata.delete('file');
             for(let value of formdata.entries()){
@@ -62,9 +87,6 @@ export default function CardAddContenu() {
             setErrorMessage(error.response.data.message)
         }
     }
-
-    useEffect(() => {
-    }, [contenus]);
     
     const {
         register,
@@ -161,20 +183,21 @@ export default function CardAddContenu() {
               <h6 className="text-blueGray-400 text-center text-sm mt-3 mb-6 font-bold uppercase">
                 Média
               </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full lg:w-12/12 px-4">
+              <div className="flex flex-wrap" >
+                <div className="w-full lg:w-6/12 px-4" hidden={hiddenFile}>
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercaseo text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="inpImageContenu"
                     >
-                      Fichier (*.jpeg/jpg ou *.png ou *.pdf ou *.mp4)
+                      Fichier (*.jpeg/jpg ou *.png ou *.pdf ou *.mp4 moins de 25Mo)
                     </label>
                     <input
                       type="file"
                       name="file"
                       multiple={isDisabled}
                       {...register('file')}
+                      onChange={(e) => HiddenLien(e)}
                       id="inpImageContenu"
                       accept="image/jpeg, image/jpg, image/png, .pdf, video/*"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -182,6 +205,23 @@ export default function CardAddContenu() {
                     <p className="text-red-500 italic">{errors.file?.message}</p>
                   </div>
                 </div>
+                <div className="w-full lg:w-6/12 px-4" hidden={hiddenLien}>
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Soit lien (facebook, Linkedin)
+                      </label>
+                      <input
+                        type="url"
+                        name="lien"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        {...register('lien')}
+                        onChange={(e) => HiddenFile(e)}
+                      />
+                    </div>
+                  </div>
               </div>
           </div>
         </form>

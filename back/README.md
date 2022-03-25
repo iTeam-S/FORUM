@@ -179,12 +179,14 @@ content-type: application/json
   "0": {
     "titre": <description>,
     "domaine_id": <fichier> ,
-    "file": <titre>
+    "file": <titre>,
+    "vues": <vues>
   },
   "1": {
     "titre": <titre>,
     "domaine_id": <domaine_id> ,
-    "file": <file>
+    "file": <file>,
+    "vues": <vues>
   },
   ...
 }

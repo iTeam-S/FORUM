@@ -153,7 +153,7 @@ def add_account():
                         INSERT INTO
                             Compte(
                                 nom, tel, email, type, lien,
-                                domaine, password, adresse
+                                domaine, password, adresse, classe
                             )
                             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                         """,
@@ -440,10 +440,10 @@ def list_contents():
                 ON
                     Ct.id = Cs.dimension
                 WHERE
-                    Ct.compte_id=%s
+                    Ct.compte_id=%s AND Cs.type=%s
                 GROUP BY
                     Ct.id;
-            """, (compte_id,))
+            """, (compte_id, 'CONTENU'))
             contents = CURSOR.fetchall()
             DB.commit()
             if contents:
@@ -481,12 +481,26 @@ def list_fiche_metier():
         access = get_jwt_identity().split("+")[1]
 
         if access == "ADMIN":
-            CURSOR.execute("""
-                SELECT
-                    id, titre, fichier, domaine_id
-                FROM
-                    Fiche_metier;
-            """)
+            CURSOR.execute(
+                """
+                    SELECT
+                        Fm.id,
+                        Fm.titre,
+                        Fm.fichier,
+                        Fm.domaine_id,
+                        COUNT(DISTINCT Cs.id) vues
+                    FROM
+                        Fiche_metier Fm
+                    LEFT JOIN
+                        Consultation Cs
+                    ON 
+                        Fm.id = Cs.dimension
+                    WHERE
+                        Fm.compte_id=%s AND Cs.type=%s
+                    GROUP BY
+                        Fm.id;
+                """, (compte_id, "FICHE_METIER")
+            )
             fiche_metiers = CURSOR.fetchall()
             DB.commit()
             if fiche_metiers:
@@ -1017,13 +1031,11 @@ def update_logo():
                 )
 
                 DB.commit()
-                if CURSOR.rowcount > 0:
-                    print(filename)
-                    return {
-                        "error": False,
-                        "message": "Logo_updated",
-                        "logo": filename
-                    }, 200
+                return {
+                    "error": False,
+                    "message": "Logo_updated",
+                    "logo": filename
+                }, 200
         return {
             "error": True,
             "message": "No file uploaded"

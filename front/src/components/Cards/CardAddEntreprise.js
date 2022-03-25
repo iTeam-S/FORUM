@@ -158,6 +158,7 @@ export default function CardAddEntreprise() {
                          <option key="8" value="Justice et Force de l'ordre">Justice et Force de l'ordre</option>
                     </select>
                     <p className="text-red-500 italic">{errors.domaine?.message}</p>
+                    
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">

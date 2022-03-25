@@ -71,9 +71,7 @@ export default function CardAddContenu() {
             }
 
             if(compte !== null){
-                if(data.file.length > 0){
-                  history.push('/adminEntreprise/AllContenu');
-                }
+                history.push('/adminEntreprise/AllContenu');
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à l'ajout du nouveau contenu");

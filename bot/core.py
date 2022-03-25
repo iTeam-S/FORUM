@@ -799,11 +799,9 @@ class Traitement(Options):
                         user_id,
                         const.description_emploi(description_url[0])
                     ) 
-                    # Eto dia lasa video zany, sendi_media
-                    self.bot.send_media(
+                    self.bot.send_message(
                         user_id,
-                        postback_payload[-2],
-                        "video"
+                        f"{translate('lien_actu', user_lang)}\n\n{postback_payload[-2]}",
                     )
                     self.bot.send_quick_reply(
                         user_id,

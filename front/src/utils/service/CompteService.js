@@ -230,6 +230,20 @@ class CompteService{
             }
         })
     }
+    
+
+    UpdateActif(state, compte_id){
+        return RouteAxios.patch('/active_account', {
+                state,
+                compte_id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${LoginService.getCurrentCompte().token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+    }
 
 }
 

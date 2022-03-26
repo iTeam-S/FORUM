@@ -144,7 +144,7 @@ def add_account():
         adresse = data.get("adresse")
         type = data.get("type")
         lien = data.get("lien")
-        classe = data.get("classe") or 4
+        classe = data.get("classe") or 5
 
         if access == "ADMIN":
             if nom and email and type and classe and password:

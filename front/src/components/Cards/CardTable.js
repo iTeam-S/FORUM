@@ -18,11 +18,16 @@ export default function CardTable({ color}) {
 
   const [termSearch, setTermSearch] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [isActive, setIsActive] = useState("");
 
-  function activate(nombre){
+  async function activate(nombre, id){
     if(nombre === "1"){
-      setIsActive("0")
+      nombre = "0";
+      await CompteService.UpdateActif(nombre, id);
+      window.location.reload();
+    } else {
+      nombre = "1";
+      await CompteService.UpdateActif(nombre, id);
+      window.location.reload();
     }
   }
 
@@ -201,9 +206,9 @@ const recherche = (e) => {
                                   {account.id !== idCompteCurrent && (
                                       account.actif === "1" ? (
                                           <button
-                                                className="bg-teal-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                                className="bg-teal-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                                                 type="button"
-                                                onClick={() => activate(account.actif)}
+                                                onClick={(e) => activate(account.actif, account.id)}
                                           >
                                             Activé
                                           </button>
@@ -211,7 +216,7 @@ const recherche = (e) => {
                                         <button
                                             className="bg-red-500  text-white active:bg-lightBlue-800 font-bold  text-xs px-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                                             type="button"
-                                            onClick={() => activate(account.actif)}
+                                            onClick={() => activate(account.actif, account.id)}
                                         >
                                             Desactivé
                                         </button>

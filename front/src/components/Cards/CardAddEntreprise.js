@@ -12,8 +12,17 @@ import { CompteContext } from "utils/contexte/CompteContext";
 export default function CardAddEntreprise() {
   const {compte, setCompte, addCompte} = useContext(CompteContext);
   const compt = LoginService.getCurrentCompte();
-  const [erreur,setErreur]=useState(false);
+  const [erreur, setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
+  const [show, setShow] = useState(false)
+
+  function showPassword(){
+      if(show){
+        setShow(false);
+      } else{
+        setShow(true);
+      }
+  }
  
   let history = useHistory();
 
@@ -185,7 +194,7 @@ export default function CardAddEntreprise() {
                     <p className="text-red-500 italic">{errors.classe?.message}</p>
                   </div>
                 </div>
-                <div className="w-full lg:w-12o/12 px-4">
+                <div className="w-10/12 mx-auto lg:w-10/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -193,12 +202,15 @@ export default function CardAddEntreprise() {
                     >
                       Mot de passe
                     </label>
-                    <input
-                      type="password"
-                      name="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      {...register('password')}
-                    />
+                    <div className="flex">
+                        <input
+                          type={show  ? "text" : "password"}
+                          name="password"
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          {...register('password')}
+                        /> 
+                        {show  ? <i className="fas fa-eye" style={{margin: '20px 5px'}} onClick={() => showPassword()} ></i> : <i class="fas fa-eye-slash" style={{margin: '20px 5px'}} onClick={() => showPassword()} ></i> }
+                    </div>
                     <p className="text-red-500 italic">{errors.password?.message}</p>
                   </div>
                 </div>

@@ -46,7 +46,8 @@ export default function CardAddContenu() {
 
   const validationSchema = Yup.object().shape({
         titre: Yup.string()
-          .required('Ce champ est obligatoire'),
+          .required('Ce champ est obligatoire')
+          .max(30, '4 mots maximum'),
         description: Yup.string()
           .nullable(true),
         type: Yup.string()
@@ -120,7 +121,7 @@ export default function CardAddContenu() {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      Titre
+                      Titre (*Brief titre 2 à 4 mots seulement*)
                     </label>
                     <input
                       type="text"

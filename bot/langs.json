@@ -833,12 +833,12 @@
     },
     "retourne_stand_emploi": {
         "en": "Back to previous",
-        "fr": "Révenir aux précedents",
-        "mg": "HIverina amin'ny teo aloha"
+        "fr": "Revenir au menu précédent",
+        "mg": "Hiverina amin'ireo menu teo aloha"
     },
     "test_non_fini": {
         "en": "You have already taken this test but did not make it to the end.\n\nSo we invite you to do it again so that it goes well",
-        "fr": "Vous avez déjà fait ce test mais n'a pas arrivé jusqu'à la fin.\n\nDonc on vous invite de le refaire à nouveau pour qu'il se passe bien",
+        "fr": "Vous avez déjà fait ce test mais vous n'avez pas arrivé jusqu'à la fin.\n\nDonc on vous invite de le refaire à nouveau pour qu'il se passe bien",
         "mg": "Efa nisy fotoana ianao nanao ity andrana ity fa tsy tonga hatramin'ny farany.\n\nKa noho izany manasa anao ary izahay mba hamerina azy hatrany amboaloany mba ho voamarina tsara ny andrana izay ataonao"
     },
     "refaire_test_kavio": {

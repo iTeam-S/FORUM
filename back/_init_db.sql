@@ -69,3 +69,26 @@ CREATE TABLE Consultation(
 	,CONSTRAINT CONSULTER_Contenu0_FK FOREIGN KEY (id) REFERENCES Contenu(id)
 )ENGINE=InnoDB;
 
+
+
+CREATE TABLE `Stat_Visite` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`public_id` INT(11) NOT NULL,
+	`nbr_msg` INT(11) NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `public_id` (`public_id`) USING BTREE,
+	CONSTRAINT `FK__Public` FOREIGN KEY (`public_id`) REFERENCES `FORUM`.`Public` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=5
+;
+
+
+
+CREATE DEFINER=`gaetan`@`%` TRIGGER `Public_after_update` AFTER UPDATE ON `Public` FOR EACH ROW BEGIN
+	INSERT INTO Stat_Visite (public_id, nbr_msg)
+	VALUES (NEW.id, 1) 
+	
+	ON DUPLICATE KEY UPDATE nbr_msg = nbr_msg + 1;
+END

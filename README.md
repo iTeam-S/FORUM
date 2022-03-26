@@ -1,7 +1,5 @@
 # FORUM
 Plateforme pour la 6 éme édition du forum de l'orientation et des métiers organisé par SÉSAME.
-# Portfolio
-Page présentant le portfolio de chaque membre de l'association iTeam-$.
 
 Vous pouvez visualiser le plateforme ici https://forum.iteam-s.mg/
 

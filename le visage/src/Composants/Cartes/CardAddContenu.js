@@ -47,7 +47,7 @@ export default function CardAddContenu() {
   const validationSchema = Yup.object().shape({
         titre: Yup.string()
           .required('Ce champ est obligatoire')
-          .max(100, '10 mots maximum'),
+          .max(125, '20 mots maximum'),
         description: Yup.string()
           .nullable(true),
         type: Yup.string()

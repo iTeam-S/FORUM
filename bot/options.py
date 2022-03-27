@@ -226,11 +226,17 @@ class Options:
 
     def gestion_extension_de_fichier(self, fichier):
         if fichier.endswith(".pdf"):
-            return "https://www.iconpacks.net/icons/2/free-pdf-download-icon-2617-thumb.png", "telecharger"
+            return "https://www.iconpacks.net/icons/2/free-pdf-download-icon-2617-thumb.png", "telecharger"  
+
+        elif fichier.startswith("http"):
+            verif = fichier.split("/")
+            if verif[-1].isdigit() and verif[-2]=="videos":
+                return "https://icon-library.com/images/play-video-icon-png-transparent/play-video-icon-png-transparent-14.jpg", "regarder"
+            return "https://www.aussitot.fr/wp-content/uploads/2009/10/fb-lien-420.png", "voir"
+
         elif fichier.endswith(".mp4"):
             return "https://icon-library.com/images/play-video-icon-png-transparent/play-video-icon-png-transparent-14.jpg", "regarder"
-        elif fichier.startswith("http"):
-            return "https://www.aussitot.fr/wp-content/uploads/2009/10/fb-lien-420.png", "voir"
+
         else:
             return "https://www.kindpng.com/picc/m/244-2446073_icons8-flat-gallery-icon-logo-gallery-png-transparent.png", "voir"
 

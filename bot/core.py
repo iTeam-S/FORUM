@@ -793,15 +793,45 @@ class Traitement(Options):
             elif postback_payload[-1] == "CONTENU_URL":
                 description_url = self.req.description_de_chaque_contenu(
                     postback_payload[1])[0]
-                if description_url:
-                    self.bot.send_message(
-                        user_id,
-                        const.description_emploi(description_url[0])
-                    ) 
-                    self.bot.send_message(
-                        user_id,
-                        f"{translate('lien_actu', user_lang)}\n\n{postback_payload[-2]}",
-                    )
+
+                verif = postback_payload[-2].split("/")
+                
+                try:
+                    if description_url:
+                        if verif[-1].isdigit() and verif[-2]=="videos":
+                            self.bot.send_message(
+                                user_id,
+                                const.description_emploi(description_url[0])
+                            )
+                            self.bot.send_media(
+                                user_id,
+                                postback_payload[-2],
+                                "video"
+                            )  
+                        else : 
+                            self.bot.send_message(
+                                user_id,
+                                const.description_emploi(description_url[0])
+                            ) 
+                            self.bot.send_message(
+                                user_id,
+                                f"{translate('lien_actu', user_lang)}\n\n{postback_payload[-2]}",
+                            )
+
+                    else:
+                        if verif[-1].isdigit() and verif[-2]=="videos":
+                            self.bot.send_media(
+                                user_id,
+                                postback_payload[-2],
+                                "video"
+                            )  
+                        else : 
+                            self.bot.send_message(
+                                user_id,
+                                f"{translate('lien_actu', user_lang)}\n\n{postback_payload[-2]}",
+                            )
+
+                    # boutton retoure
                     self.bot.send_quick_reply(
                         user_id,
                         user_lang,
@@ -809,24 +839,16 @@ class Traitement(Options):
                         postback_payload[-3]
                     )
 
-                else:
-                    self.bot.send_message(
+                    self.req.inserer_consultation(
                         user_id,
-                        postback_payload[-2]
+                        postback_payload[1],
+                        postback_payload[-1].split("_")[0]
                     )
-                    self.bot.send_quick_reply(
-                        user_id,
-                        user_lang,
-                        "retourne_stand_emploi",
-                        postback_payload[-3]
-                    )
-
-                self.req.inserer_consultation(
-                    user_id,
-                    postback_payload[1],
-                    postback_payload[-1].split("_")[0]
-                )
-                return True
+                    return True
+                
+                except BaseException as err:
+                    self.bot.send_message(ID_DEV,"CONTENU_URL_ERROR: " + str(err))
+                    return True
 
             else:
                 try:
@@ -864,7 +886,7 @@ class Traitement(Options):
                         )
 
                 except BaseException as err:
-                    self.bot.send_message(ID_DEV,str(err))
+                    self.bot.send_message(ID_DEV,"AUTRE_FICHIER: " + str(err))
                     return True
 
             self.req.inserer_consultation(

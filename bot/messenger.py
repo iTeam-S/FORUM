@@ -65,7 +65,7 @@ class Messenger:
         return res
 
     @retry(requests.exceptions.ConnectionError, tries=3, delay=3)
-    def send_quick_reply(self, dest_id, lang, types, *args):
+    def send_quick_reply(self, dest_id, lang, types, *args, **kwargs):
         self.send_action(dest_id, 'typing_on')
         '''
             Envoie des quick reply messenger
@@ -203,26 +203,7 @@ class Messenger:
                 id_stand = argument
 
             text = translate("visiter_stand", lang)
-            quick_rep = [{"content_type": "text",
-                          "title": "💱" + translate("offre",
-                                                  lang).upper(),
-                          "payload": f"__EMPLOI {id_stand} page"},
-                         {"content_type": "text",
-                          "title": "📜" + translate("info",
-                                                   lang).upper(),
-                          "payload": f"__EVENEMENTS {id_stand} page"},
-                         {"content_type": "text",
-                          "title": "🖼️" + translate("galerie",
-                                                    lang).upper(),
-                          "payload": f"__GALERIE {id_stand}"},
-                         {"content_type": "text",
-                          "title": "🏢" + translate("presentation",
-                                                   lang).upper(),
-                          "payload": f"__PRESENTATION {id_stand}"},
-                         {"content_type": "text",
-                          "title": "📠" + translate("plus_info",
-                                                   lang).upper(),
-                          "payload": f"__INFO {id_stand}"}]
+            quick_rep = kwargs['quick_rep']
 
         elif types == "fini_test_kavio":
             text = translate("fini_test_kavio_question", lang)

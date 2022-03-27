@@ -619,9 +619,7 @@ class Traitement(Options):
             return True
 
         elif cmd[0] == "__RETOURNE_STAND_EMPLOI":
-            if cmd[-1].isdigit():
-                self.bot.send_quick_reply(
-                    user_id, user_lang, "visiter_stand", cmd[-1])
+            self.__execution(user_id, f"__VISITER {cmd[-1]}")
             return True
 
         elif commande == "__RETOURNE_STAND_DEBUT":
@@ -876,20 +874,67 @@ class Traitement(Options):
             return True
 
         elif postback_payload[0] == "__VISITER":
-            description = self.req.description_de_chaque_stand(
-                postback_payload[-1]
-            )
+            description = self.req.description_de_chaque_stand(postback_payload[-1])
+            
             if description:
-                self.bot.send_message(user_id,
-                                      "DESCRIPTION:\n" + description)
-            else:
-                pass
+                self.bot.send_message(user_id, "DESCRIPTION:\n" + description)
 
+            id_stand = postback_payload[-1]
+            quick_rep =  []
+
+            # verification video presentation
+            if self.req.presentation_stand(id_stand):
+                quick_rep.append(
+                   {
+                        "content_type": "text",
+                        "title": "🏢" + translate("presentation", user_lang).upper(),
+                        "payload": f"__PRESENTATION {id_stand}"
+                    },
+                )
+
+            # verification de galerie
+            if self.req.galerie_de_chaque_stand(id_stand):
+                quick_rep.append(
+                    {
+                        "content_type": "text",
+                        "title": "🖼️" + translate("galerie",user_lang).upper(),
+                        "payload": f"__GALERIE {id_stand}"
+                    },
+                )
+            
+            # verification emploi
+            if self.req.emploi_de_chaque_stands(id_stand):
+                quick_rep.append(
+                    {
+                        "content_type": "text",
+                        "title": "💱" + translate("offre", user_lang).upper(),
+                        "payload": f"__EMPLOI {id_stand} page"
+                    },
+                )
+            
+            # verification evenement
+            if self.req.evenement_chaque_stand(id_stand):
+                 quick_rep.append(
+                     {
+                        "content_type": "text",
+                        "title": "📜" + translate("info",user_lang).upper(),
+                        "payload": f"__EVENEMENTS {id_stand} page"
+                    },
+                )
+            
+            quick_rep.append(              
+                {  
+                    "content_type": "text",
+                    "title": "📠" + translate("plus_info", user_lang).upper(),
+                    "payload": f"__INFO {id_stand}"
+                }
+            )
             self.bot.send_quick_reply(
                 user_id,
                 user_lang,
                 "visiter_stand",
-                postback_payload[-1]
+                postback_payload[-1],
+                quick_rep=quick_rep
             )
             return True
 

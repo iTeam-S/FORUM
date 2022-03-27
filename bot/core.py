@@ -619,7 +619,7 @@ class Traitement(Options):
             return True
 
         elif cmd[0] == "__RETOURNE_STAND_EMPLOI":
-            self.__execution(user_id, f"__VISITER {cmd[-1]}")
+            self.__execution(user_id, f"__VISITER {cmd[-1]} NODESC")
             return True
 
         elif commande == "__RETOURNE_STAND_DEBUT":
@@ -875,11 +875,17 @@ class Traitement(Options):
             return True
 
         elif postback_payload[0] == "__VISITER":
+            nodesc = False
+
+            if postback_payload[-1] == 'NODESC':
+                postback_payload.remove('NODESC')
+                nodesc = True
+
             description = self.req.description_de_chaque_stand(
                 postback_payload[-1]
             )
 
-            if description:
+            if description and not nodesc:
                 self.bot.send_message(user_id, "DESCRIPTION:\n" + description)
 
             id_stand = postback_payload[-1]

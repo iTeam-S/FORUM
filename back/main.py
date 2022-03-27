@@ -204,7 +204,7 @@ def add_content():
         if request.form:
             filenames, filename = [], None
             titre = request.form.get("titre")
-            description = request.form.get("description")
+            description = request.form.get("description") or None
             type = request.form.get("type")
             media = request.form.get("media")
 

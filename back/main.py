@@ -120,8 +120,9 @@ def login():
         }, 412
 
     except Exception as err:
+        CURSOR.close()
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -188,7 +189,7 @@ def add_account():
     except Exception as err:
         CURSOR.close()
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -265,7 +266,7 @@ def add_content():
     except Exception as err:
         CURSOR.close()
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -331,7 +332,7 @@ def add_fiche_metier():
     except Exception as err:
         CURSOR.close()
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 # -------------------- GET LIST API ----------------
@@ -397,7 +398,7 @@ def list_accounts():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -456,7 +457,7 @@ def list_contents():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 # ---------------------------------------------------
@@ -514,7 +515,7 @@ def list_fiche_metier():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -558,7 +559,7 @@ def delete_content():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -609,7 +610,7 @@ def delete_account():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -654,7 +655,7 @@ def delete_fiche_metier():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -717,7 +718,7 @@ def update_account():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -792,7 +793,7 @@ def update_content():
 
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @verif_db
@@ -865,8 +866,9 @@ def update_fiche_metier():
         }, 403
 
     except Exception as err:
+        CURSOR.close()
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @app.route(
@@ -875,14 +877,19 @@ def get_attachement(compte_id, attachement):
     """
         DESC : Fonction permettant de récuperer un fichier
     """
-    if compte_id:
-        compte_folder = os.path.join(
-            app.config['UPLOAD_FOLDER'], str(compte_id)
-        )
-        return send_from_directory(
-            directory=compte_folder, path=attachement)
+    try:
+        if compte_id:
+            compte_folder = os.path.join(
+                app.config['UPLOAD_FOLDER'], str(compte_id)
+            )
+            return send_from_directory(
+                directory=compte_folder, path=attachement)
+    except Exception as err:
+        print(f"[ERROR] : { err }")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
+@verif_db
 @app.route('/api/v1/get_stats', methods=['GET'])
 @jwt_required()
 def get_stats():
@@ -935,7 +942,7 @@ def get_stats():
         }, 403
     except Exception as err:
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @app.route('/api/v1/change_password', methods=['PATCH'])
@@ -983,7 +990,7 @@ def change_password():
         except Exception as err:
             CURSOR.close()
             print(f"[ERROR] : { err }")
-            abort(500, description="Something went wrong !")
+            abort(500, description=f"Something went wrong :  { err }")
     return {
         "error": True,
         "message": "Needed Data not enough"
@@ -1036,7 +1043,7 @@ def update_logo():
     except Exception as err:
         CURSOR.close()
         print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 @app.route('/api/v1/update_video', methods=['PATCH'])
@@ -1044,93 +1051,101 @@ def update_logo():
 def update_video():
     compte_id = int(get_jwt_identity().split("+")[0])
     video, filename = None, None
-    if request.form:
-        filename = request.form.get("video")
-    elif request.files:
-        video = request.files['video']
-        if video:
+    try:
+        if request.form:
+            filename = request.form.get("video")
+        elif request.files:
+            video = request.files['video']
+            if video:
 
-            if not allowed_file_video(video.filename):
+                if not allowed_file_video(video.filename):
+                    return {
+                        "error": True,
+                        "message":
+                            "Video must be less than 25Mo or Format not supported"
+                    }, 413
+                else:
+                    compte_folder = os.path.join(
+                        app.config['UPLOAD_FOLDER'], str(compte_id)
+                    )
+
+                    filename = str(time.time()) + '_' + secure_filename(
+                        video.filename)
+
+                    video.save(
+                        os.path.join(compte_folder, filename)
+                    )
+        try:
+            if filename:
+                CURSOR.execute("""
+                    UPDATE
+                        Compte
+                    SET
+                        video=%s
+                    WHERE
+                        id=%s;
+                    """, (filename, compte_id)
+                )
+
+                DB.commit()
+
+                return {
+                    "error": False,
+                    "message": "Video Updated",
+                    "logo": filename
+                }, 200
+            else:
                 return {
                     "error": True,
-                    "message":
-                        "Video must be less than 25Mo or Format not supported"
-                }, 413
-            else:
-                compte_folder = os.path.join(
-                    app.config['UPLOAD_FOLDER'], str(compte_id)
-                )
+                    "message": "No file uploaded "
+                }, 412
 
-                filename = str(time.time()) + '_' + secure_filename(
-                    video.filename)
-
-                video.save(
-                    os.path.join(compte_folder, filename)
-                )
-    try:
-        if filename:
-            CURSOR.execute("""
-                UPDATE
-                    Compte
-                SET
-                    video=%s
-                WHERE
-                    id=%s;
-                """, (filename, compte_id)
-            )
-
-            DB.commit()
-
-            return {
-                "error": False,
-                "message": "Video Updated",
-                "logo": filename
-            }, 200
-        else:
-            return {
-                "error": True,
-                "message": "No file uploaded "
-            }, 412
-
+        except Exception as err:
+            CURSOR.close()
+            print(f"[ERROR] : { err }")
+            abort(500, description=f"Something went wrong :  { err }")
     except Exception as err:
-        CURSOR.close()
-        print(f"[ERROR] : { err }")
-        abort(500, description="Something went wrong !")
-
+            CURSOR.close()
+            print(f"[ERROR] : { err }")
+            abort(500, description=f"Something went wrong :  { err }")
 
 @app.route('/api/v1/active_account', methods=['PATCH'])
 @jwt_required()
 def active_account():
     access = get_jwt_identity().split("+")[1]
     data = request.get_json()
+    try:
+        if data:
+            state = data.get("state")
+            compte_id = data.get("compte_id")
+            if access == "ADMIN" and state and compte_id:
+                CURSOR.execute("""
+                    UPDATE
+                        Compte
+                    SET
+                        actif=%s
+                    WHERE
+                        id=%s;
+                    """, (str(state), compte_id)
+                )
 
-    if data:
-        state = data.get("state")
-        compte_id = data.get("compte_id")
-        if access == "ADMIN" and state and compte_id:
-            CURSOR.execute("""
-                UPDATE
-                    Compte
-                SET
-                    actif=%s
-                WHERE
-                    id=%s;
-                """, (str(state), compte_id)
-            )
-
-            DB.commit()
+                DB.commit()
+                return {
+                    "error": False,
+                    "message": "ACCOUNT State updated"
+                }, 200
             return {
-                "error": False,
-                "message": "ACCOUNT State updated"
-            }, 200
+                "error": True,
+                "message": "No enough data to update state"
+            }, 400
         return {
             "error": True,
-            "message": "No enough data to update state"
+            "message": "No data posted"
         }, 400
-    return {
-        "error": True,
-        "message": "No data posted"
-    }, 400
+    except Exception as err:
+        CURSOR.close()
+        print(f"[ERROR] : { err }")
+        abort(500, description=f"Something went wrong :  { err }")
 
 
 if __name__ == "__main__":

@@ -220,7 +220,9 @@ class Traitement(Options):
             return True
 
         elif commande == "__NON_AUTRE_DOMAINE":
-            self.bot.send_message(user_id, "😔😔")
+            self.bot.send_message(user_id, "🥺")
+            # continuer la conversation
+            self.__execution(user_id, 'Hello')
             return True
 
         elif commande == "__VISITE_STAND":
@@ -653,7 +655,7 @@ class Traitement(Options):
                 if description:
                     self.bot.send_message(
                         user_id,
-                        const.description_emploi(description[0])
+                        const.description_emploi(description)
                     )
                     self.bot.send_file_url(
                         user_id,
@@ -686,7 +688,7 @@ class Traitement(Options):
                     print("ato")
                     self.bot.send_message(
                         user_id,
-                        const.description_emploi(description[0])
+                        const.description_emploi(description)
                     )
                     self.bot.send_file_url(
                         user_id,
@@ -729,7 +731,7 @@ class Traitement(Options):
                 if description:
                     self.bot.send_message(
                         user_id,
-                        const.description_emploi(description[0])
+                        const.description_emploi(description)
                     )
                     self.bot.send_file_url(
                         user_id,
@@ -761,7 +763,7 @@ class Traitement(Options):
                 if description:
                     self.bot.send_message(
                         user_id,
-                        const.description_emploi(description[0])
+                        const.description_emploi(description)
                     )
                     self.bot.send_file_url(
                         user_id,
@@ -801,7 +803,7 @@ class Traitement(Options):
                         if verif[-1].isdigit() and verif[-2]=="videos":
                             self.bot.send_message(
                                 user_id,
-                                const.description_emploi(description_url[0])
+                                const.description_emploi(description_url)
                             )
                             self.bot.send_media(
                                 user_id,
@@ -811,7 +813,7 @@ class Traitement(Options):
                         else : 
                             self.bot.send_message(
                                 user_id,
-                                const.description_emploi(description_url[0])
+                                const.description_emploi(description_url)
                             ) 
                             self.bot.send_message(
                                 user_id,
@@ -856,7 +858,7 @@ class Traitement(Options):
                     if description:
                         self.bot.send_message(
                             user_id,
-                            const.description_emploi(description[0])
+                            const.description_emploi(description)
                         )
                         self.bot.send_file_url(
                             user_id,

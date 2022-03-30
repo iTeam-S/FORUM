@@ -71,7 +71,7 @@ export default function CardLineChart() {
             labels: jour,
             datasets: [
               {
-                label: "Nombre visiteur",
+                label: "Visite contenus",
                 backgroundColor: "#02d47c",
                 borderColor: "#02d47c",
                 data: nbreVisiteur,
